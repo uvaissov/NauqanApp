@@ -1,0 +1,6 @@
+export * from './main/HeaderMain'
+export * from './main/Swiper'
+export * from './main/ButtonGrad'
+export * from './elements/CardView'
+export * from './CardPlace'
+export * from './elements/Header'

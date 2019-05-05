@@ -1,0 +1,1 @@
+export const LEVEL_CHANGE = 'LEVEL_CHANGE'
