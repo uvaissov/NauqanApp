@@ -1,6 +1,7 @@
 import React from 'react'
 import { SafeAreaView, ScrollView, View, Text} from 'react-native'
 import { createDrawerNavigator, createAppContainer, DrawerItems, createStackNavigator } from 'react-navigation'
+import { fromRight } from 'react-navigation-transitions'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Main from './Main'
 import Favorite from './Favorite'
@@ -24,16 +25,42 @@ const CustomDrawerComponent = (props) => (
   </SafeAreaView>
 )
 
+// const FadeTransation = (index, position) => {
+//   const sceneRange = [index - 1, index]
+//   const outputOpacity = [0, 1]
+//   const transtition = position.interpolate({
+//     inputRange: sceneRange,
+//     outputRange: outputOpacity
+//   })
+//   return {
+//     opacity: transtition
+//   }
+// }
+
+// const NavigationConfig = () => {
+//   return {
+//     screenInterpolator: (sceneOptions) => {
+//       const position = sceneOptions.position
+//       const scene = sceneOptions.scene
+//       const index = scene.index
+//       return FadeTransation(index, position)
+//     }
+//   }
+// }
+
 const MainStack = createStackNavigator(
   {
     Main,
     Catalog,
-    Item,
+    Item: { 
+      screen: Item
+    },
     Sale
   },
   {
     initialRouteName: 'Main',
-    headerMode: 'none'
+    headerMode: 'none',
+    transitionConfig: () => fromRight(300)
   }
 )
 

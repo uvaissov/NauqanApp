@@ -9,8 +9,8 @@ class Catalog extends Component {
     const { navigation } = this.props
     return (
       <View style={styles.container}>
-        <Header navigation={navigation} leftIcon="ios-arrow-round-back" mainColor="#45A460" secondColor="#A9D334" title="Каталог" onPress={() => navigation.navigate('Main')} /> 
-        <ScrollView overScrollMode="never" bounces={false} style={[{ flex: 1}]}>
+        <Header navigation={navigation} leftIcon="md-arrow-back" mainColor="#45A460" secondColor="#A9D334" title="Каталог" onPress={() => navigation.navigate('Main')} /> 
+        <ScrollView style={[{ flex: 1}]}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 15}}>
             <Text style={{ fontSize: 16}}>Все подкатегории</Text>
             <Ionicons name={'ios-search'} style={{ fontSize: 16}} color={'white'} />

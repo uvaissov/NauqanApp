@@ -15,11 +15,13 @@ const SubCategory = ({
         <Text style={{ fontWeight: '500', fontFamily: 'Roboto-Regular', lineHeight: 16}}>Категория: {item.categoryName}</Text>
         <Text style={{ fontWeight: '500', fontFamily: 'Roboto-Regular', color: '#FF6E36', lineHeight: 16, textTransform: 'uppercase'}}>Все</Text>
       </View>
-      <ScrollView horizontal style={{ flexDirection: 'row', padding: 15 }}>
-        <CardPlace navigation={navigation} item={{ title: 'Adidas', count: 15, source: require('../../../resources/demo/adidas.png')}} />
-        <CardPlace navigation={navigation} item={{ title: 'Acceserize', count: 3, source: require('../../../resources/demo/access.png')}} />
-        <CardPlace navigation={navigation} item={{ title: 'Magnum', count: 67, source: require('../../../resources/demo/magnum.png')}} />
-        <CardPlace navigation={navigation} item={{ title: 'Foxtot', count: 2, source: require('../../../resources/demo/foxtrot.png')}} />
+      <ScrollView horizontal >
+        <View style={{ flexDirection: 'row', padding: 15 }}>
+          <CardPlace navigation={navigation} item={{ title: 'Adidas', count: 15, source: require('../../../resources/demo/adidas.png')}} />
+          <CardPlace navigation={navigation} item={{ title: 'Acceserize', count: 3, source: require('../../../resources/demo/access.png')}} />
+          <CardPlace navigation={navigation} item={{ title: 'Magnum', count: 67, source: require('../../../resources/demo/magnum.png')}} />
+          <CardPlace navigation={navigation} item={{ title: 'Foxtot', count: 2, source: require('../../../resources/demo/foxtrot.png')}} />
+        </View>
       </ScrollView>
     </View>
   )
@@ -28,8 +30,7 @@ const SubCategory = ({
 const styles = StyleSheet.create({
   view: {
     flex: 1,
-    backgroundColor: BG_COLOR,
-    paddingTop: 15
+    backgroundColor: BG_COLOR
   }
 })
 

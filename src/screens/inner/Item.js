@@ -1,12 +1,21 @@
 import React, {Component} from 'react'
-import {StyleSheet, Text, View} from 'react-native'
+import {StyleSheet, View, Image} from 'react-native'
+import { Header } from '../../components/uikit/item/Header'
+import { w } from '../../constants/global'
 
 class Catalog extends Component {
   render() {
+    const { navigation } = this.props
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>React Native</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
+        <Header style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-arrow-back" title="Главная" onPress={() => navigation.goBack()} />
+        <View style={{ width: w, height: 210, borderWidth: 1 }}>
+          <Image 
+            style={{flex: 1, height: undefined, width: undefined }} 
+            source={{ source: require('../../../resources/demo/picture.png') }} 
+            resizeMode="stretch"
+          />
+        </View>
       </View>
     )
   }
@@ -15,19 +24,7 @@ class Catalog extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5
+    justifyContent: 'flex-start'
   }
 })
 
