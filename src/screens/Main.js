@@ -1,23 +1,24 @@
 import React, {Component} from 'react'
-import { Image, StyleSheet, View, Text, ScrollView } from 'react-native'
+import { Image, StyleSheet, View, Text, ScrollView, StatusBar } from 'react-native'
 import { Button } from 'react-native-elements'
 import { HeaderMain, Swiper, ButtonGrad, CardPlace} from '../components/uikit'
 import { w, h, BG_COLOR, TRASPARENT } from '../constants/global'
 
 class Main extends Component {
   render() {
-    const { navigation } = this.props
+    const { navigation } = this.props    
     return (
       <View style={styles.container}>
+        <StatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="light-content" />
         {/* Start scroll component */}
         <ScrollView overScrollMode="never" bounces={false} style={[{ flex: 1}]}>
           <HeaderMain style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />
           <Swiper data={[{ source: require('../../resources/demo/promo.png') }, { source: require('../../resources/demo/promo.png') }]} />
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 15 }}> 
-            <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Поесть" onPress={() => navigation.push('Catalog')} />
-            <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Продукты" onPress={() => navigation.push('Catalog')} />
-            <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Красота и здоровье" onPress={() => navigation.push('Catalog')} />
-            <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Благотво рительность" onPress={() => navigation.push('Catalog')} />
+            <ButtonGrad mainColor="#FF662E" secondColor="#FFA470" iconName="logo-apple" text="Поесть" onPress={() => navigation.push('Catalog')} />
+            <ButtonGrad mainColor="#8366D8" secondColor="#4786FF" iconName="logo-apple" text="Продукты" onPress={() => navigation.push('Catalog')} />
+            <ButtonGrad mainColor="#E04381" secondColor="#FF89F3" iconName="logo-apple" text="Красота и здоровье" onPress={() => navigation.push('Catalog')} />
+            <ButtonGrad mainColor="#2976BD" secondColor="#35B4EA" iconName="logo-apple" text="Благотво рительность" onPress={() => navigation.push('Catalog')} />
             <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Все" onPress={() => navigation.push('Catalog', { catalog: 'all' })} />
           </View>
           <Swiper data={[{ source: require('../../resources/demo/picture.png') }, { source: require('../../resources/demo/picture.png') }]} radius={6} />

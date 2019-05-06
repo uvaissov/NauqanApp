@@ -1,6 +1,7 @@
 import React from 'react'
-import { SafeAreaView, ScrollView, View, Text} from 'react-native'
+import { SafeAreaView, ScrollView, View, Image, ImageBackground, Text} from 'react-native'
 import { createDrawerNavigator, createAppContainer, DrawerItems, createStackNavigator } from 'react-navigation'
+import LinearGradient from 'react-native-linear-gradient'
 import { fromRight } from 'react-navigation-transitions'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Main from './Main'
@@ -13,11 +14,34 @@ import Setting from './Setting'
 import Catalog from './inner/Catalog'
 import Item from './inner/Item'
 import Sale from './inner/Sale'
+import { w } from '../constants/global'
 
 const CustomDrawerComponent = (props) => (
   <SafeAreaView style={{ flex: 1 }}>
-    <View style={{ height: 150, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Test</Text>
+    <View style={{ height: 210, backgroundColor: '#FAFAFA', alignItems: 'center', justifyContent: 'center'}}>
+      <ImageBackground  
+        style={{width: '100%', flex: 2, transform: [{perspective: 850}], justifyContent: 'center'}}
+        source={require('../../resources/images/background.png')} 
+        resizeMode="cover"        
+      >
+        <LinearGradient
+          colors={['rgba(250, 250, 250, 0)', '#FAFAFA']}
+          start={{x: 0.0, y: 0.25}} 
+          end={{x: 0.5, y: 1.0}}
+          locations={[0, 0.6]}
+          useAngle
+          angle={180}
+          style={{flex: 1}}
+        />
+        <Image 
+          style={{ position: 'absolute', height: 60, width: 60, top: 60, left: (((w * 0.8) / 2) - 30) }} 
+          source={require('../../resources/images/logo.png')}
+          resizeMode="stretch"
+        />        
+      </ImageBackground>
+      <View style={{ flex: 1}}>
+        <Text> СПИСОК ГОРОДОВ </Text>
+      </View>
     </View>
     <ScrollView>
       <DrawerItems {...props} />
@@ -131,10 +155,11 @@ const Screens = createDrawerNavigator({
 },
 {
   initialRouteName: 'Main',
+  drawerWidth: w * 0.8,
   contentOptions: {
-    activeTintColor: 'grey',
+    activeTintColor: '#FF6E36',
     itemsContainerStyle: {
-      marginVertical: 75
+      //marginVertical: 10
     }
   },
   contentComponent: CustomDrawerComponent

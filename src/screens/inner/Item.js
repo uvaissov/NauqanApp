@@ -12,7 +12,7 @@ class Catalog extends Component {
         <View style={{ width: w, height: 210, borderWidth: 1 }}>
           <Image 
             style={{flex: 1, height: undefined, width: undefined }} 
-            source={{ source: require('../../../resources/demo/picture.png') }} 
+            source={require('../../../resources/demo/promo.png')} 
             resizeMode="stretch"
           />
         </View>
