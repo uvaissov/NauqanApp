@@ -13,7 +13,8 @@ const Header = ({
   onPress,
   style,
   title,
-  navigation
+  navigation,
+  categories
 }) => {
   const { headerGradView, viewStyle, textStyle, leftButtonStyle, rightButtonStyle } = styles
   this.navigate = (params) => {
@@ -40,15 +41,14 @@ const Header = ({
         </TouchableOpacity>
       </LinearGradient>
       <ScrollView horizontal style={{ flexDirection: 'row', padding: 15 }}>
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Поесть" onPress={() => this.navigate({ catalog: 'all1' })} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Продукты" onPress={() => this.navigate({ catalog: 'all2' })} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Красота и здоровье" onPress={() => this.navigate({ catalog: 'all3' })} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Благотво рительность" onPress={() => navigation.push('Catalog', { catalog: 'all4' })} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Все" onPress={() => navigation.push('Catalog', { catalog: 'all5' })} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Поесть" onPress={() => navigation.push('Catalog', { catalog: 'all6' })} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Продукты" onPress={() => navigation.push('Catalog', { catalog: 'all7' })} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Красота и здоровье" onPress={() => navigation.push('Catalog', { catalog: 'all8' })} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Благотво рительность" onPress={() => navigation.push('Catalog', { catalog: 'all9' })} />        
+        {
+          categories.map((category) => {                
+            return (
+              <ButtonGrad code={category.code} mainColor={category.mainColor} secondColor={category.secondColor} text={category.name} onPress={() => navigation.push('Catalog', { catalog: category.code })} />
+            )
+          }
+          )
+        }        
       </ScrollView>
     </View>
   )

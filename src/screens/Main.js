@@ -20,12 +20,11 @@ class Main extends Component {
               mainCategory.map((itemName) => {
                 const category = categories.filter(cat => cat.code === itemName)[0]
                 return (
-                  <ButtonGrad code={itemName} mainColor={category.mainColor} secondColor={category.secondColor} iconName="logo-apple" text={category.name} onPress={() => navigation.push('Catalog', { catalog: itemName })} />
+                  <ButtonGrad code={itemName} mainColor={category.mainColor} secondColor={category.secondColor} text={category.name} onPress={() => navigation.push('Catalog', { catalog: itemName })} />
                 )
               }
               )
-            }
-           
+            }           
           </View>
           <Swiper data={[{ source: require('../../resources/demo/picture.png') }, { source: require('../../resources/demo/picture.png') }]} radius={6} />
           <View style={{ flexDirection: 'row', margin: 15}}>

@@ -1,17 +1,18 @@
 import React, {Component} from 'react'
 import { Text, StyleSheet, View, ScrollView, StatusBar} from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { connect } from 'react-redux'
 import { Header } from '../../components/uikit'
 import { SubCategory } from '../../components/uikit/SubCategory'
 
 class Catalog extends Component {
   render() {
-    const { navigation } = this.props
-
+    const { navigation, categories } = this.props
+    const category = categories.filter(cat => cat.code === navigation.getParam('catalog'))[0]
     return (
       <View style={styles.container}>
-        <StatusBar backgroundColor="#45A460" barStyle="light-content" />
-        <Header navigation={navigation} leftIcon="md-arrow-back" mainColor="#45A460" secondColor="#A9D334" title="Каталог" onPress={() => navigation.goBack()} /> 
+        <StatusBar backgroundColor={category.mainColor} barStyle="light-content" />
+        <Header categories={categories} navigation={navigation} leftIcon="md-arrow-back" mainColor={category.mainColor} secondColor={category.secondColor} title="Каталог" onPress={() => navigation.goBack()} /> 
         <ScrollView style={[{ flex: 1}]}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 15}}>
             <Text style={{ fontSize: 16}}>Все подкатегории</Text>
@@ -43,4 +44,10 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Catalog
+const mapStateToProps = state => {
+  return {
+    categories: state.catalog.categories,
+    mainCategory: state.catalog.mainCategory
+  }
+}
+export default connect(mapStateToProps, { })(Catalog)
