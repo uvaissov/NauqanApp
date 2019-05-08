@@ -33,7 +33,7 @@ const Header = ({
         <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Продукты" onPress={() => navigation.push('Catalog')} />
         <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Красота и здоровье" onPress={() => navigation.push('Catalog')} />
         <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Благотво рительность" onPress={() => navigation.push('Catalog')} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Все" onPress={() => navigation.push('navigate', { catalog: 'all' })} />
+        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Все" onPress={() => navigation.push('Catalog', { catalog: 'all' })} />
         <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Поесть" onPress={() => navigation.push('Catalog')} />
         <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Продукты" onPress={() => navigation.push('Catalog')} />
         <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Красота и здоровье" onPress={() => navigation.push('Catalog')} />

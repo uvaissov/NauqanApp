@@ -1,6 +1,7 @@
 import React from 'react'
-import { SafeAreaView, ScrollView, View, Image, ImageBackground, Text} from 'react-native'
+import { ScrollView, View, Image, ImageBackground, Text} from 'react-native'
 import { createDrawerNavigator, createAppContainer, DrawerItems, createStackNavigator } from 'react-navigation'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 import LinearGradient from 'react-native-linear-gradient'
 import { fromRight } from 'react-navigation-transitions'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -17,8 +18,16 @@ import Sale from './inner/Sale'
 import { w } from '../constants/global'
 
 const CustomDrawerComponent = (props) => (
-  <SafeAreaView style={{ flex: 1 }}>
-    <View style={{ height: 210, backgroundColor: '#FAFAFA', alignItems: 'center', justifyContent: 'center'}}>
+  <View style={{ flex: 1 }}>
+    <View style={{ ...ifIphoneX({
+      height: 240
+    }, {
+      height: 210
+    }),
+    backgroundColor: '#FAFAFA', 
+    alignItems: 'center', 
+    justifyContent: 'center'}} 
+    >
       <ImageBackground  
         style={{width: '100%', flex: 2, transform: [{perspective: 850}], justifyContent: 'center'}}
         source={require('../../resources/images/background.png')} 
@@ -46,7 +55,7 @@ const CustomDrawerComponent = (props) => (
     <ScrollView>
       <DrawerItems {...props} />
     </ScrollView>
-  </SafeAreaView>
+  </View>
 )
 
 // const FadeTransation = (index, position) => {

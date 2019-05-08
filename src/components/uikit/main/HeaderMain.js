@@ -2,6 +2,7 @@ import React from 'react'
 import { View, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import SvgUri from 'react-native-svg-uri'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 //import { w } from '../../../constants/global'
 
 const HeaderMain = ({
@@ -35,7 +36,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',    
     position: 'relative',
-    height: 60,
+    ...ifIphoneX({
+      height: 90
+    }, {
+      height: 60
+    }),
     alignItems: 'flex-end',
     paddingHorizontal: 20
   },
