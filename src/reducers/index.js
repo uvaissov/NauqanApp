@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import SettingReducer from './SettingReducer'
+import CatalogReducer from './CatalogReducer'
 
 export default combineReducers({
-  setting: SettingReducer
+  catalog: CatalogReducer
 })

@@ -1,6 +1,7 @@
 import React from 'react'
 import { ScrollView, View, TouchableOpacity, StyleSheet, Text } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
+import { NavigationActions, StackActions } from 'react-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { w } from '../../../constants/global'
 import { ButtonGrad } from '../main/ButtonGrad'
@@ -15,6 +16,16 @@ const Header = ({
   navigation
 }) => {
   const { headerGradView, viewStyle, textStyle, leftButtonStyle, rightButtonStyle } = styles
+  this.navigate = (params) => {
+    const resetAction = StackActions.reset({
+      index: 1,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Main' }),
+        NavigationActions.navigate({ routeName: 'Catalog', params })
+      ]
+    })
+    navigation.dispatch(resetAction) 
+  }
   return (
     <View style={viewStyle}>
       <LinearGradient style={[headerGradView, style]} colors={[mainColor, secondColor]} useAngle angle={135}>
@@ -29,15 +40,15 @@ const Header = ({
         </TouchableOpacity>
       </LinearGradient>
       <ScrollView horizontal style={{ flexDirection: 'row', padding: 15 }}>
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Поесть" onPress={() => navigation.push('Catalog')} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Продукты" onPress={() => navigation.push('Catalog')} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Красота и здоровье" onPress={() => navigation.push('Catalog')} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Благотво рительность" onPress={() => navigation.push('Catalog')} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Все" onPress={() => navigation.push('Catalog', { catalog: 'all' })} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Поесть" onPress={() => navigation.push('Catalog')} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Продукты" onPress={() => navigation.push('Catalog')} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Красота и здоровье" onPress={() => navigation.push('Catalog')} />
-        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Благотво рительность" onPress={() => navigation.push('Catalog')} />        
+        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Поесть" onPress={() => this.navigate({ catalog: 'all1' })} />
+        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Продукты" onPress={() => this.navigate({ catalog: 'all2' })} />
+        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Красота и здоровье" onPress={() => this.navigate({ catalog: 'all3' })} />
+        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Благотво рительность" onPress={() => navigation.push('Catalog', { catalog: 'all4' })} />
+        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Все" onPress={() => navigation.push('Catalog', { catalog: 'all5' })} />
+        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Поесть" onPress={() => navigation.push('Catalog', { catalog: 'all6' })} />
+        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Продукты" onPress={() => navigation.push('Catalog', { catalog: 'all7' })} />
+        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Красота и здоровье" onPress={() => navigation.push('Catalog', { catalog: 'all8' })} />
+        <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Благотво рительность" onPress={() => navigation.push('Catalog', { catalog: 'all9' })} />        
       </ScrollView>
     </View>
   )

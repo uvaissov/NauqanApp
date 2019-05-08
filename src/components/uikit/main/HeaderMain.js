@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import SvgUri from 'react-native-svg-uri'
+import Icon from '../../svgkit/Icon'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 //import { w } from '../../../constants/global'
 
@@ -16,7 +16,7 @@ const HeaderMain = ({
     <View style={[viewStyle, style, {backgroundColor: headerColor }]}>
       {leftIcon &&
         <TouchableOpacity onPress={onPress}>          
-          <SvgUri width="20" height="20" source={require('../../../../resources/icons/svg/menu.svg')} style={leftButtonStyle} />
+          <Icon name="menu" height="20" width="20" fill="#fff" style={leftButtonStyle} />
         </TouchableOpacity>
       }
       <View style={containerStyle} >

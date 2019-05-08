@@ -1,17 +1,18 @@
 import React from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import LinearGradient from 'react-native-linear-gradient'
+import Icon from '../../svgkit/Icon'
 //import { w, h } from '../../../constants/global'
 
 const ButtonGrad = ({
   onPress,
   text,
-  iconName,
+  //iconName,
   mainColor,
-  secondColor
+  secondColor,
+  code
 }) => {
-  const { container, touch, button, icon } = styles
+  const { container, touch, button } = styles
   return (
     <View style={container}>
       <TouchableOpacity
@@ -19,7 +20,7 @@ const ButtonGrad = ({
         onPress={onPress}
       > 
         <LinearGradient style={[button]} colors={[mainColor, secondColor]} useAngle angle={135}>
-          <Ionicons name={iconName} style={[icon]} size={24} color={'#fff'} />
+          <Icon name={code} height="18" width="18" fill="#fff" />
         </LinearGradient>
         <Text style={{ marginTop: 6, width: 70, textAlign: 'center', fontSize: 10, lineHeight: 12, color: '#170701', opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{text}</Text>
       </TouchableOpacity>

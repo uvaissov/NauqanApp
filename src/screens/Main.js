@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import { Image, StyleSheet, View, Text, ScrollView, StatusBar } from 'react-native'
 import { Button } from 'react-native-elements'
+import { connect } from 'react-redux'
 import { HeaderMain, Swiper, ButtonGrad, CardPlace} from '../components/uikit'
 import { w, h, BG_COLOR, TRASPARENT } from '../constants/global'
 
 class Main extends Component {
   render() {
-    const { navigation } = this.props    
+    const { navigation, mainCategory, categories } = this.props    
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="light-content" />
@@ -15,11 +16,16 @@ class Main extends Component {
           <HeaderMain style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />
           <Swiper data={[{ source: require('../../resources/demo/promo.png') }, { source: require('../../resources/demo/promo.png') }]} />
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 15 }}> 
-            <ButtonGrad mainColor="#FF662E" secondColor="#FFA470" iconName="logo-apple" text="Поесть" onPress={() => navigation.push('Catalog')} />
-            <ButtonGrad mainColor="#8366D8" secondColor="#4786FF" iconName="logo-apple" text="Продукты" onPress={() => navigation.push('Catalog')} />
-            <ButtonGrad mainColor="#E04381" secondColor="#FF89F3" iconName="logo-apple" text="Красота и здоровье" onPress={() => navigation.push('Catalog')} />
-            <ButtonGrad mainColor="#2976BD" secondColor="#35B4EA" iconName="logo-apple" text="Благотво рительность" onPress={() => navigation.push('Catalog')} />
-            <ButtonGrad mainColor="#45A460" secondColor="#A9D334" iconName="logo-apple" text="Все" onPress={() => navigation.push('Catalog', { catalog: 'all' })} />
+            {
+              mainCategory.map((itemName) => {
+                const category = categories.filter(cat => cat.code === itemName)[0]
+                return (
+                  <ButtonGrad code={itemName} mainColor={category.mainColor} secondColor={category.secondColor} iconName="logo-apple" text={category.name} onPress={() => navigation.push('Catalog', { catalog: itemName })} />
+                )
+              }
+              )
+            }
+           
           </View>
           <Swiper data={[{ source: require('../../resources/demo/picture.png') }, { source: require('../../resources/demo/picture.png') }]} radius={6} />
           <View style={{ flexDirection: 'row', margin: 15}}>
@@ -98,4 +104,10 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Main
+const mapStateToProps = state => {
+  return {
+    categories: state.catalog.categories,
+    mainCategory: state.catalog.mainCategory
+  }
+}
+export default connect(mapStateToProps, { })(Main)

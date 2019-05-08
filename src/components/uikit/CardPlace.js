@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, Text, TouchableHighlight } from 'react-native'
 import { BG_COLOR } from '../../constants/global'
 
 const CardPlace = ({ item, navigation }) => {
-  console.log('item', item)    
+  //console.log('item', item)    
   const { view, row } = styles
   return (
 
