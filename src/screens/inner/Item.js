@@ -28,29 +28,28 @@ class Item extends Component {
                 style={{flex: 1}}
               /> 
               <View style={{flex: 1}}>
-                <Text>123</Text>
                 <View style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 36, backgroundColor: 'white', position: 'absolute', height: 72, width: 72, bottom: -36, left: ((w / 2) - 36)}}>
                   <View style={{ justifyContent: 'center', alignItems: 'center', height: 62, width: 62, backgroundColor: 'black', borderRadius: 36}}>
-                    <Text style={{ color: 'white', fontSize: 12, lineHeight: 14}}>VISIT</Text>
+                    <Text style={{ fontFamily: 'Roboto-Regular', color: 'white', fontSize: 12, lineHeight: 14}}>VISIT</Text>
                   </View>
                 </View>
               </View>      
             </ImageBackground>
           </View>
           <View style={{ alignItems: 'center', marginTop: 43 }}>
-            <Text>Visit Альматы</Text>
-            <Text>Поесть</Text>
+            <Text style={{fontFamily: 'Roboto-Regular'}}>Visit Альматы</Text>
+            <Text style={{fontFamily: 'Roboto-Regular'}}>Поесть</Text>
           </View>
           <View style={{flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 15, marginTop: 15, backgroundColor: '#EBF2F5'}}>
-            <Text style={{ color: 'rgba(0, 0, 0, 0.87);'}}>Астана, ул. Астанаевская, 63</Text>
+            <Text style={{ color: 'rgba(0, 0, 0, 0.87)', fontFamily: 'Roboto-Regular'}}>Астана, ул. Астанаевская, 63</Text>
           </View>
           <View style={{ width: w, overflow: 'hidden', paddingHorizontal: 15, paddingVertical: 20}}>
-            <Text numberOfLines={6} style={{ }}>
+            <Text numberOfLines={6} style={{ fontFamily: 'Roboto-Regular' }}>
               Если вы до сих пор не нанесли визит в кафе Visit в Алматы, то утверждение о том, что вы знакомы с разнообразной, вкусной едой весьма спорно. Этот кулинарный бутик разбирается в вопросах гастрономии самого разного характера: за столиками кафе (интерьер — актуальный минимализм) можно отведать фирменные пир
             </Text>
           </View>
           <View>
-            <View><Text>Предложения</Text></View>
+            <View><Text style={{ fontFamily: 'Roboto-Regular' }}>Предложения</Text></View>
             <View>
               <FlatList 
                 numColumns={2}
