@@ -22,13 +22,13 @@ const Header = ({
       <Ionicons
         name='md-funnel'
         size={24}
-        color='grey'
+        color='white'
         style={[leftButtonStyle, {marginRight: 10 }]}
       />
       <Ionicons
         name='md-search'
         size={24}
-        color='grey'
+        color='white'
         style={[leftButtonStyle, {marginRight: 10 }]}
       />
      

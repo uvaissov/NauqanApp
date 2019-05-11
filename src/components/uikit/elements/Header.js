@@ -27,6 +27,9 @@ const Header = ({
     })
     navigation.dispatch(resetAction) 
   }
+  this.changeCatalog = (name) => {
+    navigation.setParam('catalog', name)
+  }
   return (
     <View style={viewStyle}>
       <LinearGradient style={[headerGradView, style]} colors={[mainColor, secondColor]} useAngle angle={135}>
@@ -44,7 +47,7 @@ const Header = ({
         {
           categories.map((category) => {                
             return (
-              <ButtonGrad code={category.code} mainColor={category.mainColor} secondColor={category.secondColor} text={category.name} onPress={() => navigation.push('Catalog', { catalog: category.code })} />
+              <ButtonGrad code={category.code} mainColor={category.mainColor} secondColor={category.secondColor} text={category.name} onPress={() => this.changeCatalog(category.name)} />
             )
           }
           )

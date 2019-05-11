@@ -8,6 +8,7 @@ import { SubCategory } from '../../components/uikit/SubCategory'
 class Catalog extends Component {
   render() {
     const { navigation, categories } = this.props
+        
     const category = categories.filter(cat => cat.code === navigation.getParam('catalog'))[0]
     return (
       <View style={styles.container}>
