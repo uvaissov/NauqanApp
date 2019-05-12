@@ -8,12 +8,13 @@ import { w } from '../../constants/global'
 
 class Item extends Component {  
   render() {
+    const widthItem = (w / 2) - 8  
     const { navigation, items } = this.props
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Header leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-arrow-back" title="Главная" onPress={() => navigation.goBack()} />
-          <View style={{ width: w, height: getComponentHeight(w), borderWidth: 1 }}>
+          <Header iconFunnel iconSearch leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-arrow-back" title="Главная" onPress={() => navigation.goBack()} />
+          <View style={{ width: w, height: getComponentHeight(w) }}>
             <ImageBackground  
               style={{flex: 1, height: undefined, width: undefined }} 
               source={require('../../../resources/demo/item.png')} 
@@ -52,11 +53,13 @@ class Item extends Component {
             <View><Text style={{ fontFamily: 'Roboto-Regular' }}>Предложения</Text></View>
             <View>
               <FlatList 
+                columnWrapperStyle={{ justifyContent: 'space-between'}}
                 numColumns={2}
                 data={items}
-                renderItem={(item) => <CardItem navigation={navigation} item={item} />}
+                renderItem={(item) => <CardItem style={{width: widthItem}} navigation={navigation} item={item.item} />}
                 keyExtractor={(item) => item.key}
               />
+            
             </View>
           </View>
         </ScrollView>

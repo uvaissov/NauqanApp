@@ -20,7 +20,7 @@ class Main extends Component {
               mainCategory.map((itemName) => {
                 const category = categories.filter(cat => cat.code === itemName)[0]
                 return (
-                  <ButtonGrad code={itemName} mainColor={category.mainColor} secondColor={category.secondColor} text={category.name} onPress={() => navigation.push('Catalog', { catalog: itemName })} />
+                  <ButtonGrad key={itemName} code={itemName} mainColor={category.mainColor} secondColor={category.secondColor} text={category.name} onPress={() => navigation.push('Catalog', { catalog: itemName })} />
                 )
               }
               )

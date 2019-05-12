@@ -2,11 +2,12 @@ import React from 'react'
 import { View, StyleSheet, Image, Text, TouchableHighlight } from 'react-native'
 import { BG_COLOR } from '../../../constants/global'
 
-const CardItem = ({ item, navigation }) => {
+const CardItem = ({ item, navigation, style }) => {
   const { view, row } = styles
+  const heightCalc = style.width * 1.72
   return (
 
-    <TouchableHighlight style={[view, { height: 203, width: 152, marginHorizontal: 10 }]} onPress={() => navigation.push('Sale')} >
+    <TouchableHighlight style={[style, view, { height: heightCalc }]} onPress={() => navigation.push('Sale')} >
       <View style={{flex: 1, overflow: 'hidden', borderRadius: 6}}>
         <View style={{ flex: 1 }}>
           <Image 
@@ -17,8 +18,12 @@ const CardItem = ({ item, navigation }) => {
         </View>
         <View style={row}>
           <View style={{ flex: 1}}>
-            <Text style={{ color: '#170701', fontSize: 16, lineHeight: 19, opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{item.title}</Text>
-            <Text style={{ color: '#563DD0', fontSize: 12, lineHeight: 19, fontFamily: 'Roboto-Regular' }}>{item.count} предложений</Text>
+            <Text style={{fontFamily: 'Roboto-Regular', fontSize: 16, lineHeight: 19, color: 'rgba(0, 0, 0, 0.87)' }}>{item.title}</Text>
+            <Text style={{fontFamily: 'Roboto-Regular', fontSize: 12, color: 'rgba(0, 0, 0, 0.4)', lineHeight: 14, margin: 10}}>Действует до {item.date}</Text>
+            <View style={{ flexDirection: 'row'}}>
+              <Text style={{fontFamily: 'Roboto-Regular', fontSize: 14, color: '#979797', textDecorationLine: 'line-through' }} >{item.price.before}</Text>
+              <Text style={{fontFamily: 'Roboto-Regular', fontSize: 14, color: '#FF6E36', marginLeft: 5}}>{item.price.after}</Text>
+            </View>
           </View>          
         </View>
       </View>
@@ -31,7 +36,7 @@ const styles = StyleSheet.create({
   row: {
     paddingLeft: 10,
     paddingTop: 8,
-    height: 51,
+    height: 121,
     flexDirection: 'row',
     backgroundColor: BG_COLOR
   },
@@ -44,7 +49,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 1.22,
-    
+    margin: 4,
     elevation: 4
   }
 })

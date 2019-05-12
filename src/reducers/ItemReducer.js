@@ -7,11 +7,11 @@ import {
 
 const INITIAL_STATE = {
   items: [
-    { key: 'a', title: 'Magnum', count: 67, source: require('../../resources/demo/magnum.png')},
-    { key: 'b', title: 'Magnum', count: 67, source: require('../../resources/demo/magnum.png')},
-    { key: 'c', title: 'Magnum', count: 67, source: require('../../resources/demo/magnum.png')},
-    { key: 'd', title: 'Magnum', count: 67, source: require('../../resources/demo/magnum.png')},
-    { key: 'f', title: 'Magnum', count: 67, source: require('../../resources/demo/magnum.png')}   
+    { key: 'a', title: 'Суп с фрикадельками', date: '22.03.2019', price: { before: 150, after: 142 }, source: require('../../resources/demo/soup.png')},
+    { key: 'b', title: 'Суп с фрикадельками', date: '22.03.2019', price: { before: 150, after: 142 }, source: require('../../resources/demo/magnum.png')},
+    { key: 'c', title: 'Суп с фрикадельками', date: '22.03.2019', price: { before: 150, after: 142 }, source: require('../../resources/demo/foxtrot.png')},
+    { key: 'd', title: 'Суп с фрикадельками', date: '22.03.2019', price: { before: 150, after: 142 }, source: require('../../resources/demo/soup.png')},
+    { key: 'f', title: 'Суп с фрикадельками', date: '22.03.2019', price: { before: 150, after: 142 }, source: require('../../resources/demo/soup.png')}   
   ]
 }
 

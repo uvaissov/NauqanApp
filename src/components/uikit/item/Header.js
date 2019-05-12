@@ -8,7 +8,9 @@ const Header = ({
   leftColor,
   headerColor,
   onPress,
-  style
+  style,
+  iconFunnel,
+  iconSearch
 }) => {
   const { viewStyle, leftButtonStyle } = styles
   return (
@@ -19,18 +21,24 @@ const Header = ({
         </TouchableOpacity>
       }
       <View style={{ flex: 1}} />
-      <Ionicons
-        name='md-funnel'
-        size={24}
-        color='white'
-        style={[leftButtonStyle, {marginRight: 10 }]}
-      />
-      <Ionicons
-        name='md-search'
-        size={24}
-        color='white'
-        style={[leftButtonStyle, {marginRight: 10 }]}
-      />
+      {
+        iconFunnel &&
+        <Ionicons
+          name='md-funnel'
+          size={24}
+          color='white'
+          style={[leftButtonStyle, {marginRight: 10 }]}
+        />
+      }
+      {
+        iconSearch &&
+        <Ionicons
+          name='md-search'
+          size={24}
+          color='white'
+          style={[leftButtonStyle, {marginRight: 10 }]}
+        />
+      }        
      
     </View>
   )
