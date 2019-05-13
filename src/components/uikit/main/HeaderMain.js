@@ -1,8 +1,9 @@
 import React from 'react'
 import { View, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Icon from '../../svgkit/Icon'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+
 //import { w } from '../../../constants/global'
 
 const HeaderMain = ({

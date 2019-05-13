@@ -4,6 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { connect } from 'react-redux'
 import { Header } from '../../components/uikit'
 import { SubCategory } from '../../components/uikit/SubCategory'
+import { BG_COLOR } from '../../constants/global'
 
 class Catalog extends Component {
   render() {
@@ -17,11 +18,11 @@ class Catalog extends Component {
         <ScrollView style={[{ flex: 1}]}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 15}}>
             <Text style={{ fontSize: 16}}>Все подкатегории</Text>
-            <Ionicons name={'ios-search'} style={{ fontSize: 16}} color={'white'} />
+            <Ionicons name={'md-arrow-dropdown'} style={{ fontSize: 16}} color={'#000000'} />
           </View>
-          <SubCategory navigation={navigation} item={{ categoryName: 'test1'}} />
-          <SubCategory navigation={navigation} item={{ categoryName: 'test2'}} />
-          <SubCategory navigation={navigation} item={{ categoryName: 'test3'}} />
+          <SubCategory mainColor={category.mainColor} navigation={navigation} item={{ categoryName: 'test1'}} />
+          <SubCategory mainColor={category.mainColor} navigation={navigation} item={{ categoryName: 'test2'}} />
+          <SubCategory mainColor={category.mainColor} navigation={navigation} item={{ categoryName: 'test3'}} />
         </ScrollView>
       </View>
     )
@@ -31,17 +32,8 @@ class Catalog extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5
+    justifyContent: 'flex-start',
+    backgroundColor: BG_COLOR
   }
 })
 

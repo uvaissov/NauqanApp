@@ -6,14 +6,15 @@ import { CardPlace } from './CardPlace'
 const SubCategory = ({ 
   style,
   item,
-  navigation
+  navigation,
+  mainColor
 }) => {
   const { view } = styles
   return (
     <View style={[view, style]} >
       <View style={{paddingHorizontal: 15, flexDirection: 'row', justifyContent: 'space-between'}}>
         <Text style={{ fontWeight: '500', fontFamily: 'Roboto-Regular', lineHeight: 16}}>Категория: {item.categoryName}</Text>
-        <Text style={{ fontWeight: '500', fontFamily: 'Roboto-Regular', color: '#FF6E36', lineHeight: 16, textTransform: 'uppercase'}}>Все</Text>
+        <Text style={{ fontWeight: '500', fontFamily: 'Roboto-Regular', color: mainColor, lineHeight: 16, textTransform: 'uppercase'}}>Все</Text>
       </View>
       <ScrollView horizontal >
         <View style={{ flexDirection: 'row', padding: 15 }}>

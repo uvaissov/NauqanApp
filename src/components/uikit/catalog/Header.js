@@ -2,6 +2,7 @@ import React from 'react'
 import { ScrollView, View, TouchableOpacity, StyleSheet, Text } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { NavigationActions, StackActions } from 'react-navigation'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { w } from '../../../constants/global'
 import { ButtonGrad } from '../main/ButtonGrad'
@@ -47,7 +48,7 @@ const Header = ({
         {
           categories.map((category) => {                
             return (
-              <ButtonGrad code={category.code} mainColor={category.mainColor} secondColor={category.secondColor} text={category.name} onPress={() => this.changeCatalog(category.code)} />
+              <ButtonGrad key={category.code} code={category.code} mainColor={category.mainColor} secondColor={category.secondColor} text={category.name} onPress={() => this.changeCatalog(category.code)} />
             )
           }
           )
@@ -61,7 +62,11 @@ const styles = StyleSheet.create({
   headerGradView: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    height: 90
+    ...ifIphoneX({
+      height: 90
+    }, {
+      height: 60
+    })
   },
   viewStyle: {
     justifyContent: 'flex-start',

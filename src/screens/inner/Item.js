@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
-import { Text, StyleSheet, View, ImageBackground, FlatList, ScrollView} from 'react-native'
+import { StatusBar, Text, StyleSheet, View, ImageBackground, FlatList, ScrollView} from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { connect } from 'react-redux'
 import { Header } from '../../components/uikit/item/Header'
 import { CardItem } from '../../components/uikit/item/CardItem'
-import { w } from '../../constants/global'
+import { w, TRASPARENT } from '../../constants/global'
 
 class Item extends Component {  
   render() {
@@ -12,6 +12,7 @@ class Item extends Component {
     const { navigation, items } = this.props
     return (
       <View style={styles.container}>
+        <StatusBar backgroundColor={TRASPARENT} barStyle="light-content" />
         <ScrollView>
           <Header iconFunnel iconSearch leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-arrow-back" title="Главная" onPress={() => navigation.goBack()} />
           <View style={{ width: w, height: getComponentHeight(w) }}>
