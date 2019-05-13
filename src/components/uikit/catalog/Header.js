@@ -1,11 +1,11 @@
 import React from 'react'
 import { ScrollView, View, TouchableOpacity, StyleSheet, Text } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import { NavigationActions, StackActions } from 'react-navigation'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { w } from '../../../constants/global'
-import { ButtonGrad } from '../main/ButtonGrad'
+import Icon from '../../svgkit/Icon'
+//import { w } from '../../../constants/global'
+import { ButtonGrad } from '../catalog/ButtonGrad'
 
 const Header = ({
   leftIcon,
@@ -15,21 +15,28 @@ const Header = ({
   style,
   title,
   navigation,
-  categories
+  categories,
+  category,
+  scrollTo,
+  sortPress,
+  searchPress
 }) => {
-  const { headerGradView, viewStyle, textStyle, leftButtonStyle, rightButtonStyle } = styles
-  this.navigate = (params) => {
-    const resetAction = StackActions.reset({
-      index: 1,
-      actions: [
-        NavigationActions.navigate({ routeName: 'Main' }),
-        NavigationActions.navigate({ routeName: 'Catalog', params })
-      ]
-    })
-    navigation.dispatch(resetAction) 
-  }
+  const { headerGradView, viewStyle, textStyle, leftButtonStyle, rightButtonStyle } = styles  
   this.changeCatalog = (name) => {
-    navigation.navigate('Catalog', {catalog: name})
+    navigation.navigate('Catalog', {catalog: name, scrollTo: undefined})
+  }
+  
+  if (scrollTo) {
+    let idx
+    categories.map((cat, index) => {  
+      if (cat.code === category.code) {
+        idx = index        
+      }
+      return null
+    })
+    setTimeout(() => {
+      this._scrollView.scrollTo({x: idx * 110}) 
+    }, 100)
   }
   return (
     <View style={viewStyle}>
@@ -40,15 +47,25 @@ const Header = ({
           </TouchableOpacity>
         }
         <Text numberOfLines={1} ellipsizeMode="tail" style={[textStyle, { paddingLeft: leftIcon ? 35 : 0 }]}>{title}</Text>
-        <TouchableOpacity onPress={onPress}>
-          <Ionicons name={'ios-search'} style={[rightButtonStyle]} color={'white'} />
-        </TouchableOpacity>
-      </LinearGradient>
-      <ScrollView horizontal style={{ flexDirection: 'row', padding: 15 }}>
         {
-          categories.map((category) => {                
+          sortPress &&
+          <TouchableOpacity onPress={sortPress} style={[rightButtonStyle]}>
+            <Icon name="sort" height="24" width="24" fill="#fff" />
+          </TouchableOpacity>
+        }
+        {
+          searchPress && 
+          <TouchableOpacity onPress={searchPress}>
+            <Ionicons name={'ios-search'} style={[rightButtonStyle]} color={'white'} />
+          </TouchableOpacity>
+        }
+        
+      </LinearGradient>
+      <ScrollView ref={(view) => { this._scrollView = view }} horizontal style={{ flexDirection: 'row', padding: 15 }}>
+        {
+          categories.map((cat) => {            
             return (
-              <ButtonGrad key={category.code} code={category.code} mainColor={category.mainColor} secondColor={category.secondColor} text={category.name} onPress={() => this.changeCatalog(category.code)} />
+              <ButtonGrad key={cat.code} code={cat.code} color={cat.code !== category.code ? 'rgba(0, 0, 0, 0.54)' : cat.mainColor} text={cat.name} onPress={() => this.changeCatalog(cat.code)} />
             )
           }
           )
@@ -62,6 +79,8 @@ const styles = StyleSheet.create({
   headerGradView: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    paddingBottom: 15,
+    alignItems: 'flex-end',
     ...ifIphoneX({
       height: 90
     }, {
@@ -75,24 +94,28 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     elevation: 3,
     position: 'relative',
-    height: 200,
+    ...ifIphoneX({
+      height: 200
+    }, {
+      height: 180
+    }),
     backgroundColor: 'white'
   },
   textStyle: {
     fontSize: 20,
     fontWeight: '500',
-    fontFamily: 'Roboto-Regular',
-    paddingTop: 50,
-    width: w - 60,
+    fontFamily: 'Roboto-Regular',    
+    flex: 1,
     color: 'white'
   },
   leftButtonStyle: {
-    paddingTop: 45,
+    //paddingTop: 45,
     fontSize: 24
   },
   rightButtonStyle: {
-    paddingTop: 45,
-    fontSize: 24
+    //paddingTop: 45,
+    fontSize: 24,
+    marginRight: 15
   }
 })
 

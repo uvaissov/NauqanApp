@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native'
+import { Dimensions, Platform, PixelRatio } from 'react-native'
 
 export const WHITE = '#fff'
 export const BLACK = '#000'
@@ -17,4 +17,17 @@ export const responsive = {
   mobile8: w > 342 && w < 375,
   mobile8plus: w > 375 && w < 415,
   tablet: w < 990 && w > 415
+}
+
+const scale = w / 320
+
+export function normalize(size) {
+  const newSize = size * scale 
+  let result
+  if (Platform.OS === 'ios') {
+    result = Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    result = Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+  return result
 }

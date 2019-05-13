@@ -14,17 +14,17 @@ const ButtonGrad = ({
 }) => {
   const { container, touch, button } = styles
   return (
-    <View style={container}>
-      <TouchableOpacity
-        style={touch}
-        onPress={onPress}
-      > 
+    <TouchableOpacity  
+      style={container}   
+      onPress={onPress}
+    > 
+      <View style={touch}>
         <LinearGradient style={[button]} colors={[mainColor, secondColor]} useAngle angle={135}>
           <Icon name={code} height="18" width="18" fill="#fff" />
         </LinearGradient>
         <Text style={{ marginTop: 6, width: 70, textAlign: 'center', fontSize: 10, lineHeight: 12, color: '#170701', opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{text}</Text>
-      </TouchableOpacity>
-    </View> 
+      </View>
+    </TouchableOpacity>    
   )
 }
 

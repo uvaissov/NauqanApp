@@ -11,18 +11,21 @@ class Catalog extends Component {
     const { navigation, categories } = this.props
         
     const category = categories.filter(cat => cat.code === navigation.getParam('catalog'))[0]
+    const scrollTo = navigation.getParam('scrollTo')
     return (
       <View style={styles.container}>
-        <StatusBar backgroundColor={category.mainColor} barStyle="light-content" />
-        <Header categories={categories} navigation={navigation} leftIcon="md-arrow-back" mainColor={category.mainColor} secondColor={category.secondColor} title="Каталог" onPress={() => navigation.goBack()} /> 
+        <StatusBar animated backgroundColor={category.mainColor} barStyle="default" />
+        <Header sortPress={() => navigation.goBack()} searchPress={() => navigation.goBack()} scrollTo={scrollTo} categories={categories} category={category} navigation={navigation} leftIcon="md-arrow-back" mainColor={category.mainColor} secondColor={category.secondColor} title="Каталог" onPress={() => navigation.goBack()} /> 
         <ScrollView style={[{ flex: 1}]}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 15}}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 15, backgroundColor: '#EEEEEE'}}>
             <Text style={{ fontSize: 16}}>Все подкатегории</Text>
             <Ionicons name={'md-arrow-dropdown'} style={{ fontSize: 16}} color={'#000000'} />
           </View>
-          <SubCategory mainColor={category.mainColor} navigation={navigation} item={{ categoryName: 'test1'}} />
-          <SubCategory mainColor={category.mainColor} navigation={navigation} item={{ categoryName: 'test2'}} />
-          <SubCategory mainColor={category.mainColor} navigation={navigation} item={{ categoryName: 'test3'}} />
+          <View style={{ paddingTop: 10}}>
+            <SubCategory mainColor={category.mainColor} navigation={navigation} item={{ categoryName: 'test1'}} />
+            <SubCategory mainColor={category.mainColor} navigation={navigation} item={{ categoryName: 'test2'}} />
+            <SubCategory mainColor={category.mainColor} navigation={navigation} item={{ categoryName: 'test3'}} />
+          </View>
         </ScrollView>
       </View>
     )

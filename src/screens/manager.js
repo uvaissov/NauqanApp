@@ -52,7 +52,7 @@ const CustomDrawerComponent = (props) => (
         <Text> СПИСОК ГОРОДОВ </Text>
       </View>
     </View>
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: '#FAFAFA'}}>
       <DrawerItems {...props} />
     </ScrollView>
   </View>
@@ -121,7 +121,7 @@ const Screens = createDrawerNavigator({
     navigationOptions: {
       drawerLabel: 'Карта заведений',
       drawerIcon: ({ tintColor }) => (
-        <MaterialIcons name="pets" size={24} style={{ color: tintColor }} />
+        <MaterialIcons name="room" size={24} style={{ color: tintColor }} />
       )
     }
   },
@@ -130,7 +130,7 @@ const Screens = createDrawerNavigator({
     navigationOptions: {
       drawerLabel: 'Вы владелец заведения?',
       drawerIcon: ({ tintColor }) => (
-        <MaterialIcons name="pets" size={24} style={{ color: tintColor }} />
+        <MaterialIcons name="work" size={24} style={{ color: tintColor }} />
       )
     }
   },
@@ -139,7 +139,7 @@ const Screens = createDrawerNavigator({
     navigationOptions: {
       drawerLabel: 'Связаться с нами',
       drawerIcon: ({ tintColor }) => (
-        <MaterialIcons name="pets" size={24} style={{ color: tintColor }} />
+        <MaterialIcons name="message" size={24} style={{ color: tintColor }} />
       )
     }
   },
@@ -148,7 +148,7 @@ const Screens = createDrawerNavigator({
     navigationOptions: {
       drawerLabel: 'О приложении',
       drawerIcon: ({ tintColor }) => (
-        <MaterialIcons name="pets" size={24} style={{ color: tintColor }} />
+        <MaterialIcons name="label" size={24} style={{ color: tintColor, transform: [{ rotate: '-90deg'}] }} />
       )
     }
   },
@@ -157,7 +157,7 @@ const Screens = createDrawerNavigator({
     navigationOptions: {
       drawerLabel: 'Настройки',
       drawerIcon: ({ tintColor }) => (
-        <MaterialIcons name="pets" size={24} style={{ color: tintColor }} />
+        <MaterialIcons name="settings" size={24} style={{ color: tintColor }} />
       )
     }
   }
@@ -167,9 +167,12 @@ const Screens = createDrawerNavigator({
   drawerWidth: w * 0.8,
   contentOptions: {
     activeTintColor: '#FF6E36',
+    inactiveTintColor: 'rgba(0, 0, 0, 0.54)',
+    activeBackgroundColor: '#FFFFFF',
     itemsContainerStyle: {
-      //marginVertical: 10
-    }
+      backgroundColor: '#FAFAFA'
+    },
+    labelStyle: { fontSize: 14, fontFamily: 'Roboto-Regular', fontWeight: 'normal', fontStyle: 'normal', color: 'rgba(23, 7, 1, 0.87)' }
   },
   contentComponent: CustomDrawerComponent
 })

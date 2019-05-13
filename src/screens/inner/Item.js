@@ -4,17 +4,17 @@ import LinearGradient from 'react-native-linear-gradient'
 import { connect } from 'react-redux'
 import { Header } from '../../components/uikit/item/Header'
 import { CardItem } from '../../components/uikit/item/CardItem'
-import { w, TRASPARENT } from '../../constants/global'
+import { w } from '../../constants/global'
 
 class Item extends Component {  
   render() {
     const widthItem = (w / 2) - 8  
     const { navigation, items } = this.props
     return (
-      <View style={styles.container}>
-        <StatusBar backgroundColor={TRASPARENT} barStyle="light-content" />
-        <ScrollView>
+      <View style={styles.container}>        
+        <ScrollView>          
           <Header iconFunnel iconSearch leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-arrow-back" title="Главная" onPress={() => navigation.goBack()} />
+          <StatusBar animated backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
           <View style={{ width: w, height: getComponentHeight(w) }}>
             <ImageBackground  
               style={{flex: 1, height: undefined, width: undefined }} 
@@ -39,7 +39,7 @@ class Item extends Component {
             </ImageBackground>
           </View>
           <View style={{ alignItems: 'center', marginTop: 43 }}>
-            <Text style={{fontFamily: 'Roboto-Regular'}}>Visit Альматы</Text>
+            <Text style={{fontFamily: 'Roboto-Regular'}}>Visit Алматы</Text>
             <Text style={{fontFamily: 'Roboto-Regular'}}>Поесть</Text>
           </View>
           <View style={{flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 15, marginTop: 15, backgroundColor: '#EBF2F5'}}>

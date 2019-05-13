@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import { Image, StyleSheet, View, Text, ScrollView, StatusBar } from 'react-native'
+import { Image, StyleSheet, View, Text, ScrollView, StatusBar, TouchableOpacity } from 'react-native'
 import { Button } from 'react-native-elements'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
 import { HeaderMain, Swiper, ButtonGrad, CardPlace} from '../components/uikit'
 import { w, h, BG_COLOR, TRASPARENT } from '../constants/global'
@@ -9,18 +10,18 @@ class Main extends Component {
   render() {
     const { navigation, mainCategory, categories } = this.props    
     return (
-      <View style={styles.container}>
-        <StatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="light-content" />
+      <View style={styles.container}>        
         {/* Start scroll component */}
         <ScrollView overScrollMode="never" bounces={false} style={[{ flex: 1}]}>
-          <HeaderMain style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />
+          <HeaderMain style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />          
+          <StatusBar animated showHideTransition='slide' backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
           <Swiper data={[{ source: require('../../resources/demo/promo.png') }, { source: require('../../resources/demo/promo.png') }]} />
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 15 }}> 
             {
               mainCategory.map((itemName) => {
                 const category = categories.filter(cat => cat.code === itemName)[0]
                 return (
-                  <ButtonGrad key={itemName} code={itemName} mainColor={category.mainColor} secondColor={category.secondColor} text={category.name} onPress={() => navigation.push('Catalog', { catalog: itemName })} />
+                  <ButtonGrad key={itemName} code={itemName} mainColor={category.mainColor} secondColor={category.secondColor} text={category.name} onPress={() => navigation.push('Catalog', { catalog: itemName, scrollTo: 'index' })} />
                 )
               }
               )
@@ -63,7 +64,8 @@ class Main extends Component {
                 shadowRadius: 1.22,
                 
                 elevation: 4
-              }} 
+              }}
+              onPress={() => navigation.push('Catalog', { catalog: 'all' })} 
               titleStyle={{ fontSize: 14, lineHeight: 16, fontWeight: '500', color: '#fff', fontFamily: 'Roboto-Regular'}} title="ВЕСЬ КАТАЛОГ"
             />
           </View>       
@@ -71,11 +73,17 @@ class Main extends Component {
         {/* footer static and get 10% from display */}
         <View style={[styles.shadowBox, { backgroundColor: TRASPARENT, height: h * 0.1}]} >          
           <View style={[{flex: 1, backgroundColor: BG_COLOR, flexDirection: 'row', justifyContent: 'space-between'}, styles.scrollView]}>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><Text>1</Text></View>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><Text>2</Text></View>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><Text>3</Text></View>
+            <TouchableOpacity style={{ flex: 1}} >
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="home" size={24} style={{ color: '#FF6E36' }} /><Text style={{ color: '#FF6E36' }} >Главная</Text></View>
+            </TouchableOpacity>
+            <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('MapPlaces')} >
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="room" size={24} /><Text>Карта заведений</Text></View>
+            </TouchableOpacity>
+            <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('Favorite')} >
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="favorite" size={24} /><Text>Избранные</Text></View>
+            </TouchableOpacity>
           </View>
-        </View>
+        </View>        
       </View>
     )
   }

@@ -14,13 +14,13 @@ class MapPlaces extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>123</Text>
+        <Text>Карта</Text>
         <MapView
           provider={PROVIDER_GOOGLE} // remove if not using Google Maps
           style={{...StyleSheet.absoluteFillObject}}
           region={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: 43.2214459,
+            longitude: 76.8501801,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121
           }}

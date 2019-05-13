@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, TouchableOpacity, StyleSheet } from 'react-native'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { w } from '../../../constants/global'
 
@@ -48,15 +49,21 @@ const styles = StyleSheet.create({
   viewStyle: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+    paddingBottom: 15,
     position: 'relative',
-    height: 90
+    ...ifIphoneX({
+      height: 90
+    }, {
+      height: 60
+    })
   },
   textStyle: {
-    paddingTop: 50,
+    //paddingTop: 50,
     width: w - 60
   },
   leftButtonStyle: {
-    paddingTop: 50,
+    //paddingTop: 50,
     fontSize: 25
   }
 })

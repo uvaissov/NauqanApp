@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Text, StyleSheet, View, ImageBackground, ScrollView} from 'react-native'
+import { Text, StyleSheet, View, ImageBackground, ScrollView, StatusBar} from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { Divider } from 'react-native-elements'
 import { connect } from 'react-redux'
@@ -13,6 +13,7 @@ class Sale extends Component {
       <View style={styles.container}>
         <ScrollView>
           <Header leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-arrow-back" title="Главная" onPress={() => navigation.goBack()} />
+          <StatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
           <View style={{ width: w, height: getComponentHeight(w) }}>
             <ImageBackground  
               style={{flex: 1, height: undefined, width: undefined }} 
