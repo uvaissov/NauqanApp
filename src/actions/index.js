@@ -1,11 +1,19 @@
 import {
-  LEVEL_CHANGE
+  VISIBLE_SORT,
+  VISIBLE_SUB_CATEGORY
 } from '../types'
 
 //change timeout for round
-export const changeLevel = (value) => {
+export const _visibleSort = (value) => {
   return {
-    type: LEVEL_CHANGE,
+    type: VISIBLE_SORT,
+    payload: value
+  }
+}
+
+export const _visibleSubCategory = (value) => {
+  return {
+    type: VISIBLE_SUB_CATEGORY,
     payload: value
   }
 }

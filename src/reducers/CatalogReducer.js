@@ -1,8 +1,6 @@
 import {
-  ADD_CHANGE,
-  EDIT_CHANGE,
-  DEL_CHANGE,
-  TIME_CHANGE
+  VISIBLE_SORT,
+  VISIBLE_SUB_CATEGORY
 } from '../types'
 
 const INITIAL_STATE = {
@@ -24,52 +22,24 @@ const INITIAL_STATE = {
     { code: 'charity', name: 'Благотво рительность', mainColor: '#2976BD', secondColor: '#35B4EA'},
     { code: 'flowersgifts', name: 'Цветы и подарки', mainColor: '#FF2E86', secondColor: '#70D4FF'}
   ],
-  mainCategory: ['eat', 'product', 'beautyhealth', 'charity', 'all']
+  mainCategory: ['eat', 'product', 'beautyhealth', 'charity', 'all'],
+  visibleSort: false,
+  visibleSubCategory: false
 }
 
 export default (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-  case ADD_CHANGE: {
+  console.log(action)
+  switch (action.type) {  
+  case VISIBLE_SORT: {    
     return {
       ...state,
-      commands: [
-        ...state.commands,
-        action.payload
-      ],
-      init_id: state.init_id + 1
+      visibleSort: action.payload
     }
   }
-  case EDIT_CHANGE: {
-    const index = state.commands.findIndex(({id}) => id === action.id)
-    const item = state.commands[index]
-    const newItem = {
-      ...item,
-      name: action.payload.name
-    }
+  case VISIBLE_SUB_CATEGORY: {    
     return {
       ...state,
-      commands: [
-        ...state.commands.slice(0, index),
-        newItem,
-        ...state.commands.slice(index + 1)
-      ]
-    }
-  }
-  case DEL_CHANGE: {
-    const index = state.commands.findIndex(({id}) => id === action.payload)
-    return {
-      ...state,
-      commands: [
-        ...state.commands.slice(0, index),
-        ...state.commands.slice(index + 1)
-      ],
-      select_index: 0
-    }
-  }
-  case TIME_CHANGE: {
-    return {
-      ...state,
-      roundTime: action.payload
+      visibleSubCategory: action.payload
     }
   }
   default: return state

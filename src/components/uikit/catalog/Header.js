@@ -4,6 +4,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Icon from '../../svgkit/Icon'
+import { ModalSort } from './ModalSort'
 //import { w } from '../../../constants/global'
 import { ButtonGrad } from '../catalog/ButtonGrad'
 
@@ -19,12 +20,13 @@ const Header = ({
   category,
   scrollTo,
   sortPress,
-  searchPress
+  searchPress,
+  visibleSort
 }) => {
   const { headerGradView, viewStyle, textStyle, leftButtonStyle, rightButtonStyle } = styles  
   this.changeCatalog = (name) => {
     navigation.navigate('Catalog', {catalog: name, scrollTo: undefined})
-  }
+  } 
   
   if (scrollTo) {
     let idx
@@ -38,8 +40,12 @@ const Header = ({
       this._scrollView.scrollTo({x: idx * 110}) 
     }, 100)
   }
+  this.show = (value) => {
+    sortPress(value)
+  }
   return (
     <View style={viewStyle}>
+      
       <LinearGradient style={[headerGradView, style]} colors={[mainColor, secondColor]} useAngle angle={135}>
         {leftIcon &&
           <TouchableOpacity onPress={onPress}>
@@ -49,10 +55,11 @@ const Header = ({
         <Text numberOfLines={1} ellipsizeMode="tail" style={[textStyle, { paddingLeft: leftIcon ? 35 : 0 }]}>{title}</Text>
         {
           sortPress &&
-          <TouchableOpacity onPress={sortPress} style={[rightButtonStyle]}>
+          <TouchableOpacity onPress={() => this.show(true)} style={[rightButtonStyle]}>
             <Icon name="sort" height="24" width="24" fill="#fff" />
+            <ModalSort visible={visibleSort} hideSort={() => this.show(false)} />           
           </TouchableOpacity>
-        }
+        }        
         {
           searchPress && 
           <TouchableOpacity onPress={searchPress}>
@@ -70,7 +77,7 @@ const Header = ({
           }
           )
         }        
-      </ScrollView>
+      </ScrollView>      
     </View>
   )
 }
