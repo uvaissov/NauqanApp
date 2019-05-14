@@ -7,7 +7,7 @@ const CardPlace = ({ item, navigation }) => {
   const { view, row } = styles
   return (
 
-    <TouchableHighlight style={[view, { height: 203, width: 152, marginHorizontal: 10 }]} onPress={() => navigation.push('Item')} >
+    <TouchableHighlight style={[view, { height: 203, width: 152, marginHorizontal: 5, marginBottom: 10 }]} onPress={() => navigation.push('Item')} >
       <View style={{flex: 1, overflow: 'hidden', borderRadius: 6}}>
         <View style={{ flex: 1 }}>
           <Image 

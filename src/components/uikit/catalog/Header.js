@@ -68,7 +68,7 @@ const Header = ({
         }
         
       </LinearGradient>
-      <ScrollView ref={(view) => { this._scrollView = view }} horizontal style={{ flexDirection: 'row', padding: 15 }}>
+      <ScrollView showsHorizontalScrollIndicator={false} ref={(view) => { this._scrollView = view }} horizontal style={{ flexDirection: 'row', padding: 15 }}>
         {
           categories.map((cat) => {            
             return (

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Text, StyleSheet, View, ScrollView, StatusBar, TouchableNativeFeedback} from 'react-native'
+import { Text, StyleSheet, View, ScrollView, StatusBar, TouchableOpacity} from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { connect } from 'react-redux'
 import { _visibleSort, _visibleSubCategory } from '../../actions'
@@ -27,12 +27,12 @@ class Catalog extends Component {
         <Header visibleSort={showSort} sortPress={this._showSort} searchPress={() => navigation.goBack()} scrollTo={scrollTo} categories={categories} category={category} navigation={navigation} leftIcon="md-arrow-back" mainColor={category.mainColor} secondColor={category.secondColor} title="Каталог" onPress={() => navigation.goBack()} />         
         <ModalSubCategory visible={showSubCategoryOption} hideSort={() => this._showSubCat(false)} />
         <ScrollView style={[{ flex: 1}]}>
-          <TouchableNativeFeedback onPress={() => this._showSubCat(true)} >
+          <TouchableOpacity onPress={() => this._showSubCat(true)} >
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 15, backgroundColor: '#EEEEEE'}}>
               <Text style={{ fontSize: 16}}>Все подкатегории</Text>
               <Ionicons name={'md-arrow-dropdown'} style={{ fontSize: 16}} color={'#000000'} />            
             </View>
-          </TouchableNativeFeedback>
+          </TouchableOpacity>
           <View style={{ paddingTop: 10}}>
             <SubCategory mainColor={category.mainColor} navigation={navigation} item={{ categoryName: 'test1'}} />
             <SubCategory mainColor={category.mainColor} navigation={navigation} item={{ categoryName: 'test2'}} />

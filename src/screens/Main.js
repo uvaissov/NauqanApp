@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import { Image, StyleSheet, View, Text, ScrollView, StatusBar, TouchableOpacity } from 'react-native'
+import { Image, StyleSheet, View, Text, ScrollView, StatusBar, TouchableOpacity, FlatList } from 'react-native'
 import { Button } from 'react-native-elements'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
-import { HeaderMain, Swiper, ButtonGrad, CardPlace} from '../components/uikit'
+import { HeaderMain, SwiperApp, ButtonGrad, CardPlace} from '../components/uikit'
 import { w, h, BG_COLOR, TRASPARENT } from '../constants/global'
 
 class Main extends Component {
@@ -15,7 +15,7 @@ class Main extends Component {
         <ScrollView overScrollMode="never" bounces={false} style={[{ flex: 1}]}>
           <HeaderMain style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />          
           <StatusBar animated showHideTransition='slide' backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
-          <Swiper data={[{ source: require('../../resources/demo/promo.png') }, { source: require('../../resources/demo/promo.png') }]} />
+          <SwiperApp data={[{ source: require('../../resources/demo/promo.png') }, { source: require('../../resources/demo/promo.png') }]} />
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 15 }}> 
             {
               mainCategory.map((itemName) => {
@@ -27,7 +27,7 @@ class Main extends Component {
               )
             }           
           </View>
-          <Swiper data={[{ source: require('../../resources/demo/picture.png') }, { source: require('../../resources/demo/picture.png') }]} radius={6} />
+          <SwiperApp data={[{ source: require('../../resources/demo/picture.png') }, { source: require('../../resources/demo/picture.png') }]} radius={6} />
           <View style={{ flexDirection: 'row', margin: 15}}>
             <View style={{ flex: 1, justifyContent: 'center'}}><Text style={{ fontWeight: 'bold', 
               fontFamily: 'Roboto-Regular',
@@ -38,19 +38,29 @@ class Main extends Component {
             <View style={{ flex: 1, alignItems: 'center'}}><Image style={{width: 31, height: 31}} source={require('../../resources/icons/png/topPlaces.png')} /></View>
             <View style={{ flex: 1}} />
           </View>
-          <View style={{ paddingHorizontal: 15 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginBottom: 15}} >
-              <CardPlace navigation={navigation} item={{ title: 'Adidas', count: 15, source: require('../../resources/demo/adidas.png')}} />
-              <CardPlace navigation={navigation} item={{ title: 'Acceserize', count: 3, source: require('../../resources/demo/access.png')}} />
-            </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginBottom: 15}} >
-              <CardPlace navigation={navigation} item={{ title: 'Magnum', count: 67, source: require('../../resources/demo/magnum.png')}} />
-              <CardPlace navigation={navigation} item={{ title: 'Foxtot', count: 2, source: require('../../resources/demo/foxtrot.png')}} />
-            </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginBottom: 15}} >
-              <CardPlace navigation={navigation} item={{ title: 'Кувшин', count: 6, source: require('../../resources/demo/kuvshin.png')}} />
-              <CardPlace navigation={navigation} item={{ title: 'Элита', count: 12, source: require('../../resources/demo/elita.png')}} />
-            </View>
+          <View style={{ paddingLeft: 15 }}>
+            <ScrollView 
+              horizontal
+              decelerationRate={0}
+              snapToInterval={w - 50}
+              //scrollEventThrottle={1}
+              //snapToAlignment="center"               
+              disableScrollViewPanResponder
+              overScrollMode="never" 
+              bounces={false} 
+              showsVerticalScrollIndicator={false} 
+              pagingEnabled 
+              alwaysBounceVertical={false}
+              alwaysBounceHorizontal={false}
+              
+            > 
+              <FlatList 
+                columnWrapperStyle={{ justifyContent: 'space-between'}}
+                data={['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']}
+                numColumns={6} 
+                renderItem={() => <CardPlace navigation={navigation} item={{ title: 'Adidas', count: 15, source: require('../../resources/demo/adidas.png')}} />}
+              />
+            </ScrollView>                       
           </View>
           <View style={{ padding: 15 }}>
             <Button

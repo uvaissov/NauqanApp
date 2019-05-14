@@ -16,7 +16,7 @@ const SubCategory = ({
         <Text style={{ fontWeight: '500', fontFamily: 'Roboto-Regular', lineHeight: 16}}>Категория: {item.categoryName}</Text>
         <Text style={{ fontWeight: '500', fontFamily: 'Roboto-Regular', color: mainColor, lineHeight: 16, textTransform: 'uppercase'}}>Все</Text>
       </View>
-      <ScrollView horizontal >
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} >
         <View style={{ flexDirection: 'row', padding: 15 }}>
           <CardPlace navigation={navigation} item={{ title: 'Adidas', count: 15, source: require('../../../resources/demo/adidas.png')}} />
           <CardPlace navigation={navigation} item={{ title: 'Acceserize', count: 3, source: require('../../../resources/demo/access.png')}} />

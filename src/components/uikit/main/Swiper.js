@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, Image, ImageBackground } from 'react-native'
-import SwiperFlatList from 'react-native-swiper-flatlist'
+//import SwiperFlatList from 'react-native-swiper-flatlist'
+import Swiper from 'react-native-swiper'
 import LinearGradient from 'react-native-linear-gradient'
 import { w } from '../../../constants/global'
 
@@ -12,55 +13,69 @@ const getComponentHeightSM = (weight, padding) => {
   return (weight - padding) * 0.619
 }
 
-const Swiper = ({
+const SwiperApp = ({
   data,
   radius
 }) => {
   const { child } = styles
-  this._renderItem = ({item}) => {
-    return (<View style={[child, { backgroundColor: 'skyblue', width: w }]}>      
-      <ImageBackground  
-        style={{flex: 1, height: undefined, width: undefined }} 
-        source={item.source} 
-        resizeMode="stretch"
-      >
-        <LinearGradient
-          colors={['rgba(0, 0, 0, 0.50)', 'rgba(0, 0, 0, 0.25)', 'transparent', 'transparent', 'rgba(0, 0, 0, 0.25)', 'rgba(0, 0, 0, 0.50)']}
-          start={{ x: 0, y: 1 }}
-          end={{ x: 1, y: 1 }}
-          useAngle
-          angle={180}
-          style={{flex: 1}}
-        />        
-      </ImageBackground>
-    </View>)
-  }
-  this._renderItemRaduis = ({item}) => {
-    return (
-      <View style={{ width: w, paddingHorizontal: 15, height: getComponentHeightSM(w, 30) }}>
-        <View style={[child, { flex: 1, borderRadius: radius, overflow: 'hidden'}]}>
-          <Image 
-            style={{flex: 1, height: undefined, width: undefined }} 
-            source={item.source} 
-            resizeMode="stretch"
-          />
-        </View>      
-      </View>
-    )
-  }
-  return (
+  
+  this._renderSwiper = () => (
     <View style={{paddingHorizontal: 0}}>
-      <SwiperFlatList
-        autoplay
-        autoplayDelay={2}
-        autoplayLoop
-        index={0}
-        data={data}
-        showPagination 
-        renderItem={radius ? this._renderItemRaduis : this._renderItem}
-      />
-    </View> 
+      <Swiper height={getComponentHeight(w, 30)} autoplay activeDotColor="#FFFFFF" dotColor="rgba(255, 255, 255, 0.38)" >
+        {
+          data.map((item) => {
+            return (
+              <View style={[child, { backgroundColor: 'skyblue', width: w }]}>      
+                <ImageBackground  
+                  style={{flex: 1, height: undefined, width: undefined }} 
+                  source={item.source} 
+                  resizeMode="stretch"
+                >
+                  <LinearGradient
+                    colors={['rgba(0, 0, 0, 0.50)', 'rgba(0, 0, 0, 0.25)', 'transparent', 'transparent', 'rgba(0, 0, 0, 0.25)', 'rgba(0, 0, 0, 0.50)']}
+                    start={{ x: 0, y: 1 }}
+                    end={{ x: 1, y: 1 }}
+                    useAngle
+                    angle={180}
+                    style={{flex: 1}}
+                  />        
+                </ImageBackground>
+              </View>
+            )
+          }
+          )
+        }
+      </Swiper>
+    </View>
   )
+
+  this._renderSwiperRadius = () => (
+    <View style={{paddingHorizontal: 0}}>
+      <Swiper height={getComponentHeightSM(w, 30)} autoplay activeDotColor="#FFFFFF" dotColor="rgba(255, 255, 255, 0.38)" >
+        {
+          data.map((item) => {
+            return (
+              <View style={{ width: w, paddingHorizontal: 15, height: getComponentHeightSM(w, 30) }}>
+                <View style={[child, { flex: 1, borderRadius: radius, overflow: 'hidden'}]}>
+                  <Image 
+                    style={{flex: 1, height: undefined, width: undefined }} 
+                    source={item.source} 
+                    resizeMode="stretch"
+                  />
+                </View>      
+              </View>
+            )
+          }
+          )
+        }
+      </Swiper>
+    </View>
+  )
+  if (radius) {
+    return this._renderSwiperRadius()
+  }
+  
+  return this._renderSwiper()
 }
 
 const styles = StyleSheet.create({
@@ -81,4 +96,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export { Swiper }
+export { SwiperApp }
