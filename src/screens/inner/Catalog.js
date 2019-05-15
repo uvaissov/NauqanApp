@@ -36,7 +36,7 @@ class Catalog extends Component {
     const scrollTo = navigation.getParam('scrollTo')    
     return (
       <View style={styles.container}>
-        <StatusBar animated backgroundColor={category.mainColor} barStyle="default" />
+        <StatusBar animated backgroundColor={category.mainColor.trim()} barStyle="default" />
         <Header 
           visibleSort={showSort} 
           sortPress={this._showSort} 
@@ -46,8 +46,8 @@ class Catalog extends Component {
           category={category} 
           navigation={this._navigateToCatalog} 
           leftIcon="md-arrow-back" 
-          mainColor={category.mainColor} 
-          secondColor={category.secondaryColor} 
+          mainColor={category.mainColor.trim()} 
+          secondColor={category.secondaryColor.trim()} 
           title="Каталог" 
           onPress={() => navigation.goBack()} 
         />         

@@ -18,7 +18,7 @@ const ButtonGrad = ({
       onPress={onPress}
     > 
       <View style={touch}>
-        <LinearGradient style={[button]} colors={[mainColor, secondColor]} useAngle angle={135}>
+        <LinearGradient style={[button]} colors={[mainColor.trim(), secondColor.trim()]} useAngle angle={135}>
           <Icon name={code === 'all' ? 'all' : 'eat'} height="18" width="18" fill="#fff" />
         </LinearGradient>
         <Text style={{ marginTop: 6, width: 70, textAlign: 'center', fontSize: 10, lineHeight: 12, color: '#170701', opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{text}</Text>

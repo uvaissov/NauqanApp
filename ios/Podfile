@@ -2,6 +2,9 @@
 platform :ios, '9.0'
 
 target 'NauqanApp' do
+  pod 'AppCenter/Crashes', '~> 2.0.1'
+  pod 'AppCenter/Analytics', '~> 2.0.1'
+  pod 'AppCenterReactNativeShared', '~> 2.0.0'
     rn_path = '../node_modules/react-native'
     rn_maps_path = '../node_modules/react-native-maps'
   
