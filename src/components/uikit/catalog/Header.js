@@ -31,7 +31,7 @@ const Header = ({
   if (scrollTo) {
     let idx
     categories.map((cat, index) => {  
-      if (cat.code === category.code) {
+      if (cat.id === category.id) {
         idx = index        
       }
       return null
@@ -72,7 +72,7 @@ const Header = ({
         {
           categories.map((cat) => {            
             return (
-              <ButtonGrad key={cat.code} code={cat.code} color={cat.code !== category.code ? 'rgba(0, 0, 0, 0.54)' : cat.mainColor} text={cat.name} onPress={() => this.changeCatalog(cat.code)} />
+              <ButtonGrad key={cat.code} code={cat.id} color={cat.id !== category.id ? 'rgba(0, 0, 0, 0.54)' : cat.mainColor} text={cat.name} onPress={() => this.changeCatalog(cat.id)} />
             )
           }
           )
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     elevation: 3,
     position: 'relative',
     ...ifIphoneX({
-      height: 200
+      height: 210
     }, {
       height: 180
     }),
@@ -116,11 +116,9 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   leftButtonStyle: {
-    //paddingTop: 45,
     fontSize: 24
   },
   rightButtonStyle: {
-    //paddingTop: 45,
     fontSize: 24,
     marginRight: 15
   }

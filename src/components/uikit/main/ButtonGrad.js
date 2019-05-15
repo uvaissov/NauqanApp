@@ -7,10 +7,9 @@ import Icon from '../../svgkit/Icon'
 const ButtonGrad = ({
   onPress,
   text,
-  //iconName,
+  code,
   mainColor,
-  secondColor,
-  code
+  secondColor
 }) => {
   const { container, touch, button } = styles
   return (
@@ -20,7 +19,7 @@ const ButtonGrad = ({
     > 
       <View style={touch}>
         <LinearGradient style={[button]} colors={[mainColor, secondColor]} useAngle angle={135}>
-          <Icon name={code} height="18" width="18" fill="#fff" />
+          <Icon name={code === 'all' ? 'all' : 'eat'} height="18" width="18" fill="#fff" />
         </LinearGradient>
         <Text style={{ marginTop: 6, width: 70, textAlign: 'center', fontSize: 10, lineHeight: 12, color: '#170701', opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{text}</Text>
       </View>
@@ -33,12 +32,12 @@ const styles = StyleSheet.create({
     margin: 5
   },
   button: {
-    height: 40,
-    width: 40,
+    height: 45,
+    width: 45,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFA470',
-    borderRadius: 20,
+    borderRadius: 30,
     shadowOffset: {
       width: 0,
       height: 4

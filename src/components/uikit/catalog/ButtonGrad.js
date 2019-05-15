@@ -17,7 +17,8 @@ const ButtonGrad = ({
         onPress={onPress}
       > 
         <View style={[button]}>
-          <Icon name={code} height="24" width="24" fill={color} />
+
+          <Icon name={code === 'all' ? 'all' : 'eat'} height="24" width="24" fill={color} />
         </View>
         <Text style={{ marginTop: 6, width: 100, textAlign: 'center', fontSize: normalize(14), lineHeight: normalize(16), color: `${color}`, opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{text}</Text>
       </TouchableOpacity>

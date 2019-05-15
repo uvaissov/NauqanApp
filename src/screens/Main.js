@@ -3,12 +3,29 @@ import { Image, StyleSheet, View, Text, ScrollView, StatusBar, TouchableOpacity,
 import { Button } from 'react-native-elements'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
+import { getCategories } from '../actions/index'
 import { HeaderMain, SwiperApp, ButtonGrad, CardPlace} from '../components/uikit'
 import { w, h, BG_COLOR, TRASPARENT } from '../constants/global'
 
 class Main extends Component {
+  componentDidMount() {
+    this.props.getCategories()
+  }
+
   render() {
-    const { navigation, mainCategory, categories } = this.props    
+    const { navigation, mainCategory, categories, loading } = this.props   
+    
+    /**when first loading show this splash screen */
+    if (loading) {
+      return (<View style={StyleSheet.absoluteFill}>
+        <Image 
+          style={{flex: 1, height: undefined, width: undefined }} 
+          source={require('../../resources/images/splashscreen.png')} 
+          resizeMode="cover"
+        />
+      </View>)
+    }
+
     return (
       <View style={styles.container}>        
         {/* Start scroll component */}
@@ -19,9 +36,9 @@ class Main extends Component {
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 15 }}> 
             {
               mainCategory.map((itemName) => {
-                const category = categories.filter(cat => cat.code === itemName)[0]
+                const category = categories.filter(cat => cat.id === itemName)[0]                
                 return (
-                  <ButtonGrad key={itemName} code={itemName} mainColor={category.mainColor} secondColor={category.secondColor} text={category.name} onPress={() => navigation.push('Catalog', { catalog: itemName, scrollTo: 'index' })} />
+                  <ButtonGrad key={itemName} code={category.id} mainColor={category.mainColor || '#FFF'} secondColor={category.secondaryColor || '#000'} text={category.name} onPress={() => navigation.push('Catalog', { catalog: itemName, scrollTo: 'index' })} />
                 )
               }
               )
@@ -38,26 +55,24 @@ class Main extends Component {
             <View style={{ flex: 1, alignItems: 'center'}}><Image style={{width: 31, height: 31}} source={require('../../resources/icons/png/topPlaces.png')} /></View>
             <View style={{ flex: 1}} />
           </View>
-          <View style={{ paddingLeft: 15 }}>
+          <View style={{ paddingHorizontal: 15 }}>
             <ScrollView 
               horizontal
               decelerationRate={0}
-              snapToInterval={w - 50}
-              //scrollEventThrottle={1}
-              //snapToAlignment="center"               
+              snapToInterval={(152/*itemWidth*/ * 2) + 20/*el-Margin*/}                           
               disableScrollViewPanResponder
               overScrollMode="never" 
               bounces={false} 
               showsVerticalScrollIndicator={false} 
+              showsHorizontalScrollIndicator={false}
               pagingEnabled 
               alwaysBounceVertical={false}
               alwaysBounceHorizontal={false}
-              
             > 
               <FlatList 
-                columnWrapperStyle={{ justifyContent: 'space-between'}}
+                columnWrapperStyle={{ justifyContent: 'flex-start'}}
                 data={['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']}
-                numColumns={6} 
+                numColumns={10} 
                 renderItem={() => <CardPlace navigation={navigation} item={{ title: 'Adidas', count: 15, source: require('../../resources/demo/adidas.png')}} />}
               />
             </ScrollView>                       
@@ -124,7 +139,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     categories: state.catalog.categories,
+    loading: state.catalog.loading,
     mainCategory: state.catalog.mainCategory
   }
 }
-export default connect(mapStateToProps, { })(Main)
+export default connect(mapStateToProps, { getCategories })(Main)

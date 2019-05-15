@@ -17,14 +17,14 @@ class Catalog extends Component {
   }
   render() {
     const { navigation, categories, showSort, showSubCategoryOption } = this.props
-    const category = categories.filter(cat => cat.code === navigation.getParam('catalog'))[0]
+    const category = categories.filter(cat => cat.id === navigation.getParam('catalog'))[0]
     const scrollTo = navigation.getParam('scrollTo')
     console.log('showSubCategoryOption', showSubCategoryOption)
       
     return (
       <View style={styles.container}>
         <StatusBar animated backgroundColor={category.mainColor} barStyle="default" />
-        <Header visibleSort={showSort} sortPress={this._showSort} searchPress={() => navigation.goBack()} scrollTo={scrollTo} categories={categories} category={category} navigation={navigation} leftIcon="md-arrow-back" mainColor={category.mainColor} secondColor={category.secondColor} title="Каталог" onPress={() => navigation.goBack()} />         
+        <Header visibleSort={showSort} sortPress={this._showSort} searchPress={() => navigation.goBack()} scrollTo={scrollTo} categories={categories} category={category} navigation={navigation} leftIcon="md-arrow-back" mainColor={category.mainColor} secondColor={category.secondaryColor} title="Каталог" onPress={() => navigation.goBack()} />         
         <ModalSubCategory visible={showSubCategoryOption} hideSort={() => this._showSubCat(false)} />
         <ScrollView style={[{ flex: 1}]}>
           <TouchableOpacity onPress={() => this._showSubCat(true)} >
