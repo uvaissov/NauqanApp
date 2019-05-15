@@ -3,7 +3,7 @@ import { Image, StyleSheet, View, Text, ScrollView, StatusBar, TouchableOpacity,
 import { Button } from 'react-native-elements'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
-import { getCategories } from '../actions/index'
+import { getCategories, getSubCategories } from '../actions/index'
 import { HeaderMain, SwiperApp, ButtonGrad, CardPlace} from '../components/uikit'
 import { w, h, BG_COLOR, TRASPARENT } from '../constants/global'
 
@@ -38,7 +38,7 @@ class Main extends Component {
               mainCategory.map((itemName) => {
                 const category = categories.filter(cat => cat.id === itemName)[0]                
                 return (
-                  <ButtonGrad key={itemName} code={category.id} mainColor={category.mainColor || '#FFF'} secondColor={category.secondaryColor || '#000'} text={category.name} onPress={() => navigation.push('Catalog', { catalog: itemName, scrollTo: 'index' })} />
+                  <ButtonGrad key={itemName} code={category.id} mainColor={category.mainColor || '#FFF'} secondColor={category.secondaryColor || '#000'} text={category.name} onPress={() => navigation.push('Catalog', { catalog: itemName, scrollTo: category.id })} />
                 )
               }
               )
@@ -143,4 +143,4 @@ const mapStateToProps = state => {
     mainCategory: state.catalog.mainCategory
   }
 }
-export default connect(mapStateToProps, { getCategories })(Main)
+export default connect(mapStateToProps, { getCategories, getSubCategories })(Main)

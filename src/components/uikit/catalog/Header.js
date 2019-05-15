@@ -25,7 +25,7 @@ const Header = ({
 }) => {
   const { headerGradView, viewStyle, textStyle, leftButtonStyle, rightButtonStyle } = styles  
   this.changeCatalog = (name) => {
-    navigation.navigate('Catalog', {catalog: name, scrollTo: undefined})
+    navigation(name)
   } 
   
   if (scrollTo) {

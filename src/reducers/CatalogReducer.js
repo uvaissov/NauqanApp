@@ -2,11 +2,17 @@ import {
   VISIBLE_SORT,
   VISIBLE_SUB_CATEGORY,
   CATEGORIES_FETCHED,
-  CATEGORIES_FAILED
+  CATEGORIES_FAILED,
+  SUB_CATEGORIES_FETCHED,
+  SUB_CATEGORIES_FAILED,
+  PLACES_FETCHED,
+  PLACES_FAILED
 } from '../types'
 
 const INITIAL_STATE = {
   categories: [],
+  sub_categories: [],
+  places: [],
   mainCategory: ['1', '2', '3', '4', 'all'],
   visibleSort: false,
   visibleSubCategory: false,
@@ -43,6 +49,28 @@ export default (state = INITIAL_STATE, action) => {
       ...state
     }
   }
+  case SUB_CATEGORIES_FETCHED: {    
+    return {
+      ...state,
+      sub_categories: action.payload
+    }
+  }
+  case SUB_CATEGORIES_FAILED: {    
+    return {
+      ...state
+    }
+  } 
+  case PLACES_FETCHED: {    
+    return {
+      ...state,
+      places: action.payload
+    }
+  }
+  case PLACES_FAILED: {    
+    return {
+      ...state
+    }
+  }  
   default: return state
   }
 }

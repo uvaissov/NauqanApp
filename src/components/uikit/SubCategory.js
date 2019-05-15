@@ -7,7 +7,8 @@ const SubCategory = ({
   style,
   item,
   navigation,
-  mainColor
+  mainColor,
+  places
 }) => {
   const { view } = styles
   return (
@@ -18,10 +19,12 @@ const SubCategory = ({
       </View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} >
         <View style={{ flexDirection: 'row', padding: 15 }}>
-          <CardPlace navigation={navigation} item={{ title: 'Adidas', count: 15, source: require('../../../resources/demo/adidas.png')}} />
-          <CardPlace navigation={navigation} item={{ title: 'Acceserize', count: 3, source: require('../../../resources/demo/access.png')}} />
-          <CardPlace navigation={navigation} item={{ title: 'Magnum', count: 67, source: require('../../../resources/demo/magnum.png')}} />
-          <CardPlace navigation={navigation} item={{ title: 'Foxtot', count: 2, source: require('../../../resources/demo/foxtrot.png')}} />
+          {
+            places.map((place) => {
+              console.log(place)              
+              return (<CardPlace key={place.id} navigation={navigation} item={{ title: place.name, count: 67, source: require('../../../resources/demo/magnum.png')}} />)
+            })
+          }          
         </View>
       </ScrollView>
     </View>

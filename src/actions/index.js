@@ -2,10 +2,15 @@ import {
   VISIBLE_SORT,
   VISIBLE_SUB_CATEGORY,
   CATEGORIES_FETCHED,
-  CATEGORIES_FAILED
+  CATEGORIES_FAILED,
+  SUB_CATEGORIES_FETCHED,
+  SUB_CATEGORIES_FAILED,
+  PLACES_FETCHED,
+  PLACES_FAILED
 } from '../types'
 
-//change timeout for round
+import { hostName } from '../constants/global'
+
 export const _visibleSort = (value) => {
   return {
     type: VISIBLE_SORT,
@@ -30,7 +35,7 @@ export const getCategories = () => async (dispatch) => {
     return error
   }
   try {
-    const URL = 'http://nauqan.ibeacon.kz/api/get_data.php?tb=cat'
+    const URL = `${hostName}/api/get_data.php?tb=cat`
     const res = await fetch(URL, {
       method: 'GET'
     })
@@ -39,5 +44,61 @@ export const getCategories = () => async (dispatch) => {
     return onSuccess(success)
   } catch (error) {
     return onError(error)
+  }
+}
+
+export const getSubCategories = (id) => async (dispatch) => {
+  function onSuccess(success) {    
+    dispatch({ type: SUB_CATEGORIES_FETCHED, payload: success })    
+    return success
+  }
+  function onError(error) {
+    dispatch({ type: SUB_CATEGORIES_FAILED, error })
+    return error
+  }
+  try {
+    const URL = `${hostName}/api/get_data.php?tb=sub_cat${id === 'all' ? '' : `&cat_id=${id}`}` 
+    const res = await fetch(URL, {
+      method: 'GET'
+    })
+    const success = await res.json()      
+    return onSuccess(success)
+  } catch (error) {
+    return onError(error)
+  }
+}
+
+export const cleanSubCategories = () => {
+  return {
+    type: SUB_CATEGORIES_FETCHED,
+    payload: []
+  }
+}
+
+export const getPlacesByCatalog = (id) => async (dispatch) => {
+  function onSuccess(success) {
+    dispatch({ type: PLACES_FETCHED, payload: success })
+    return success
+  }
+  function onError(error) {
+    dispatch({ type: PLACES_FAILED, error })
+    return error
+  }
+  try {
+    const URL = `${hostName}/api/get_data.php?tb=zav${id === 'all' ? '' : `&cat_id=${id}`}` 
+    const res = await fetch(URL, {
+      method: 'GET'
+    })
+    const success = await res.json()      
+    return onSuccess(success)
+  } catch (error) {
+    return onError(error)
+  }
+}
+
+export const cleanPlaces = () => {
+  return {
+    type: PLACES_FETCHED,
+    payload: []
   }
 }
