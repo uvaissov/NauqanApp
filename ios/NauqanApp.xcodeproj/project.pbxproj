@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -49,7 +50,6 @@
 		3B661543AF3B4D74A33E0358 /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D19810E74D524316A6CA4102 /* libRNSVG-tvOS.a */; };
 		3F4380657D634F4A94CC2AA2 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F9D60280DD743CBB5F2FBF2 /* libRNSVG.a */; };
 		4890AA657C55480F8C2073B7 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C42864FB690940B089316047 /* Roboto-Regular.ttf */; };
-		4B21468B226F4EB700D686F9 /* 1_AXVownRavwbbBs1gYYoxWg.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B21465D226F4EB600D686F9 /* 1_AXVownRavwbbBs1gYYoxWg.png */; };
 		5204E26630FC497B94234F6E /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B6390E393994E8CBBA58E9F /* Roboto-Light.ttf */; };
 		559F96EC8BEB4FA2A1AC9083 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DE78B1EE2544A9291637A20 /* FontAwesome5_Solid.ttf */; };
 		623EA5E85BAC484FAD64EAB9 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 10C15E840E724D78A9D5CA65 /* Roboto-Black.ttf */; };
@@ -480,7 +480,6 @@
 		3F9D60280DD743CBB5F2FBF2 /* libRNSVG.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSVG.a; sourceTree = "<group>"; };
 		410188D997B840B3A47DF279 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-MediumItalic.ttf"; path = "../assets/fonts/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
 		44885117B9C2412C8E1CBD32 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		4B21465D226F4EB600D686F9 /* 1_AXVownRavwbbBs1gYYoxWg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 1_AXVownRavwbbBs1gYYoxWg.png; path = ../../../../Documents/1_AXVownRavwbbBs1gYYoxWg.png; sourceTree = "<group>"; };
 		4B3885F025A542B987C33B56 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		4D4F117A2141471595124EB0 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../assets/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
 		53372A22F41C43E6B6E904AB /* libAppCenterReactNative.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAppCenterReactNative.a; sourceTree = "<group>"; };
@@ -688,7 +687,6 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				4B21465D226F4EB600D686F9 /* 1_AXVownRavwbbBs1gYYoxWg.png */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -1495,7 +1493,6 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				4B21468B226F4EB700D686F9 /* 1_AXVownRavwbbBs1gYYoxWg.png in Resources */,
 				A3C8D7054EC542DB942F3F54 /* AntDesign.ttf in Resources */,
 				17CBCFA33BAF43519F68441C /* Entypo.ttf in Resources */,
 				AB4F8FA86AF24F65ABD3C291 /* EvilIcons.ttf in Resources */,
