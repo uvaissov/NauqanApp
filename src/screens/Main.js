@@ -32,7 +32,7 @@ class Main extends Component {
         <ScrollView overScrollMode="never" bounces={false} style={[{ flex: 1}]}>
           <HeaderMain style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />          
           <StatusBar animated showHideTransition='slide' backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
-          <SwiperApp data={[{ source: require('../../resources/demo/promo.png') }, { source: require('../../resources/demo/promo.png') }]} />
+          <SwiperApp data={[{ id: '1', source: require('../../resources/demo/promo.png') }, { id: '2', source: require('../../resources/demo/promo.png') }]} />
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 15 }}> 
             {
               mainCategory.map((itemName) => {
@@ -44,7 +44,7 @@ class Main extends Component {
               )
             }           
           </View>
-          <SwiperApp data={[{ source: require('../../resources/demo/picture.png') }, { source: require('../../resources/demo/picture.png') }]} radius={6} />
+          <SwiperApp data={[{ id: '3', source: require('../../resources/demo/picture.png') }, { id: '4', source: require('../../resources/demo/picture.png') }]} radius={6} />
           <View style={{ flexDirection: 'row', margin: 15}}>
             <View style={{ flex: 1, justifyContent: 'center'}}><Text style={{ fontWeight: 'bold', 
               fontFamily: 'Roboto-Regular',
@@ -71,9 +71,10 @@ class Main extends Component {
             > 
               <FlatList 
                 columnWrapperStyle={{ justifyContent: 'flex-start'}}
-                data={['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']}
+                data={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25']}
                 numColumns={10} 
-                renderItem={() => <CardPlace navigation={navigation} item={{ title: 'Adidas', count: 15, source: require('../../resources/demo/adidas.png')}} />}
+                renderItem={() => <CardPlace navigation={navigation} item={{ id: '1', title: 'Adidas', count: 15, source: require('../../resources/demo/adidas.png')}} />}
+                keyExtractor={(item) => item}
               />
             </ScrollView>                       
           </View>

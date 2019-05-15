@@ -72,7 +72,7 @@ const Header = ({
         {
           categories.map((cat) => {            
             return (
-              <ButtonGrad key={cat.code} code={cat.id} color={cat.id !== category.id ? 'rgba(0, 0, 0, 0.54)' : cat.mainColor} text={cat.name} onPress={() => this.changeCatalog(cat.id)} />
+              <ButtonGrad key={cat.id} code={cat.id} color={cat.id !== category.id ? 'rgba(0, 0, 0, 0.54)' : cat.mainColor} text={cat.name} onPress={() => this.changeCatalog(cat.id)} />
             )
           }
           )

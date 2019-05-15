@@ -1,10 +1,11 @@
 import React from 'react'
 import { View, StyleSheet, Image, Text, TouchableHighlight } from 'react-native'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { BG_COLOR } from '../../constants/global'
 
 const CardPlace = ({ item, navigation }) => {
   //console.log('item', item)    
-  const { view, row } = styles
+  const { view, row, favoriteView } = styles
   return (
 
     <TouchableHighlight style={[view, { height: 203, width: 152, marginHorizontal: 5, marginBottom: 10 }]} onPress={() => navigation.push('Item')} >
@@ -17,10 +18,11 @@ const CardPlace = ({ item, navigation }) => {
           />
         </View>
         <View style={row}>
-          <View style={{ flex: 1}}>
+          <View style={{ flex: 1 }}>
             <Text style={{ color: '#170701', fontSize: 16, lineHeight: 19, opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{item.title}</Text>
-            <Text style={{ color: '#563DD0', fontSize: 12, lineHeight: 19, fontFamily: 'Roboto-Regular' }}>{item.count} предложений</Text>
+            <Text style={{ color: '#563DD0', fontSize: 12, lineHeight: 19, fontFamily: 'Roboto-Regular' }}>{item.count} предложений</Text>            
           </View>          
+          <View style={favoriteView}><MaterialIcons name="favorite-border" size={14} style={{ color: '#170701' }} /></View>
         </View>
       </View>
     </TouchableHighlight>
@@ -34,7 +36,27 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     height: 51,
     flexDirection: 'row',
-    backgroundColor: BG_COLOR
+    backgroundColor: BG_COLOR,
+    position: 'relative'
+  },
+  favoriteView: {
+    position: 'absolute', 
+    top: 5, 
+    right: 5, 
+    height: 28, 
+    width: 28, 
+    justifyContent: 'center', 
+    alignItems: 'center',
+    borderRadius: 14,
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 1.22,
+    shadowColor: 'black',
+    elevation: 4,
+    backgroundColor: 'white'
   },
   view: {
     borderRadius: 6,

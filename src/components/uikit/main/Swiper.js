@@ -25,7 +25,7 @@ const SwiperApp = ({
         {
           data.map((item) => {
             return (
-              <View style={[child, { backgroundColor: 'skyblue', width: w }]}>      
+              <View key={item.id} style={[child, { backgroundColor: 'skyblue', width: w }]}>      
                 <ImageBackground  
                   style={{flex: 1, height: undefined, width: undefined }} 
                   source={item.source} 
@@ -55,7 +55,7 @@ const SwiperApp = ({
         {
           data.map((item) => {
             return (
-              <View style={{ width: w, paddingHorizontal: 15, height: getComponentHeightSM(w, 30) }}>
+              <View key={item.id} style={{ width: w, paddingHorizontal: 15, height: getComponentHeightSM(w, 30) }}>
                 <View style={[child, { flex: 1, borderRadius: radius, overflow: 'hidden'}]}>
                   <Image 
                     style={{flex: 1, height: undefined, width: undefined }} 
