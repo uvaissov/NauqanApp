@@ -18,7 +18,7 @@ const Header = ({
     <View style={[viewStyle, style, {backgroundColor: headerColor }]}>
       {leftIcon &&
         <TouchableOpacity onPress={onPress}>
-          <Ionicons name={leftIcon} style={[leftButtonStyle, { paddingLeft: 10 }]} color={leftColor} />
+          <Ionicons name={leftIcon} style={[leftButtonStyle, { paddingLeft: 15 }]} color={leftColor} />
         </TouchableOpacity>
       }
       <View style={{ flex: 1}} />
@@ -59,11 +59,9 @@ const styles = StyleSheet.create({
     })
   },
   textStyle: {
-    //paddingTop: 50,
     width: w - 60
   },
   leftButtonStyle: {
-    //paddingTop: 50,
     fontSize: 25
   }
 })

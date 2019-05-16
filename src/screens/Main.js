@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import { Image, StyleSheet, View, Text, ScrollView, StatusBar, TouchableOpacity, FlatList } from 'react-native'
+import { Image, StyleSheet, View, Text, ScrollView, StatusBar, TouchableOpacity, FlatList, ImageBackground } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
 import { Button } from 'react-native-elements'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
@@ -13,16 +14,38 @@ class Main extends Component {
   }
 
   render() {
-    const { navigation, mainCategory, categories, loading } = this.props   
+    const { navigation, mainCategory, categories, loading, error } = this.props   
     
     /**when first loading show this splash screen */
     if (loading) {
       return (<View style={StyleSheet.absoluteFill}>
-        <Image 
-          style={{flex: 1, height: undefined, width: undefined }} 
-          source={require('../../resources/images/splashscreen.png')} 
-          resizeMode="cover"
-        />
+        <ImageBackground  
+          style={{width: '100%', flex: 1, transform: [{perspective: 850}], justifyContent: 'center'}}
+          source={require('../../resources/images/background.png')} 
+          resizeMode="cover"        
+        >   
+          {error &&
+          <View>
+            <Text>{error.message}</Text>
+            <Text>{error.stack}</Text>
+          </View>
+          }
+          
+          <LinearGradient
+            colors={['rgba(250, 250, 250, 0)', '#FAFAFA']}
+            start={{x: 0.0, y: 0.25}} 
+            end={{x: 0.5, y: 1.0}}
+            locations={[0, 0.6]}
+            useAngle
+            angle={180}
+            style={{flex: 1}}
+          />          
+          <Image 
+            style={{ position: 'absolute', height: 200, width: 200, top: (h / 2) - 100, left: (w / 2) - 100 }} 
+            source={require('../../resources/images/logo.png')}
+            resizeMode="stretch"
+          />               
+        </ImageBackground>
       </View>)
     }
 
@@ -120,12 +143,11 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 2
     },
-    shadowOpacity: 0.6,
-    shadowRadius: 2.9,
-
-    elevation: 3,
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
     position: 'relative'
   },
   container: {
@@ -141,7 +163,8 @@ const mapStateToProps = state => {
   return {
     categories: state.catalog.categories,
     loading: state.catalog.loading,
-    mainCategory: state.catalog.mainCategory
+    mainCategory: state.catalog.mainCategory,
+    error: state.catalog.error
   }
 }
 export default connect(mapStateToProps, { getCategories, getSubCategories })(Main)

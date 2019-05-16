@@ -16,7 +16,8 @@ const INITIAL_STATE = {
   mainCategory: ['1', '2', '3', '4', 'all'],
   visibleSort: false,
   visibleSubCategory: false,
-  loading: true
+  loading: true,
+  error: undefined
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -46,7 +47,8 @@ export default (state = INITIAL_STATE, action) => {
   }
   case CATEGORIES_FAILED: {    
     return {
-      ...state
+      ...state,
+      error: action.error
     }
   }
   case SUB_CATEGORIES_FETCHED: {    

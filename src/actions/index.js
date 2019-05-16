@@ -34,8 +34,8 @@ export const getCategories = () => async (dispatch) => {
     dispatch({ type: CATEGORIES_FAILED, error })
     return error
   }
-  try {
-    const URL = `${hostName}/api/get_data.php?tb=cat`
+  try {    
+    const URL = `${hostName}/api/get_data.php?tb=cat`    
     const res = await fetch(URL, {
       method: 'GET'
     })
@@ -57,6 +57,7 @@ export const getSubCategories = (id) => async (dispatch) => {
     return error
   }
   try {
+    dispatch({ type: SUB_CATEGORIES_FETCHED, payload: [] })
     const URL = `${hostName}/api/get_data.php?tb=sub_cat${id === 'all' ? '' : `&cat_id=${id}`}` 
     const res = await fetch(URL, {
       method: 'GET'
@@ -85,6 +86,7 @@ export const getPlacesByCatalog = (id) => async (dispatch) => {
     return error
   }
   try {
+    dispatch({ type: PLACES_FETCHED, payload: [] })
     const URL = `${hostName}/api/get_data.php?tb=zav${id === 'all' ? '' : `&cat_id=${id}`}` 
     const res = await fetch(URL, {
       method: 'GET'

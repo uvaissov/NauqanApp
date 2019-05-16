@@ -1,15 +1,29 @@
-import React from 'react'
-import { View, StyleSheet, Image, Text, TouchableHighlight } from 'react-native'
+import React, {Component} from 'react'
+import { View, StyleSheet, Image, Text, TouchableHighlight, TouchableOpacity, Animated } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { BG_COLOR } from '../../constants/global'
 
-const CardPlace = ({ item, navigation }) => {
-  //console.log('item', item)    
-  const { view, row, favoriteView } = styles
-  return (
+class CardPlace extends Component {
+  state = {
+    fadeAnim: new Animated.Value(0), // Initial value for opacity: 0
+    selected: false
+  }
+  componentDidMount() {
+    Animated.timing( // Animate over time
+      this.state.fadeAnim, // The animated value to drive
+      {
+        toValue: 1, // Animate to opacity: 1 (opaque)
+        duration: 300 // Make it take a while
+      }
+    ).start() // Starts the animation
+  }
 
-    <TouchableHighlight style={[view, { height: 203, width: 152, marginHorizontal: 5, marginBottom: 10 }]} onPress={() => navigation.push('Item')} >
-      <View style={{flex: 1, overflow: 'hidden', borderRadius: 6}}>
+  render() {
+    const { item, navigation } = this.props
+    const { view, row, favoriteView, touchZone } = styles
+    const { fadeAnim, selected } = this.state
+    return (<TouchableHighlight style={[view, { height: 203, width: 152, marginHorizontal: 5, marginBottom: 10 }]} onPress={() => navigation.push('Item')} >
+      <Animated.View style={{flex: 1, overflow: 'hidden', borderRadius: 6, opacity: fadeAnim}}>
         <View style={{ flex: 1 }}>
           <Image 
             style={{flex: 1, height: undefined, width: undefined }} 
@@ -22,12 +36,12 @@ const CardPlace = ({ item, navigation }) => {
             <Text style={{ color: '#170701', fontSize: 16, lineHeight: 19, opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{item.title}</Text>
             <Text style={{ color: '#563DD0', fontSize: 12, lineHeight: 19, fontFamily: 'Roboto-Regular' }}>{item.count} предложений</Text>            
           </View>          
-          <View style={favoriteView}><MaterialIcons name="favorite-border" size={14} style={{ color: '#170701' }} /></View>
+          <TouchableOpacity onPress={() => this.setState({selected: !selected })} style={touchZone}><View style={favoriteView}><MaterialIcons name={selected === true ? 'favorite' : 'favorite-border'} size={14} style={!selected ? { color: '#170701' } : { color: '#FF6E36' }} /></View></TouchableOpacity>
         </View>
-      </View>
+      </Animated.View>
     </TouchableHighlight>
-
-  )
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -39,10 +53,17 @@ const styles = StyleSheet.create({
     backgroundColor: BG_COLOR,
     position: 'relative'
   },
-  favoriteView: {
+  touchZone: {
     position: 'absolute', 
-    top: 5, 
-    right: 5, 
+    top: 0, 
+    right: 0,
+    justifyContent: 'center', 
+    alignItems: 'center',
+    height: 40, 
+    width: 40,
+    borderRadius: 20
+  },
+  favoriteView: {    
     height: 28, 
     width: 28, 
     justifyContent: 'center', 
