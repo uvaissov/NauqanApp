@@ -9,9 +9,9 @@ import { BG_COLOR } from '../../constants/global'
 import { ModalSubCategory } from '../../components/uikit/catalog/ModalSubCategory'
 
 class Catalog extends Component {
-  componentDidMount() {    
-    this.props.cleanSubCategories()
-    this.props.cleanPlaces()
+  componentDidMount() {
+    //this.props.cleanSubCategories()
+    //this.props.cleanPlaces()
     this.props.getSubCategories(this.props.navigation.getParam('catalog'))
     this.props.getPlacesByCatalog(this.props.navigation.getParam('catalog')) 
   }
@@ -24,8 +24,8 @@ class Catalog extends Component {
   }
   _navigateToCatalog = (name) => {    
     this.props.navigation.navigate('Catalog', {catalog: name, scrollTo: undefined})
-    this.props.cleanSubCategories()
-    this.props.cleanPlaces()
+    //this.props.cleanSubCategories()
+    //this.props.cleanPlaces()
     this.props.getSubCategories(name)
     this.props.getPlacesByCatalog(name)    
   }  

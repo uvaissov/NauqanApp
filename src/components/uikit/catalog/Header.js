@@ -49,7 +49,7 @@ const Header = ({
       <LinearGradient style={[headerGradView, style]} colors={[mainColor, secondColor]} useAngle angle={135}>
         {leftIcon &&
           <TouchableOpacity onPress={onPress}>
-            <Ionicons name={leftIcon} style={[leftButtonStyle, { paddingLeft: 10 }]} color={'white'} />
+            <Ionicons name={leftIcon} style={[leftButtonStyle, { paddingLeft: 15 }]} color={'white'} />
           </TouchableOpacity>
         }
         <Text numberOfLines={1} ellipsizeMode="tail" style={[textStyle, { paddingLeft: leftIcon ? 35 : 0 }]}>{title}</Text>
