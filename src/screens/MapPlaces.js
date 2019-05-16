@@ -42,7 +42,7 @@ class MapPlaces extends Component {
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
-    );
+    )
   }
 
   render() {
