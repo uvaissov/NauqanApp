@@ -120,7 +120,7 @@ class Main extends Component {
         {/* footer static and get 10% from display */}
         <View style={[styles.shadowBox, { backgroundColor: TRASPARENT, height: h * 0.1}]} >          
           <View style={[{flex: 1, backgroundColor: BG_COLOR, flexDirection: 'row', justifyContent: 'space-between'}, styles.scrollView]}>
-            <TouchableOpacity style={{ flex: 1}} >
+            <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('Main')} >
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="home" size={24} style={{ color: '#FF6E36' }} /><Text style={{ color: '#FF6E36' }} >Главная</Text></View>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('MapPlaces')} >

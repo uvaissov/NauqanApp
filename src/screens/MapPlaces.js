@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { StyleSheet, View, TouchableOpacity, Text} from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Text, Image, InteractionManager } from 'react-native'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Header } from '../components/uikit/map/Header'
@@ -7,6 +7,7 @@ import { w, h, TRASPARENT, BG_COLOR } from '../constants/global'
 
 class MapPlaces extends Component {
   state = {
+    didFinishInitialAnimation: false,
     latitude: null,
     longitude: null,
     error: null,
@@ -43,6 +44,20 @@ class MapPlaces extends Component {
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 }
     )
+    // 1: Component is mounted off-screen
+    InteractionManager.runAfterInteractions(() => {
+      // 2: Component is done animating
+      // 3: Start fetching the team
+      //this.props.dispatchTeamFetchStart()
+     
+      // 4: set didFinishInitialAnimation to false
+      // This will render the navigation bar and a list of players
+      setTimeout(() => {
+        this.setState({
+          didFinishInitialAnimation: true
+        })
+      }, 250)
+    })
   }
 
   render() {
@@ -51,30 +66,48 @@ class MapPlaces extends Component {
       <View style={styles.container}>
         
         <View style={{flex: 1}} >
-          <MapView
-            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-            style={{width: w, flex: 1}}
-            region={{
-              latitude: 43.2214459,
-              longitude: 76.8501801,
-              latitudeDelta: 0.015,
-              longitudeDelta: 0.0121
-            }}
-          >
-            <Marker title="Тут был Вася!" coordinate={this.state.coordinate1}>
-              <View style={{backgroundColor: 'red', padding: 10}}>
-                <Text>SF</Text>
-              </View>
-            </Marker>
-            <Marker coordinate={this.state.coordinate2} />
-            <Marker coordinate={this.state.coordinate3} />
-            {!!this.state.latitude && !!this.state.longitude && <MapView.Marker
-              coordinate={{ latitude: this.state.latitude, longitude: this.state.longitude}}
-              title={'Your Location'}
-            />}
-          </MapView>
+          {
+            this.state.didFinishInitialAnimation === true &&
+            <MapView
+              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+              style={{width: w, flex: 1}}
+              region={{
+                latitude: 43.2214459,
+                longitude: 76.8501801,
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.0121
+              }}
+            > 
+              <Marker title="Тут был Вася!" coordinate={this.state.coordinate1}>
+                <Image 
+                  style={{height: 38, width: 29 }} 
+                  source={require('../../resources/icons/png/marker1.png')} 
+                  resizeMode="stretch"
+                />
+              </Marker>
+              <Marker coordinate={this.state.coordinate2} >
+                <Image 
+                  style={{height: 38, width: 29 }} 
+                  source={require('../../resources/icons/png/marker2.png')} 
+                  resizeMode="stretch"
+                />
+              </Marker>
+              <Marker coordinate={this.state.coordinate3} >
+                <Image 
+                  style={{height: 38, width: 29 }} 
+                  source={require('../../resources/icons/png/marker3.png')} 
+                  resizeMode="stretch"
+                />
+              </Marker>
+              {!!this.state.latitude && !!this.state.longitude && <MapView.Marker
+                coordinate={{ latitude: this.state.latitude, longitude: this.state.longitude}}
+                title={'Your Location'}
+              />}
+            </MapView>
+          }
+          
         </View>
-        <Header style={{position: 'absolute', width: w, top: 0, zIndex: 10}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />          
+        <Header style={{position: 'absolute', width: w, top: 0, zIndex: 10}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />
         {/* footer static and get 10% from display */}
         <View style={[styles.shadowBox, { backgroundColor: TRASPARENT, height: h * 0.1}]} >          
           <View style={[{flex: 1, backgroundColor: BG_COLOR, flexDirection: 'row', justifyContent: 'space-between'}, styles.scrollView]}>
@@ -97,8 +130,7 @@ class MapPlaces extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    position: 'relative'
+    justifyContent: 'flex-start'
   },
   shadowBox: {
     shadowColor: '#000',
