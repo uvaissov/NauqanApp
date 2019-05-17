@@ -82,17 +82,15 @@ class Main extends Component {
             <ScrollView 
               horizontal
               decelerationRate={0}
-              snapToInterval={(152/*itemWidth*/ * 2) + 20/*el-Margin*/}                           
-              disableScrollViewPanResponder
+              snapToInterval={(152/*itemWidth*/ * 2) + 20/*el-Margin*/}
               overScrollMode="never" 
-              bounces={false} 
               showsVerticalScrollIndicator={false} 
               showsHorizontalScrollIndicator={false}
               pagingEnabled 
-              alwaysBounceVertical={false}
-              alwaysBounceHorizontal={false}
+              bounces={false}
             > 
               <FlatList 
+                alwaysBounceVertical={false}
                 columnWrapperStyle={{ justifyContent: 'flex-start'}}
                 data={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25']}
                 numColumns={10} 

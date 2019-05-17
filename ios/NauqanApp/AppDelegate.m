@@ -6,9 +6,6 @@
  */
 
 #import "AppDelegate.h"
-#import <AppCenterReactNativeCrashes/AppCenterReactNativeCrashes.h>
-#import <AppCenterReactNativeAnalytics/AppCenterReactNativeAnalytics.h>
-#import <AppCenterReactNative/AppCenterReactNative.h>
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -23,10 +20,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   [FIRApp configure];
-  [AppCenterReactNativeCrashes registerWithAutomaticProcessing];  // Initialize AppCenter crashes
-  [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];  // Initialize AppCenter analytics
-  [AppCenterReactNative register];  // Initialize AppCenter
-  [GMSServices provideAPIKey:@"AIzaSyA9VnGE48M6z6uYb_GGizFdtR5r8mzN2VU"]; // add this line using the api key obtained from Google Console
+ [GMSServices provideAPIKey:@"AIzaSyA9VnGE48M6z6uYb_GGizFdtR5r8mzN2VU"]; // add this line using the api key obtained from Google Console
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"NauqanApp"

@@ -1,11 +1,4 @@
 PODS:
-  - AppCenter/Analytics (2.0.1):
-    - AppCenter/Core
-  - AppCenter/Core (2.0.1)
-  - AppCenter/Crashes (2.0.1):
-    - AppCenter/Core
-  - AppCenterReactNativeShared (2.0.0):
-    - AppCenter/Core (= 2.0.1)
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
   - Folly (2018.10.22.00):
@@ -98,9 +91,6 @@ PODS:
   - yoga (0.59.5.React)
 
 DEPENDENCIES:
-  - AppCenter/Analytics (~> 2.0.1)
-  - AppCenter/Crashes (~> 2.0.1)
-  - AppCenterReactNativeShared (~> 2.0.0)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
@@ -125,8 +115,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - AppCenter
-    - AppCenterReactNativeShared
     - boost-for-react-native
     - Google-Maps-iOS-Utils
     - GoogleMaps
@@ -148,8 +136,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga/yoga.podspec"
 
 SPEC CHECKSUMS:
-  AppCenter: 6a5ff2fd007b53431259fdd74f91eb3d0dfea3d1
-  AppCenterReactNativeShared: a55d6899b99ca2c4904cffd82b2d687626afe251
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Folly: de497beb10f102453a1afa9edbf8cf8a251890de
@@ -161,6 +147,6 @@ SPEC CHECKSUMS:
   react-native-maps: 0316ed017dbb64b33b227751fa810e2454fcfa39
   yoga: 2e571f113e8cbeb0eb752aeebc86c1bfe7a8200c
 
-PODFILE CHECKSUM: d358a30104fc73536e7699fb7d5a1d66f7269cd5
+PODFILE CHECKSUM: 0ee6abb3e24a8b007ee4d09d57954c6c47c1b21a
 
 COCOAPODS: 1.6.1

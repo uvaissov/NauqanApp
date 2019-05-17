@@ -1,15 +1,39 @@
 import React, {Component} from 'react'
-import { StatusBar, Text, StyleSheet, View, ImageBackground, FlatList, ScrollView} from 'react-native'
+import { StatusBar, Text, StyleSheet, View, ImageBackground, FlatList, ScrollView, InteractionManager} from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { connect } from 'react-redux'
 import { Header } from '../../components/uikit/item/Header'
 import { CardItem } from '../../components/uikit/item/CardItem'
 import { w } from '../../constants/global'
 
-class Item extends Component {  
+class Item extends Component { 
+  state = {
+    didFinishInitialAnimation: false
+  }
+
+  // Lifecycle methods
+  componentDidMount() {
+  // 1: Component is mounted off-screen
+    InteractionManager.runAfterInteractions(() => {
+    // 2: Component is done animating
+    // 3: Start fetching the team
+      //this.props.dispatchTeamFetchStart()
+   
+      // 4: set didFinishInitialAnimation to false
+      // This will render the navigation bar and a list of players
+      this.setState({
+        didFinishInitialAnimation: true
+      })
+    })
+  }
+  
   render() {
     const widthItem = (w / 2) - 8  
     const { navigation, items } = this.props
+    if (this.state.didFinishInitialAnimation === false) {
+      return (<View style={styles.container}><Text>Loading</Text></View>)
+    }
+
     return (
       <View style={styles.container}>        
         <ScrollView>          

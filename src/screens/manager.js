@@ -1,9 +1,9 @@
 import React from 'react'
-import { ScrollView, View, Image, ImageBackground, Text} from 'react-native'
+import { ScrollView, View, Image, ImageBackground, Text, Platform, Animated, Easing} from 'react-native'
 import { createDrawerNavigator, createAppContainer, DrawerItems, createStackNavigator } from 'react-navigation'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import LinearGradient from 'react-native-linear-gradient'
-import { fromRight } from 'react-navigation-transitions'
+//import { fromRight } from 'react-navigation-transitions'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Main from './Main'
 import Favorite from './Favorite'
@@ -80,6 +80,57 @@ const CustomDrawerComponent = (props) => (
 //     }
 //   }
 // }
+const CollapseExpand = (index, position) => {
+  const inputRange = [index - 1, index, index + 1]
+  const opacity = position.interpolate({
+    inputRange,
+    outputRange: [0, 1, 1]
+  })
+
+  const scaleY = position.interpolate({
+    inputRange,
+    outputRange: ([0, 1, 1])
+  })
+
+  return {
+    opacity,
+    transform: [
+      { scaleY }
+    ]
+  }
+}
+
+const SlideFromRight = (index, position, width) => {
+  //const inputRange = [index - 1, index, index + 1]
+  const translateX = position.interpolate({
+    inputRange: [index - 1, index, index + 1],
+    outputRange: [width, 0, 0]
+  })
+  const slideFromRight = { transform: [{ translateX }] }
+  return slideFromRight
+}
+
+const TransitionConfiguration = () => {
+  return {
+    transitionSpec: {
+      duration: 300,
+      easing: Easing.out(Easing.poly(4)),
+      timing: Animated.timing,
+      useNativeDriver: true
+    },
+    screenInterpolator: (sceneProps) => {
+      const { layout, position, scene } = sceneProps
+      const width = layout.initWidth
+      const { index, route } = scene
+      const params = route.params || {} // <- That's new
+      const transition = params.transition || 'default' // <- That's new
+      return {
+        collapseExpand: CollapseExpand(index, position),
+        default: SlideFromRight(index, position, width)
+      }[transition]
+    }
+  }
+}
 
 const MainStack = createStackNavigator(
   {
@@ -93,7 +144,9 @@ const MainStack = createStackNavigator(
   {
     initialRouteName: 'Main',
     headerMode: 'none',
-    transitionConfig: () => fromRight(300)
+    mode: Platform.OS === 'ios' ? 'modal' : 'card',
+    //transitionConfig: () => fromRight(300)
+    transitionConfig: TransitionConfiguration
   }
 )
 
