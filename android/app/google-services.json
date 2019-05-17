@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "713343863173",
+    "firebase_url": "https://naucanapp-1556952948082.firebaseio.com",
+    "project_id": "naucanapp-1556952948082",
+    "storage_bucket": "naucanapp-1556952948082.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713343863173:android:5fdef0db9a758f3c",
+        "android_client_info": {
+          "package_name": "com.nauqanapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "713343863173-e8fui112hvu74e7245vch0o4lgg1rtbs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_BE2IwM-qfxSx-Liqt1KyOuINeqxKN2k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "713343863173-e8fui112hvu74e7245vch0o4lgg1rtbs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
