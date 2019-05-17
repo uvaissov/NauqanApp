@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { StatusBar, Text, StyleSheet, View, ImageBackground, FlatList, ScrollView, InteractionManager} from 'react-native'
+//import Spinner from 'react-native-loading-spinner-overlay'
 import LinearGradient from 'react-native-linear-gradient'
 import { connect } from 'react-redux'
 import { Header } from '../../components/uikit/item/Header'
@@ -31,7 +32,18 @@ class Item extends Component {
     const widthItem = (w / 2) - 8  
     const { navigation, items } = this.props
     if (this.state.didFinishInitialAnimation === false) {
-      return (<View style={styles.container}><Text>Loading</Text></View>)
+      return (
+        <View style={styles.container}>
+          {/*<Spinner
+            //visibility of Overlay Loading Spinner
+            visible
+            //Text with the Spinner 
+            textContent={'Загрузка...'}
+            //Text style of the Spinner Text
+            textStyle={{color: '#FFF'}}
+          />
+          */}
+        </View>)
     }
 
     return (

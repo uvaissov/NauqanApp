@@ -58,28 +58,6 @@ const CustomDrawerComponent = (props) => (
   </View>
 )
 
-// const FadeTransation = (index, position) => {
-//   const sceneRange = [index - 1, index]
-//   const outputOpacity = [0, 1]
-//   const transtition = position.interpolate({
-//     inputRange: sceneRange,
-//     outputRange: outputOpacity
-//   })
-//   return {
-//     opacity: transtition
-//   }
-// }
-
-// const NavigationConfig = () => {
-//   return {
-//     screenInterpolator: (sceneOptions) => {
-//       const position = sceneOptions.position
-//       const scene = sceneOptions.scene
-//       const index = scene.index
-//       return FadeTransation(index, position)
-//     }
-//   }
-// }
 const CollapseExpand = (index, position) => {
   const inputRange = [index - 1, index, index + 1]
   const opacity = position.interpolate({
@@ -150,6 +128,20 @@ const MainStack = createStackNavigator(
   }
 )
 
+const FavoriteStack = createStackNavigator(
+  {
+    Favorite,
+    Item,
+    Sale
+  },
+  {
+    initialRouteName: 'Favorite',
+    headerMode: 'none',
+    mode: Platform.OS === 'ios' ? 'modal' : 'card',
+    transitionConfig: TransitionConfiguration
+  }
+)
+
 const Screens = createDrawerNavigator({
   Main: {
     screen: MainStack,
@@ -161,7 +153,7 @@ const Screens = createDrawerNavigator({
     }
   },
   Favorite: {
-    screen: Favorite,
+    screen: FavoriteStack,
     navigationOptions: {
       drawerLabel: 'Избранное',
       drawerIcon: ({ tintColor }) => (
