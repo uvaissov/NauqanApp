@@ -1,7 +1,7 @@
 import { Dimensions, Platform, PixelRatio } from 'react-native'
 
-//const protocol = 'http'
 export const hostName = 'http://nauqan.ibeacon.kz'
+export const FAVORITE_STORE = '@MyLocalStore:favorite'
 export const WHITE = '#fff'
 export const BLACK = '#000'
 

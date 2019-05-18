@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import { View, StyleSheet, Image, Text, TouchableHighlight, TouchableOpacity, Animated } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { connect } from 'react-redux'
+import { addFavoritePlace, delFavoritePlace } from '../../actions/FavoriteActions'
 import { BG_COLOR } from '../../constants/global'
 
 class CardPlace extends Component {
   state = {
-    fadeAnim: new Animated.Value(0), // Initial value for opacity: 0
-    selected: false
+    fadeAnim: new Animated.Value(0) // Initial value for opacity: 0
   }
   componentDidMount() {
     Animated.timing( // Animate over time
@@ -18,10 +19,19 @@ class CardPlace extends Component {
     ).start() // Starts the animation
   }
 
+  _addToFav = (id) => {
+    this.props.addFavoritePlace(id)
+  }
+
+  _remFromFav = (id) => {
+    this.props.delFavoritePlace(id)
+  }
+
   render() {
-    const { item, navigation } = this.props
+    const { item, navigation, places } = this.props
     const { view, row, favoriteView, touchZone } = styles
-    const { fadeAnim, selected } = this.state
+    const { fadeAnim } = this.state
+    const selected = places.includes(item.id)
     return (<TouchableHighlight style={[view, { height: 203, width: 152, marginHorizontal: 5, marginBottom: 10 }]} onPress={() => navigation.push('Item')} >
       <Animated.View style={{flex: 1, overflow: 'hidden', borderRadius: 6, opacity: fadeAnim}}>
         <View style={{ flex: 1 }}>
@@ -36,7 +46,11 @@ class CardPlace extends Component {
             <Text style={{ color: '#170701', fontSize: 16, lineHeight: 19, opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{item.title}</Text>
             <Text style={{ color: '#563DD0', fontSize: 12, lineHeight: 19, fontFamily: 'Roboto-Regular' }}>{item.count} предложений</Text>            
           </View>          
-          <TouchableOpacity onPress={() => this.setState({selected: !selected })} style={touchZone}><View style={favoriteView}><MaterialIcons name={selected === true ? 'favorite' : 'favorite-border'} size={14} style={!selected ? { color: '#170701' } : { color: '#FF6E36' }} /></View></TouchableOpacity>
+          <TouchableOpacity onPress={() => (selected ? this._remFromFav(item.id) : this._addToFav(item.id))} style={touchZone}>
+            <View style={favoriteView}>
+              <MaterialIcons name={selected === true ? 'favorite' : 'favorite-border'} size={14} style={!selected ? { color: '#170701' } : { color: '#FF6E36' }} />
+            </View>
+          </TouchableOpacity>
         </View>
       </Animated.View>
     </TouchableHighlight>
@@ -93,4 +107,9 @@ const styles = StyleSheet.create({
   }
 })
 
-export { CardPlace }
+const mapStateToProps = state => {
+  return {
+    places: state.favorite.places
+  }
+}
+export default connect(mapStateToProps, { addFavoritePlace, delFavoritePlace })(CardPlace)

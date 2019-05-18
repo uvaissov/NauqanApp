@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
 import { getCategories, getSubCategories } from '../actions/index'
-import { HeaderMain, SwiperApp, ButtonGrad, CardPlace} from '../components/uikit'
+import CardPlace, { HeaderMain, SwiperApp, ButtonGrad} from '../components/uikit'
 import { w, h, BG_COLOR, TRASPARENT } from '../constants/global'
 
 class Main extends Component {
@@ -94,7 +94,7 @@ class Main extends Component {
                 columnWrapperStyle={{ justifyContent: 'flex-start'}}
                 data={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25']}
                 numColumns={10} 
-                renderItem={() => <CardPlace navigation={navigation} item={{ id: '1', title: 'Adidas', count: 15, source: require('../../resources/demo/adidas.png')}} />}
+                renderItem={(row) => <CardPlace navigation={navigation} item={{ id: row, title: 'Adidas', count: 15, source: require('../../resources/demo/adidas.png')}} />}
                 keyExtractor={(item) => item}
               />
             </ScrollView>                       

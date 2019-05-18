@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { View, StyleSheet, Image, Text, TouchableHighlight, TouchableOpacity, Animated } from 'react-native'
-//import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import { BG_COLOR } from '../../constants/global'
 
@@ -29,7 +29,7 @@ class CardPlaceDynamic extends Component {
   }
 
   render() {
-    const { item, style, onPress } = this.props
+    const { item, style, onPress, favorite, trash } = this.props
     const { view, row, favoriteView, touchZone } = styles
     const { fadeAnim, selected, width } = this.state
     return (<TouchableHighlight style={[view, { height: this._calcHeightViewByWidth(width), width, marginHorizontal: 5, marginBottom: 10 }, style]} onPress={onPress} >
@@ -45,8 +45,23 @@ class CardPlaceDynamic extends Component {
           <View style={{ flex: 1 }}>
             <Text style={{ color: '#170701', fontSize: 16, lineHeight: 19, opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{item.title}</Text>
             <Text style={{ color: '#563DD0', fontSize: 12, lineHeight: 19, fontFamily: 'Roboto-Regular' }}>{item.count} предложений</Text>            
-          </View>          
-          <TouchableOpacity onPress={() => this.setState({selected: !selected })} style={touchZone}><View style={favoriteView}><EvilIcons name={'trash'} size={16} style={!selected ? { color: '#170701' } : { color: '#FF6E36' }} /></View></TouchableOpacity>
+          </View>
+          {
+            trash &&
+            <TouchableOpacity onPress={() => this.setState({selected: !selected })} style={touchZone}>
+              <View style={favoriteView}>
+                <EvilIcons name={'trash'} size={16} style={!selected ? { color: '#170701' } : { color: '#FF6E36' }} />
+              </View>
+            </TouchableOpacity>
+          }
+          {
+            favorite &&
+            <TouchableOpacity onPress={() => this.setState({selected: !selected })} style={touchZone}>
+              <View style={favoriteView}>
+                <MaterialIcons name={selected === true ? 'favorite' : 'favorite-border'} size={14} style={!selected ? { color: '#170701' } : { color: '#FF6E36' }} />
+              </View>
+            </TouchableOpacity>
+          }
         </View>
       </Animated.View>
     </TouchableHighlight>
