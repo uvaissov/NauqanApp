@@ -14,12 +14,14 @@
 #import <GoogleMaps/GoogleMaps.h>
 
 #import <Firebase.h>
+#import "RNFirebaseNotifications.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   [FIRApp configure];
+  [RNFirebaseNotifications configure];
   [GMSServices provideAPIKey:@"AIzaSyA9VnGE48M6z6uYb_GGizFdtR5r8mzN2VU"]; // add this line using the api key obtained from Google Console
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
