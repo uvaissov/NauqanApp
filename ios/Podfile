@@ -45,6 +45,8 @@ target 'NauqanApp' do
     #pod 'Firebase/Analytics'
     #pod 'Firebase/Messaging', '~> 5.20.1'
     
+    pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+
   end
   
   post_install do |installer|

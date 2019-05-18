@@ -1,11 +1,16 @@
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import { FAV_PLACE_FETCHED, FAV_PLACE_FAILED } from '../types'
 
 import { FAVORITE_STORE } from '../constants/global'
 
 export const initFavorites = () => async (dispatch) => {
   function onSuccess(value) {
-    dispatch({ type: FAV_PLACE_FETCHED, payload: value })
+    let data = []
+    value.map((row) => {
+      data = [...data, row.item]
+      return row
+    })
+    dispatch({ type: FAV_PLACE_FETCHED, payload: data })
     return value
   }
   function onError(error) {
@@ -14,6 +19,7 @@ export const initFavorites = () => async (dispatch) => {
   }
   
   try {
+    //AsyncStorage.clear()
     const value = await AsyncStorage.getItem(FAVORITE_STORE)
     if (value !== null) {
       return onSuccess(JSON.parse(value))

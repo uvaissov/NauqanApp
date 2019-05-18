@@ -5,11 +5,13 @@ import { Button } from 'react-native-elements'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
 import { getCategories, getSubCategories } from '../actions/index'
+import { initFavorites } from '../actions/FavoriteActions'
 import CardPlace, { HeaderMain, SwiperApp, ButtonGrad} from '../components/uikit'
 import { w, h, BG_COLOR, TRASPARENT } from '../constants/global'
 
 class Main extends Component {
   componentDidMount() {
+    this.props.initFavorites()
     this.props.getCategories()
   }
 
@@ -165,4 +167,4 @@ const mapStateToProps = state => {
     error: state.catalog.error
   }
 }
-export default connect(mapStateToProps, { getCategories, getSubCategories })(Main)
+export default connect(mapStateToProps, { getCategories, getSubCategories, initFavorites })(Main)
