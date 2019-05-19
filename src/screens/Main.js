@@ -4,10 +4,13 @@ import LinearGradient from 'react-native-linear-gradient'
 import { Button } from 'react-native-elements'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
+import firebase from 'react-native-firebase'
 import { getCategories, getSubCategories } from '../actions/index'
 import { initFavorites } from '../actions/FavoriteActions'
 import CardPlace, { HeaderMain, SwiperApp, ButtonGrad} from '../components/uikit'
 import { w, h, BG_COLOR, TRASPARENT } from '../constants/global'
+
+const PushNotificationIOS = require('react-native-push-notification')
 
 class Main extends Component {
   componentDidMount() {
@@ -157,6 +160,71 @@ const styles = StyleSheet.create({
   shadowGradient: {
     height: 4
   }
+})
+
+const messaging = firebase.messaging()
+
+messaging.hasPermission()
+  .then((enabled) => {
+    if (enabled) {
+      messaging.getToken()
+        .then(token => { console.log(token) })
+        .catch(error => { console.log(error) })
+    } else {
+      messaging.requestPermission()
+        .then(() => { /* got permission */ })
+        .catch(error => { console.log(error) })
+    }
+  })
+  .catch(error => { console.log(error) })
+
+firebase.notifications().onNotification((notification) => {
+  const { title, body } = notification
+  PushNotificationIOS.localNotification({
+    title,
+    message: body // (required)
+  })
+})
+
+PushNotificationIOS.addEventListener('registrationError', (e) => { console.log(JSON.stringify(e)) })
+
+PushNotificationIOS.configure({
+
+  // (optional) Called when Token is generated (iOS and Android)
+  onRegister(token) {
+    console.log('TOKEN:', token)
+  },
+
+  // (required) Called when a remote or local notification is opened or received
+  onNotification(notification) {
+    console.log('NOTIFICATION:', notification)
+
+    // process the notification
+
+    // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
+    //notification.finish(PushNotificationIOS.FetchResult.NoData);
+  },
+
+  // ANDROID ONLY: GCM or FCM Sender ID (product_number) (optional - not required for local notifications, but is need to receive remote push notifications)
+  //senderID: "YOUR GCM (OR FCM) SENDER ID",
+
+  // IOS ONLY (optional): default: all - Permissions to register.
+  permissions: {
+    alert: true,
+    badge: true,
+    sound: true
+  },
+
+  // Should the initial notification be popped automatically
+  // default: true
+  popInitialNotification: true,
+
+  /**
+    * (optional) default: true
+    * - Specified if permissions (ios) and token (android and ios) will requested or not,
+    * - if not, you must call PushNotificationsHandler.requestPermissions() later
+    */
+  requestPermissions: true
 })
 
 const mapStateToProps = state => {
