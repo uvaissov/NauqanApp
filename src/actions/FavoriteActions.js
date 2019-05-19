@@ -5,12 +5,7 @@ import { FAVORITE_STORE } from '../constants/global'
 
 export const initFavorites = () => async (dispatch) => {
   function onSuccess(value) {
-    let data = []
-    value.map((row) => {
-      data = [...data, row.item]
-      return row
-    })
-    dispatch({ type: FAV_PLACE_FETCHED, payload: data })
+    dispatch({ type: FAV_PLACE_FETCHED, payload: value })
     return value
   }
   function onError(error) {
@@ -18,11 +13,11 @@ export const initFavorites = () => async (dispatch) => {
     return error
   }
   
-  try {
-    //AsyncStorage.clear()
+  try {    
     const value = await AsyncStorage.getItem(FAVORITE_STORE)
     if (value !== null) {
-      return onSuccess(JSON.parse(value))
+      //AsyncStorage.clear()
+      return onSuccess(JSON.parse(value))      
     }
     return value
   } catch (error) {

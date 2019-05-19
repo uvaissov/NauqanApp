@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import { View, StyleSheet, Image, Text, TouchableHighlight, TouchableOpacity, Animated } from 'react-native'
+import React, { Component } from 'react'
+import { Animated, Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
 import { addFavoritePlace, delFavoritePlace } from '../../actions/FavoriteActions'
@@ -32,6 +32,7 @@ class CardPlace extends Component {
     const { view, row, favoriteView, touchZone } = styles
     const { fadeAnim } = this.state
     const selected = places.includes(item.id)
+
     return (<TouchableHighlight style={[view, { height: 203, width: 152, marginHorizontal: 5, marginBottom: 10 }]} onPress={() => navigation.push('Item')} >
       <Animated.View style={{flex: 1, overflow: 'hidden', borderRadius: 6, opacity: fadeAnim}}>
         <View style={{ flex: 1 }}>

@@ -1,30 +1,35 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, ScrollView} from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { connect } from 'react-redux'
 import { w, h, TRASPARENT, BG_COLOR } from '../constants/global'
-import { CardPlaceDynamic } from '../components/uikit'
+import { Header } from '../components/uikit/favorite/Header'
+import CardPlaceDynamic from '../components/uikit/CardPlaceDynamic'
 
 class Favorite extends Component {  
   render() {
-    const { navigation } = this.props
+    const { navigation, places } = this.props
     const itemWidth = w * 0.466
     return (
       <View style={styles.container}>
+        <Header 
+          visibleSort
+          //sortPress={this._showSort} 
+          searchPress={() => navigation.goBack()} 
+          navigation={this._navigateToCatalog} 
+          leftIcon="md-arrow-back" 
+          mainColor="#45A460"
+          secondColor="#A9D334" 
+          title="Избранное" 
+          onPress={() => navigation.goBack()} 
+        />  
         <View style={{flex: 1, backgroundColor: 'white'}}>
           <ScrollView>
             <FlatList 
               columnWrapperStyle={{ justifyContent: 'space-between'}}
-              data={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25']}
+              data={places}
               numColumns={2} 
-              renderItem={() => <CardPlaceDynamic width={itemWidth} onPress={() => navigation.push('Item')} item={{ id: '1', title: 'Adidas', count: 15, source: require('../../resources/demo/adidas.png')}} />}
+              renderItem={(row) => <CardPlaceDynamic trash width={itemWidth} onPress={() => navigation.push('Item')} item={{ id: row.item, title: 'Adidas', count: 15, source: require('../../resources/demo/adidas.png')}} />}
               keyExtractor={(item) => item}
               style={{ padding: 5 }}
             />
@@ -67,4 +72,9 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Favorite
+const mapStateToProps = state => {
+  return {
+    places: state.favorite.places
+  }
+}
+export default connect(mapStateToProps, { })(Favorite)

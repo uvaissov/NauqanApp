@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View, StyleSheet, ScrollView } from 'react-native'
 import { BG_COLOR } from '../../constants/global'
-import { CardPlace } from './CardPlace'
+import CardPlace from './CardPlace'
 
 const SubCategory = ({ 
   style,
@@ -22,7 +22,7 @@ const SubCategory = ({
           {
             places.map((place) => {
               console.log(place)              
-              return (<CardPlace key={place.id} navigation={navigation} item={{ title: place.name, count: 67, source: require('../../../resources/demo/magnum.png')}} />)
+              return (<CardPlace key={place.id} navigation={navigation} item={{ id: place.id, title: place.name, count: 67, source: require('../../../resources/demo/magnum.png')}} />)
             })
           }          
         </View>

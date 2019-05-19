@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import { View, StyleSheet, Image, Text, TouchableHighlight, TouchableOpacity, Animated } from 'react-native'
+import { connect } from 'react-redux'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
+import { addFavoritePlace, delFavoritePlace } from '../../actions/FavoriteActions'
 import { BG_COLOR } from '../../constants/global'
 
 class CardPlaceDynamic extends Component {
@@ -28,10 +30,19 @@ class CardPlaceDynamic extends Component {
     return width * 0.3
   }
 
+  _addToFav = (id) => {
+    this.props.addFavoritePlace(id)
+  }
+
+  _remFromFav = (id) => {
+    this.props.delFavoritePlace(id)
+  }
+
   render() {
-    const { item, style, onPress, favorite, trash } = this.props
+    const { item, style, onPress, favorite, trash, places } = this.props
     const { view, row, favoriteView, touchZone } = styles
-    const { fadeAnim, selected, width } = this.state
+    const { fadeAnim, width } = this.state
+    const selected = places.includes(item.id)
     return (<TouchableHighlight style={[view, { height: this._calcHeightViewByWidth(width), width, marginHorizontal: 5, marginBottom: 10 }, style]} onPress={onPress} >
       <Animated.View style={{flex: 1, overflow: 'hidden', borderRadius: 6, opacity: fadeAnim}}>
         <View style={{ flex: 1 }}>
@@ -48,7 +59,7 @@ class CardPlaceDynamic extends Component {
           </View>
           {
             trash &&
-            <TouchableOpacity onPress={() => this.setState({selected: !selected })} style={touchZone}>
+            <TouchableOpacity onPress={() => this._remFromFav(item.id)} style={touchZone}>
               <View style={favoriteView}>
                 <EvilIcons name={'trash'} size={16} style={!selected ? { color: '#170701' } : { color: '#FF6E36' }} />
               </View>
@@ -56,7 +67,7 @@ class CardPlaceDynamic extends Component {
           }
           {
             favorite &&
-            <TouchableOpacity onPress={() => this.setState({selected: !selected })} style={touchZone}>
+            <TouchableOpacity onPress={() => (selected ? this._remFromFav(item.id) : this._addToFav(item.id))} style={touchZone}>
               <View style={favoriteView}>
                 <MaterialIcons name={selected === true ? 'favorite' : 'favorite-border'} size={14} style={!selected ? { color: '#170701' } : { color: '#FF6E36' }} />
               </View>
@@ -118,4 +129,9 @@ const styles = StyleSheet.create({
   }
 })
 
-export { CardPlaceDynamic }
+const mapStateToProps = state => {
+  return {
+    places: state.favorite.places
+  }
+}
+export default connect(mapStateToProps, { addFavoritePlace, delFavoritePlace })(CardPlaceDynamic)

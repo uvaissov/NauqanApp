@@ -96,7 +96,7 @@ class Main extends Component {
                 columnWrapperStyle={{ justifyContent: 'flex-start'}}
                 data={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25']}
                 numColumns={10} 
-                renderItem={(row) => <CardPlace navigation={navigation} item={{ id: row, title: 'Adidas', count: 15, source: require('../../resources/demo/adidas.png')}} />}
+                renderItem={(row) => <CardPlace navigation={navigation} item={{ id: row.item, title: 'Adidas', count: 15, source: require('../../resources/demo/adidas.png')}} />}
                 keyExtractor={(item) => item}
               />
             </ScrollView>                       

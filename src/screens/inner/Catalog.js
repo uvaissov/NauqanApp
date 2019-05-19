@@ -50,22 +50,21 @@ class Catalog extends Component {
           secondColor={category.secondaryColor.trim()} 
           title="Каталог" 
           onPress={() => navigation.goBack()} 
-        />         
+        />
+        <TouchableOpacity onPress={() => this._showSubCat(true)} >
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 15, backgroundColor: '#EEEEEE'}}>
+            <Text style={{ fontSize: 16}}>Все подкатегории</Text>
+            <Ionicons name={'md-arrow-dropdown'} style={{ fontSize: 16}} color={'#000000'} />            
+          </View>
+        </TouchableOpacity>      
         <ModalSubCategory catColor={category.mainColor} catName={category.name} visible={showSubCategoryOption} hideSort={() => this._showSubCat(false)} sub_categories={sub_categories} />
         <ScrollView style={[{ flex: 1}]}>
-          <TouchableOpacity onPress={() => this._showSubCat(true)} >
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 15, backgroundColor: '#EEEEEE'}}>
-              <Text style={{ fontSize: 16}}>Все подкатегории</Text>
-              <Ionicons name={'md-arrow-dropdown'} style={{ fontSize: 16}} color={'#000000'} />            
-            </View>
-          </TouchableOpacity>
+          
           <View style={{ paddingTop: 10}}>
             {
               places.length > 0 && sub_categories.length > 0 &&
               sub_categories.map((sub) => {
-                console.log(sub)
-                const place = places.filter(pl => sub.id === pl.sub_cat_id)//array         
-                console.log(place)
+                const place = places.filter(pl => sub.id === pl.sub_cat_id)//array
                 return (<SubCategory key={sub.id} places={place} mainColor={category.mainColor} navigation={navigation} item={{ categoryName: sub.name}} />)
               })
             }
