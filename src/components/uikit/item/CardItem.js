@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, Image, Text, TouchableHighlight } from 'react-native'
-import { BG_COLOR, normalize } from '../../../constants/global'
+import { BG_COLOR, normalize, genImageUri } from '../../../constants/global'
 
 const CardItem = ({ item, navigation, style }) => {
   const { view, row } = styles
@@ -12,18 +12,31 @@ const CardItem = ({ item, navigation, style }) => {
         <View style={{ flex: 1 }}>
           <Image 
             style={{flex: 1, height: undefined, width: undefined }} 
-            source={item.source} 
+            source={{uri: genImageUri(item.img)}}
             resizeMode="stretch"
           />
         </View>
         <View style={row}>
           <View style={{ flex: 1}}>
-            <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(16), lineHeight: 19, color: 'rgba(0, 0, 0, 0.87)' }}>{item.title}</Text>
-            <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(12), color: 'rgba(0, 0, 0, 0.4)', lineHeight: 14, margin: 10}}>Действует до {item.date}</Text>
-            <View style={{ flexDirection: 'row'}}>
-              <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(14), color: '#979797', textDecorationLine: 'line-through' }} >{item.price.before}</Text>
-              <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(14), color: '#FF6E36', marginLeft: 5}}>{item.price.after}</Text>
-            </View>
+            <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(16), lineHeight: 19, color: 'rgba(0, 0, 0, 0.87)' }}>{item.name}</Text>
+            { item.date_en && 
+              <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(12), color: 'rgba(0, 0, 0, 0.4)', lineHeight: 14, margin: 10}}>Действует до {item.date_en}</Text>
+            }            
+            
+            {
+              item.skidka_price &&
+                <View style={{ flexDirection: 'row'}}>
+                  <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(14), color: '#979797', textDecorationLine: 'line-through' }} >{item.price}</Text>
+                  <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(14), color: '#FF6E36', marginLeft: 5}}>{item.skidka_price}</Text>
+                </View>
+            }
+            {
+              !item.skidka_price &&
+                <View style={{ flexDirection: 'row'}}>                  
+                  <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(14), color: '#FF6E36', marginLeft: 5}}>{item.price}</Text>
+                </View>
+            }
+              
           </View>          
         </View>
       </View>

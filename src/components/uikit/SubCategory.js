@@ -20,9 +20,9 @@ const SubCategory = ({
       <ScrollView horizontal showsHorizontalScrollIndicator={false} >
         <View style={{ flexDirection: 'row', padding: 15 }}>
           {
-            places.map((place) => {
-              console.log(place)              
-              return (<CardPlace key={place.id} navigation={navigation} item={{ id: place.id, title: place.name, count: 67, source: require('../../../resources/demo/magnum.png')}} />)
+            places.map((place) => { 
+              console.log(place)        
+              return (<CardPlace key={place.id} navigation={navigation} item={place} />)
             })
           }          
         </View>

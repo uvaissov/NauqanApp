@@ -3,9 +3,10 @@ import { StatusBar, Text, StyleSheet, View, ImageBackground, FlatList, ScrollVie
 //import Spinner from 'react-native-loading-spinner-overlay'
 import LinearGradient from 'react-native-linear-gradient'
 import { connect } from 'react-redux'
+import { getZav, getPlacesByZav } from '../../actions/ItemActions'
 import { Header } from '../../components/uikit/item/Header'
 import { CardItem } from '../../components/uikit/item/CardItem'
-import { w } from '../../constants/global'
+import { w, genImageUri } from '../../constants/global'
 
 class Item extends Component { 
   state = {
@@ -14,14 +15,11 @@ class Item extends Component {
 
   // Lifecycle methods
   componentDidMount() {
-  // 1: Component is mounted off-screen
+    this.props.getZav(this.props.navigation.getParam('id'))
+    this.props.getPlacesByZav(this.props.navigation.getParam('id'))
+    
+    // 1: Component is mounted off-screen
     InteractionManager.runAfterInteractions(() => {
-    // 2: Component is done animating
-    // 3: Start fetching the team
-      //this.props.dispatchTeamFetchStart()
-   
-      // 4: set didFinishInitialAnimation to false
-      // This will render the navigation bar and a list of players
       this.setState({
         didFinishInitialAnimation: true
       })
@@ -30,8 +28,8 @@ class Item extends Component {
   
   render() {
     const widthItem = (w / 2) - 8  
-    const { navigation, items } = this.props
-    if (this.state.didFinishInitialAnimation === false) {
+    const { navigation, items, zav, categories } = this.props
+    if (this.state.didFinishInitialAnimation === false || !zav.id) {
       return (
         <View style={styles.container}>
           {/*<Spinner
@@ -46,6 +44,8 @@ class Item extends Component {
         </View>)
     }
 
+    const [catName] = categories.filter((cat) => cat.id === zav.cat_id).map(({ name }) => name)
+
     return (
       <View style={styles.container}>        
         <ScrollView>          
@@ -54,13 +54,14 @@ class Item extends Component {
           <View style={{ width: w, height: getComponentHeight(w) }}>
             <ImageBackground  
               style={{flex: 1, height: undefined, width: undefined }} 
-              source={require('../../../resources/demo/item.png')} 
+              source={{uri: genImageUri(zav.img)}} 
               resizeMode="stretch"
             >
               <LinearGradient
                 colors={['rgba(0, 0, 0, 0.50)', 'transparent']}
                 start={{ x: 0, y: 1 }}
                 end={{ x: 1, y: 1 }}
+                locations={[0, 0.8]}
                 useAngle
                 angle={180}
                 style={{flex: 1}}
@@ -75,29 +76,33 @@ class Item extends Component {
             </ImageBackground>
           </View>
           <View style={{ alignItems: 'center', marginTop: 43 }}>
-            <Text style={{fontFamily: 'Roboto-Regular'}}>Visit Алматы</Text>
-            <Text style={{fontFamily: 'Roboto-Regular'}}>Поесть</Text>
+            <Text style={{fontFamily: 'Roboto-Regular'}}>{zav.name}</Text>
+            <Text style={{fontFamily: 'Roboto-Regular'}}>{catName}</Text>
           </View>
           <View style={{flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 15, marginTop: 15, backgroundColor: '#EBF2F5'}}>
-            <Text style={{ color: 'rgba(0, 0, 0, 0.87)', fontFamily: 'Roboto-Regular'}}>Астана, ул. Астанаевская, 63</Text>
+            <Text style={{ color: 'rgba(0, 0, 0, 0.87)', fontFamily: 'Roboto-Regular'}}>{zav.city}, {zav.address}</Text>
           </View>
           <View style={{ width: w, overflow: 'hidden', paddingHorizontal: 15, paddingVertical: 20}}>
-            <Text numberOfLines={6} style={{ fontFamily: 'Roboto-Regular' }}>
-              Если вы до сих пор не нанесли визит в кафе Visit в Алматы, то утверждение о том, что вы знакомы с разнообразной, вкусной едой весьма спорно. Этот кулинарный бутик разбирается в вопросах гастрономии самого разного характера: за столиками кафе (интерьер — актуальный минимализм) можно отведать фирменные пир
-            </Text>
+            <Text numberOfLines={6} style={{ fontFamily: 'Roboto-Regular' }}>{zav.description}</Text>
           </View>
           <View>
-            <View><Text style={{ fontFamily: 'Roboto-Regular' }}>Предложения</Text></View>
-            <View>
-              <FlatList 
-                columnWrapperStyle={{ justifyContent: 'space-between'}}
-                numColumns={2}
-                data={items}
-                renderItem={(item) => <CardItem style={{width: widthItem}} navigation={navigation} item={item.item} />}
-                keyExtractor={(item) => item.key}
-              />
+            {
+              items && 
+              <View>
+                <View><Text style={{ fontFamily: 'Roboto-Regular' }}>Предложения</Text></View>
+                <View>
+                  <FlatList 
+                    columnWrapperStyle={{ justifyContent: 'space-between'}}
+                    numColumns={2}
+                    data={items}
+                    renderItem={(item) => <CardItem style={{width: widthItem}} navigation={navigation} item={item.item} />}
+                    keyExtractor={(item) => item.key}
+                  />
+                
+                </View>
+              </View>
+            }
             
-            </View>
           </View>
         </ScrollView>
       </View>
@@ -118,9 +123,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    categories: state.catalog.categories,
-    mainCategory: state.catalog.mainCategory,
-    items: state.item.items
+    categories: state.catalog.categories,    
+    items: state.item.items,
+    zav: state.item.item
   }
 }
-export default connect(mapStateToProps, { })(Item)
+export default connect(mapStateToProps, { getZav, getPlacesByZav })(Item)

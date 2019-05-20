@@ -1,8 +1,9 @@
 import React from 'react'
-import { ScrollView, View, TouchableOpacity, StyleSheet, Text } from 'react-native'
+import { ScrollView, View, TouchableOpacity, StyleSheet, Text, TextInput } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { ifIphoneX, isIphoneX } from 'react-native-iphone-x-helper'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { NavigationEvents } from 'react-navigation'
 import Icon from '../../svgkit/Icon'
 import { ModalSort } from './ModalSort'
 //import { w } from '../../../constants/global'
@@ -21,9 +22,11 @@ const Header = ({
   scrollTo,
   sortPress,
   searchPress,
-  visibleSort
+  visibleSort,
+  showSearchResult,
+  searchByCatalog
 }) => {
-  const { headerGradView, viewStyle, textStyle, leftButtonStyle, rightButtonStyle } = styles  
+  const { headerGradView, viewStyle, textStyle, inputStyle, leftButtonStyle, rightButtonStyle } = styles  
   this.changeCatalog = (name) => {
     navigation(name)
   } 
@@ -37,47 +40,81 @@ const Header = ({
       return null
     })
     setTimeout(() => {
-      this._scrollView.scrollTo({x: idx * 110}) 
+      if (this._scrollView) {
+        this._scrollView.scrollTo({x: idx * 110}) 
+      }
     }, 100)
   }
   this.show = (value) => {
     sortPress(value)
   }
+  this.search = (text) => {
+    searchByCatalog(text)    
+  }
+
+  this.viewHeader = () => {
+    if (showSearchResult === true) {
+      if (isIphoneX()) {
+        return 90
+      }
+      return 70
+    }
+    if (isIphoneX()) {
+      return 210
+    }
+    return 180
+  }
   return (
-    <View style={viewStyle}>
-      
+    <View style={[viewStyle, {height: this.viewHeader()}]}>
+      <NavigationEvents onWillBlur={() => searchPress(false)} />
       <LinearGradient style={[headerGradView, style]} colors={[mainColor, secondColor]} useAngle angle={135}>
         {leftIcon &&
           <TouchableOpacity onPress={onPress}>
-            <Ionicons name={leftIcon} style={[leftButtonStyle, { paddingLeft: 15 }]} color={'white'} />
+            <Ionicons name={leftIcon} style={[leftButtonStyle, { paddingHorizontal: 20 }]} color={'white'} />
           </TouchableOpacity>
         }
-        <Text numberOfLines={1} ellipsizeMode="tail" style={[textStyle, { paddingLeft: leftIcon ? 35 : 0 }]}>{title}</Text>
         {
-          sortPress &&
+          showSearchResult === false &&
+          <Text numberOfLines={1} ellipsizeMode="tail" style={[textStyle, { paddingLeft: leftIcon ? 15 : 0 }]}>{title}</Text>
+        }
+        {
+          showSearchResult === true &&
+          <TextInput autoFocus style={[inputStyle, { paddingBottom: 0, paddingLeft: leftIcon ? 15 : 0 }]} onChangeText={(text) => this.search(text)} />
+        }        
+        {
+          sortPress && showSearchResult === false &&
           <TouchableOpacity onPress={() => this.show(true)} style={[rightButtonStyle]}>
             <Icon name="sort" height="24" width="24" fill="#fff" />
             <ModalSort visible={visibleSort} hideSort={() => this.show(false)} />           
           </TouchableOpacity>
-        }        
+        }
         {
-          searchPress && 
-          <TouchableOpacity onPress={searchPress}>
+          searchPress && showSearchResult === false &&
+          <TouchableOpacity onPress={() => searchPress(true)}>
             <Ionicons name={'ios-search'} style={[rightButtonStyle]} color={'white'} />
           </TouchableOpacity>
-        }
-        
-      </LinearGradient>
-      <ScrollView showsHorizontalScrollIndicator={false} ref={(view) => { this._scrollView = view }} horizontal style={{ flexDirection: 'row', padding: 15 }}>
+        }     
         {
-          categories.map((cat) => {            
-            return (
-              <ButtonGrad key={cat.id} code={cat.id} color={cat.id !== category.id ? 'rgba(0, 0, 0, 0.54)' : cat.mainColor} text={cat.name} onPress={() => this.changeCatalog(cat.id)} />
+          searchPress && showSearchResult === true &&
+          <TouchableOpacity onPress={() => searchPress(false)}>
+            <Ionicons name={'ios-close'} style={[rightButtonStyle, {fontSize: 24 }]} color={'white'} />
+          </TouchableOpacity>
+        }
+      </LinearGradient>
+      {
+        showSearchResult === false && 
+        <ScrollView showsHorizontalScrollIndicator={false} ref={(view) => { this._scrollView = view }} horizontal style={{ flexDirection: 'row', padding: 15 }}>
+          {
+            categories.map((cat) => {            
+              return (
+                <ButtonGrad key={cat.id} code={cat.id} color={cat.id !== category.id ? 'rgba(0, 0, 0, 0.54)' : cat.mainColor} text={cat.name} onPress={() => this.changeCatalog(cat.id)} />
+              )
+            }
             )
-          }
-          )
-        }        
-      </ScrollView>      
+          }        
+        </ScrollView> 
+      }
+           
     </View>
   )
 }
@@ -100,13 +137,14 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2},
     shadowOpacity: 0.2,
     elevation: 3,
-    position: 'relative',
-    ...ifIphoneX({
-      height: 210
-    }, {
-      height: 180
-    }),
+    position: 'relative',    
     backgroundColor: 'white'
+  },
+  inputStyle: {
+    fontSize: 20,    
+    fontFamily: 'Roboto-Regular',    
+    flex: 1,
+    color: 'white'
   },
   textStyle: {
     fontSize: 20,

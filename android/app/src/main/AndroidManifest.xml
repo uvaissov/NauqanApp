@@ -36,7 +36,17 @@
           <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
           <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
-      </receiver>      
+      </receiver>
+      <service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService">
+        <intent-filter>
+          <action android:name="com.google.firebase.MESSAGING_EVENT" />
+        </intent-filter>
+      </service> 
+      <service android:name="io.invertase.firebase.messaging.RNFirebaseInstanceIdService">
+        <intent-filter>
+          <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+        </intent-filter>
+      </service> 
       <meta-data
         android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyA9VnGE48M6z6uYb_GGizFdtR5r8mzN2VU"/>

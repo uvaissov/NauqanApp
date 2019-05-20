@@ -1,12 +1,17 @@
 import {
   VISIBLE_SORT,
   VISIBLE_SUB_CATEGORY,
+  VISIBLE_SEARCH_RESULT,
   CATEGORIES_FETCHED,
   CATEGORIES_FAILED,
   SUB_CATEGORIES_FETCHED,
   SUB_CATEGORIES_FAILED,
   PLACES_FETCHED,
-  PLACES_FAILED  
+  PLACES_FAILED,  
+  TOP_PLACES_FETCHED,
+  TOP_PLACES_FAILED,
+  SEARCH_FETCHED,
+  SEARCH_FAILED
 } from '../types'
 
 const INITIAL_STATE = {
@@ -14,8 +19,11 @@ const INITIAL_STATE = {
   sub_categories: [],
   places: [],
   mainCategory: [],
+  topPlaces: [],
+  searchResults: [],
   visibleSort: false,
   visibleSubCategory: false,
+  visibleSearchResult: false,
   loading: true,
   error: undefined
 }
@@ -35,9 +43,18 @@ export default (state = INITIAL_STATE, action) => {
       visibleSubCategory: action.payload
     }
   }
+  case VISIBLE_SEARCH_RESULT: {    
+    return {
+      ...state,
+      visibleSearchResult: action.payload,
+      searchResults: []
+    }
+  }
   case CATEGORIES_FETCHED: { 
-    const glav = action.payload.filter((row) => row.glav === 1).map(({id}) => id)
-    console.log('glav', glav)
+    let glav = [...action.payload.filter((row) => row.glav === 1).map(({id}) => id), 'all']
+    if (glav.length > 5) {
+      glav = [...glav.slice(0, 3), 'all']
+    }
     return {
       ...state,
       categories: [
@@ -54,6 +71,28 @@ export default (state = INITIAL_STATE, action) => {
       error: action.error
     }
   }
+  case TOP_PLACES_FETCHED: {    
+    return {
+      ...state,
+      topPlaces: action.payload
+    }
+  }
+  case TOP_PLACES_FAILED: {    
+    return {
+      ...state
+    }
+  }
+  case SEARCH_FETCHED: {    
+    return {
+      ...state,
+      searchResults: action.payload
+    }
+  }
+  case SEARCH_FAILED: {    
+    return {
+      ...state
+    }
+  } 
   case SUB_CATEGORIES_FETCHED: {    
     return {
       ...state,
