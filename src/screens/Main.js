@@ -10,7 +10,8 @@ import { initFavorites } from '../actions/FavoriteActions'
 import CardPlace, { HeaderMain, SwiperApp, ButtonGrad} from '../components/uikit'
 import { w, h, BG_COLOR, TRASPARENT } from '../constants/global'
 
-const PushNotificationIOS = require('react-native-push-notification')
+//const PushNotificationIOS = require('react-native-push-notification')
+const PushNotification = require('react-native-push-notification')
 
 class Main extends Component {
   componentDidMount() {
@@ -180,15 +181,15 @@ messaging.hasPermission()
 
 firebase.notifications().onNotification((notification) => {
   const { title, body } = notification
-  PushNotificationIOS.localNotification({
+  PushNotification.localNotification({
     title,
     message: body // (required)
   })
 })
 
-PushNotificationIOS.addEventListener('registrationError', (e) => { console.log(JSON.stringify(e)) })
+//PushNotification.addEventListener('registrationError', (e) => { console.log(JSON.stringify(e)) })
 
-PushNotificationIOS.configure({
+PushNotification.configure({
 
   // (optional) Called when Token is generated (iOS and Android)
   onRegister(token) {

@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   categories: [],
   sub_categories: [],
   places: [],
-  mainCategory: ['1', '2', '3', '4', 'all'],
+  mainCategory: [],
   visibleSort: false,
   visibleSubCategory: false,
   loading: true,
@@ -35,13 +35,16 @@ export default (state = INITIAL_STATE, action) => {
       visibleSubCategory: action.payload
     }
   }
-  case CATEGORIES_FETCHED: {    
+  case CATEGORIES_FETCHED: { 
+    const glav = action.payload.filter((row) => row.glav === 1).map(({id}) => id)
+    console.log('glav', glav)
     return {
       ...state,
       categories: [
         { id: 'all', mainColor: '#45A460', secondaryColor: '#A9D334', name: 'Все' }, //добавим еще категорию все
         ...action.payload        
       ],
+      mainCategory: glav,
       loading: false
     }
   }
