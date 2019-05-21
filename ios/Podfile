@@ -59,5 +59,8 @@ target 'NauqanApp' do
       if target.name == "React"
         target.remove_from_project
       end
+      if target.name == "yoga"
+        target.remove_from_project
+      end
     end
   end
