@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Modal, FlatList, TouchableWithoutFeedback } fro
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 //import { w } from '../../../constants/global'
 
-const ModalSort = ({visible, hideSort}) => {
+const ModalSort = ({visible, hideSort, dir}) => {
   const { viewStyle, rowView, rowText } = styles   
   const data = [{name: 'Показать от А до Я', dir: 'asc'}, {name: 'Показать от Я до А', dir: 'desc'}]
   return (
@@ -18,7 +18,7 @@ const ModalSort = ({visible, hideSort}) => {
           <View style={viewStyle}>
             <FlatList
               data={data}
-              renderItem={(item) => <View style={rowView}><Text style={rowText}>{item.item.name}</Text></View>}
+              renderItem={(item) => <View style={rowView}><Text style={[rowText, { }]}>{item.item.name}</Text></View>}
             />        
           </View>        
         </View>

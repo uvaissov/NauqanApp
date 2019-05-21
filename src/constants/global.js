@@ -23,6 +23,10 @@ export const responsive = {
 
 const scale = w / 320
 
+export function genImageUri(path) {
+  return `${hostName}/storage/${path}`
+}
+
 export function normalize(size) {
   const newSize = size * scale 
   let result

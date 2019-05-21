@@ -5,21 +5,28 @@ import { Button } from 'react-native-elements'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
-import { getCategories, getSubCategories } from '../actions/index'
+import { getCategories, getSubCategories, getPlacesTop } from '../actions/CatalogActions'
 import { initFavorites } from '../actions/FavoriteActions'
-import CardPlace, { HeaderMain, SwiperApp, ButtonGrad} from '../components/uikit'
+import { HeaderMain, SwiperApp, ButtonGrad} from '../components/uikit'
+import CardPlaceDynamic from '../components/uikit/CardPlaceDynamic'
 import { w, h, BG_COLOR, TRASPARENT } from '../constants/global'
 
-const PushNotificationIOS = require('react-native-push-notification')
+//const PushNotificationIOS = require('react-native-push-notification')
+const PushNotification = require('react-native-push-notification')
 
 class Main extends Component {
   componentDidMount() {
+    this._initData()
+  }
+
+  _initData= () => {
     this.props.initFavorites()
+    this.props.getPlacesTop()
     this.props.getCategories()
   }
 
   render() {
-    const { navigation, mainCategory, categories, loading, error } = this.props   
+    const { navigation, mainCategory, categories, topPlaces, loading, error } = this.props   
     
     /**when first loading show this splash screen */
     if (loading) {
@@ -49,7 +56,10 @@ class Main extends Component {
             style={{ position: 'absolute', height: 200, width: 200, top: (h / 2) - 100, left: (w / 2) - 100 }} 
             source={require('../../resources/images/logo.png')}
             resizeMode="stretch"
-          />               
+          />
+          {error &&
+            <Button title="ПОВТОРИТЬ" onPress={() => this._initData()} />            
+          }
         </ImageBackground>
       </View>)
     }
@@ -66,7 +76,7 @@ class Main extends Component {
               mainCategory.map((itemName) => {
                 const category = categories.filter(cat => cat.id === itemName)[0]                
                 return (
-                  <ButtonGrad key={itemName} code={category.id} mainColor={category.mainColor || '#FFF'} secondColor={category.secondaryColor || '#000'} text={category.name} onPress={() => navigation.push('Catalog', { catalog: itemName, scrollTo: category.id })} />
+                  <ButtonGrad icon={category.promoIcon} key={itemName} code={category.id} mainColor={category.mainColor || '#FFF'} secondColor={category.secondaryColor || '#000'} text={category.name} onPress={() => navigation.push('Catalog', { catalog: itemName, scrollTo: category.id })} />
                 )
               }
               )
@@ -97,10 +107,10 @@ class Main extends Component {
               <FlatList 
                 alwaysBounceVertical={false}
                 columnWrapperStyle={{ justifyContent: 'flex-start'}}
-                data={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25']}
+                data={topPlaces}
                 numColumns={10} 
-                renderItem={(row) => <CardPlace navigation={navigation} item={{ id: row.item, title: 'Adidas', count: 15, source: require('../../resources/demo/adidas.png')}} />}
-                keyExtractor={(item) => item}
+                renderItem={(row) => <CardPlaceDynamic favorite width={152} navigation={navigation} item={row.item} onPress={() => navigation.push('Item', { id: row.item.id })} />}
+                keyExtractor={(item) => item.id}
               />
             </ScrollView>                       
           </View>
@@ -168,7 +178,7 @@ messaging.hasPermission()
   .then((enabled) => {
     if (enabled) {
       messaging.getToken()
-        .then(token => { console.log(token) })
+        .then(token => { console.log('token', token) })
         .catch(error => { console.log(error) })
     } else {
       messaging.requestPermission()
@@ -180,15 +190,13 @@ messaging.hasPermission()
 
 firebase.notifications().onNotification((notification) => {
   const { title, body } = notification
-  PushNotificationIOS.localNotification({
+  PushNotification.localNotification({
     title,
     message: body // (required)
   })
 })
 
-PushNotificationIOS.addEventListener('registrationError', (e) => { console.log(JSON.stringify(e)) })
-
-PushNotificationIOS.configure({
+PushNotification.configure({
 
   // (optional) Called when Token is generated (iOS and Android)
   onRegister(token) {
@@ -232,7 +240,8 @@ const mapStateToProps = state => {
     categories: state.catalog.categories,
     loading: state.catalog.loading,
     mainCategory: state.catalog.mainCategory,
+    topPlaces: state.catalog.topPlaces,
     error: state.catalog.error
   }
 }
-export default connect(mapStateToProps, { getCategories, getSubCategories, initFavorites })(Main)
+export default connect(mapStateToProps, { getCategories, getSubCategories, getPlacesTop, initFavorites })(Main)

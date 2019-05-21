@@ -15,13 +15,13 @@ class Favorite extends Component {
         <Header 
           visibleSort
           //sortPress={this._showSort} 
-          searchPress={() => navigation.goBack()} 
+          searchPress={() => navigation.openDrawer()} 
           navigation={this._navigateToCatalog} 
-          leftIcon="md-arrow-back" 
+          leftIcon="md-menu" 
           mainColor="#45A460"
           secondColor="#A9D334" 
           title="Избранное" 
-          onPress={() => navigation.goBack()} 
+          onPress={() => navigation.openDrawer()} 
         />  
         <View style={{flex: 1, backgroundColor: 'white'}}>
           <ScrollView>
@@ -29,7 +29,7 @@ class Favorite extends Component {
               columnWrapperStyle={{ justifyContent: 'space-between'}}
               data={places}
               numColumns={2} 
-              renderItem={(row) => <CardPlaceDynamic trash width={itemWidth} onPress={() => navigation.push('Item')} item={{ id: row.item, title: 'Adidas', count: 15, source: require('../../resources/demo/adidas.png')}} />}
+              renderItem={(row) => <CardPlaceDynamic trash width={itemWidth} onPress={() => navigation.push('Item', {id: row.item})} item={{ id: row.item, name: 'Adidas', count: 15, img: require('../../resources/demo/adidas.png')}} />}
               keyExtractor={(item) => item}
               style={{ padding: 5 }}
             />

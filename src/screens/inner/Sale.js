@@ -1,14 +1,44 @@
 import React, {Component} from 'react'
-import { Text, StyleSheet, View, ImageBackground, ScrollView, StatusBar} from 'react-native'
+import { Text, StyleSheet, View, ImageBackground, ScrollView, StatusBar, InteractionManager} from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { Divider } from 'react-native-elements'
 import { connect } from 'react-redux'
+import Moment from 'moment'
+import { getSale } from '../../actions/SaleActions'
 import { Header } from '../../components/uikit/item/Header'
-import { w } from '../../constants/global'
+import { w, normalize, genImageUri } from '../../constants/global'
 
-class Sale extends Component {  
+class Sale extends Component {
+  state = {
+    didFinishInitialAnimation: false
+  }
+
+  // Lifecycle methods
+  componentDidMount() {
+    this.props.getSale(this.props.navigation.getParam('id'))    
+    // 1: Component is mounted off-screen
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        didFinishInitialAnimation: true
+      })
+    })
+  }
   render() {
-    const { navigation } = this.props
+    const { navigation, item } = this.props
+    if (this.state.didFinishInitialAnimation === false || !item.id) {
+      return (
+        <View style={styles.container}>
+          {/*<Spinner
+            //visibility of Overlay Loading Spinner
+            visible
+            //Text with the Spinner 
+            textContent={'Загрузка...'}
+            //Text style of the Spinner Text
+            textStyle={{color: '#FFF'}}
+          />
+          */}
+        </View>)
+    }
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -17,7 +47,7 @@ class Sale extends Component {
           <View style={{ width: w, height: getComponentHeight(w) }}>
             <ImageBackground  
               style={{flex: 1, height: undefined, width: undefined }} 
-              source={require('../../../resources/demo/soup-big.png')} 
+              source={{uri: genImageUri(item.img)}} 
               resizeMode="stretch"
             >
               <LinearGradient
@@ -31,20 +61,43 @@ class Sale extends Component {
               /> 
               <View style={{flex: 1}} />                
             </ImageBackground>
+            {/*skidka*/
+              item.skidka &&
+              <View style={styles.skidkaView}>
+                <Text style={styles.skidkaText}>Скидка {item.skidka}%</Text>
+              </View>
+            }
           </View>
           <View style={{ marginHorizontal: 15, marginVertical: 10 }}>
-            <Text style={{fontFamily: 'Roboto-Regular', fontSize: 24, color: 'rgba(0, 0, 0, 0.87)' }}>Суп с фрикадельками</Text>
-            <Text style={{fontFamily: 'Roboto-Regular', fontSize: 12, color: 'rgba(0, 0, 0, 0.4)', lineHeight: 14, margin: 10}}>Действует до 22.03.19</Text>
-            <View style={{ flexDirection: 'row'}}>
-              <Text style={{fontFamily: 'Roboto-Regular', fontSize: 16, color: '#979797', textDecorationLine: 'line-through' }} >150</Text>
-              <Text style={{fontFamily: 'Roboto-Regular', fontSize: 16, color: '#FF6E36', marginLeft: 5}}>142</Text>
-            </View>
-            <Text style={{fontFamily: 'Roboto-Regular'}}>Экономия - <Text style={{color: '#FF6E36'}}>8 тенге</Text></Text>
+            <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(24), color: 'rgba(0, 0, 0, 0.87)' }}>{item.name}</Text>
+            {
+              item.date_en &&
+              <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(12), color: 'rgba(0, 0, 0, 0.4)', lineHeight: 14, margin: 10}}>Действует до {Moment(item.date_en).format('DD.MM.YYYY')}</Text>
+            }    
+            {
+              item.skidka_price && 
+              <View style={{ flexDirection: 'row'}}>
+                <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(16), color: '#979797', textDecorationLine: 'line-through' }} >{item.price}</Text>
+                <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(16), color: '#FF6E36', marginLeft: 5}}>{item.skidka_price}</Text>
+              </View>
+            }
+            {
+              !item.skidka_price && 
+              <View style={{ flexDirection: 'row'}}>
+                <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(16), color: '#FF6E36', marginLeft: 5}}>{item.price}</Text>
+              </View>
+            }        
+            
+            {
+              item.ekonom &&
+              <Text style={{fontFamily: 'Roboto-Regular'}}>Экономия - <Text style={{color: '#FF6E36'}}>{item.ekonom} тенге</Text></Text>
+            }
+            
           </View>
           <Divider style={{ backgroundColor: 'rgba(0, 0, 0, 0.12)' }} />
           <View style={{ paddingHorizontal: 15, paddingVertical: 20}}>
             <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 14, lineHeight: 21, color: 'rgba(0, 0, 0, 0.541327)' }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              {item.description}
             </Text>
           </View>          
         </ScrollView>
@@ -61,14 +114,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start'
+  },
+  skidkaView: {
+    position: 'absolute',
+    backgroundColor: '#FF6E36',
+    left: 0,
+    top: getComponentHeight(w) - 55,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderTopRightRadius: 4,
+    borderBottomRightRadius: 4
+  },
+  skidkaText: {
+    fontFamily: 'Roboto-Regular', fontSize: normalize(12), color: 'white', lineHeight: 19
   }
 })
 
 const mapStateToProps = state => {
   return {
-    categories: state.catalog.categories,
-    mainCategory: state.catalog.mainCategory,
-    items: state.item.items
+    item: state.sale.item
   }
 }
-export default connect(mapStateToProps, { })(Sale)
+export default connect(mapStateToProps, { getSale })(Sale)

@@ -3,7 +3,7 @@ import { Animated, Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
 import { addFavoritePlace, delFavoritePlace } from '../../actions/FavoriteActions'
-import { BG_COLOR } from '../../constants/global'
+import { BG_COLOR, genImageUri } from '../../constants/global'
 
 class CardPlace extends Component {
   state = {
@@ -28,23 +28,23 @@ class CardPlace extends Component {
   }
 
   render() {
-    const { item, navigation, places } = this.props
+    const { item, navigation, places, catName } = this.props
     const { view, row, favoriteView, touchZone } = styles
     const { fadeAnim } = this.state
     const selected = places.includes(item.id)
-
-    return (<TouchableHighlight style={[view, { height: 203, width: 152, marginHorizontal: 5, marginBottom: 10 }]} onPress={() => navigation.push('Item')} >
+   
+    return (<TouchableHighlight style={[view, { height: 203, width: 152, marginHorizontal: 5, marginBottom: 10 }]} onPress={() => navigation.push('Item', {id: item.id, catName})} >
       <Animated.View style={{flex: 1, overflow: 'hidden', borderRadius: 6, opacity: fadeAnim}}>
         <View style={{ flex: 1 }}>
           <Image 
             style={{flex: 1, height: undefined, width: undefined }} 
-            source={item.source} 
-            resizeMode="stretch"
+            source={{uri: genImageUri(item.img)}} 
+            resizeMode="cover"
           />
         </View>
         <View style={row}>
           <View style={{ flex: 1 }}>
-            <Text style={{ color: '#170701', fontSize: 16, lineHeight: 19, opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{item.title}</Text>
+            <Text style={{ color: '#170701', fontSize: 16, lineHeight: 19, opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{item.name}</Text>
             <Text style={{ color: '#563DD0', fontSize: 12, lineHeight: 19, fontFamily: 'Roboto-Regular' }}>{item.count} предложений</Text>            
           </View>          
           <TouchableOpacity onPress={() => (selected ? this._remFromFav(item.id) : this._addToFav(item.id))} style={touchZone}>
