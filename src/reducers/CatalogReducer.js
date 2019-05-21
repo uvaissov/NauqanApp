@@ -25,7 +25,8 @@ const INITIAL_STATE = {
   visibleSubCategory: false,
   visibleSearchResult: false,
   loading: true,
-  error: undefined
+  error: undefined,
+  dir: 'asc'
 }
 
 export default (state = INITIAL_STATE, action) => {

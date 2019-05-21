@@ -27,7 +27,7 @@ class Catalog extends Component {
     //this.props.cleanSubCategories()
     //this.props.cleanPlaces()
     this.props.getSubCategories(name)
-    this.props.getPlacesByCatalog(name)    
+    this.props.getPlacesByCatalog(name,this.props.dir)    
   }
   _showSearchResult = (value) => { 
     this.props._visibleSearchResult(value)
@@ -47,7 +47,17 @@ class Catalog extends Component {
   }
 
   render() {
-    const { navigation, categories, sub_categories, places, showSort, showSubCategoryOption, showSearchResult, searchResults } = this.props
+    const { 
+      navigation, 
+      categories, 
+      sub_categories, 
+      places, 
+      showSort, 
+      showSubCategoryOption, 
+      showSearchResult, 
+      searchResults,
+      dir
+    } = this.props
     const category = categories.filter(cat => cat.id === navigation.getParam('catalog'))[0]
     const scrollTo = navigation.getParam('scrollTo')
 
@@ -122,6 +132,7 @@ class Catalog extends Component {
           onPress={() => navigation.goBack()}
           showSearchResult={showSearchResult}
           searchByCatalog={this._searchByCatalog}
+          dir={dir}
         />
         {this._renderController()}
         
@@ -152,7 +163,8 @@ const mapStateToProps = state => {
     showSort: state.catalog.visibleSort,
     showSubCategoryOption: state.catalog.visibleSubCategory,
     showSearchResult: state.catalog.visibleSearchResult,
-    searchResults: state.catalog.searchResults
+    searchResults: state.catalog.searchResults,
+    dir: state.catalog.dir
   }
 }
 export default connect(mapStateToProps, { _visibleSort, _visibleSubCategory, _visibleSearchResult, getSubCategories, cleanSubCategories, cleanPlaces, getPlacesByCatalog, searchByCatalog })(Catalog)

@@ -109,7 +109,7 @@ export const cleanSubCategories = () => {
   }
 }
 
-export const getPlacesByCatalog = (id) => async (dispatch) => {
+export const getPlacesByCatalog = (id, dir) => async (dispatch) => {
   function onSuccess(success) {
     dispatch({ type: PLACES_FETCHED, payload: success })
     return success
@@ -120,7 +120,7 @@ export const getPlacesByCatalog = (id) => async (dispatch) => {
   }
   try {
     dispatch({ type: PLACES_FETCHED, payload: [] })
-    const URL = `${hostName}/zavedeniya${id === 'all' ? '' : `?cat_id=${id}`}` 
+    const URL = `${hostName}/zavedeniya?filt=${dir}${id === 'all' ? '' : `&cat_id=${id}`}` 
     const res = await fetch(URL, {
       method: 'GET'
     })
