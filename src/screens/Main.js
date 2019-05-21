@@ -7,7 +7,8 @@ import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
 import { getCategories, getSubCategories, getPlacesTop } from '../actions/CatalogActions'
 import { initFavorites } from '../actions/FavoriteActions'
-import CardPlace, { HeaderMain, SwiperApp, ButtonGrad} from '../components/uikit'
+import { HeaderMain, SwiperApp, ButtonGrad} from '../components/uikit'
+import CardPlaceDynamic from '../components/uikit/CardPlaceDynamic'
 import { w, h, BG_COLOR, TRASPARENT } from '../constants/global'
 
 //const PushNotificationIOS = require('react-native-push-notification')
@@ -15,6 +16,10 @@ const PushNotification = require('react-native-push-notification')
 
 class Main extends Component {
   componentDidMount() {
+    this._initData()
+  }
+
+  _initData= () => {
     this.props.initFavorites()
     this.props.getPlacesTop()
     this.props.getCategories()
@@ -51,7 +56,10 @@ class Main extends Component {
             style={{ position: 'absolute', height: 200, width: 200, top: (h / 2) - 100, left: (w / 2) - 100 }} 
             source={require('../../resources/images/logo.png')}
             resizeMode="stretch"
-          />               
+          />
+          {error &&
+            <Button title="ПОВТОРИТЬ" onPress={() => this._initData()} />            
+          }
         </ImageBackground>
       </View>)
     }
@@ -68,7 +76,7 @@ class Main extends Component {
               mainCategory.map((itemName) => {
                 const category = categories.filter(cat => cat.id === itemName)[0]                
                 return (
-                  <ButtonGrad key={itemName} code={category.id} mainColor={category.mainColor || '#FFF'} secondColor={category.secondaryColor || '#000'} text={category.name} onPress={() => navigation.push('Catalog', { catalog: itemName, scrollTo: category.id })} />
+                  <ButtonGrad icon={category.promoIcon} key={itemName} code={category.id} mainColor={category.mainColor || '#FFF'} secondColor={category.secondaryColor || '#000'} text={category.name} onPress={() => navigation.push('Catalog', { catalog: itemName, scrollTo: category.id })} />
                 )
               }
               )
@@ -101,7 +109,7 @@ class Main extends Component {
                 columnWrapperStyle={{ justifyContent: 'flex-start'}}
                 data={topPlaces}
                 numColumns={10} 
-                renderItem={(row) => <CardPlace navigation={navigation} item={row.item} />}
+                renderItem={(row) => <CardPlaceDynamic favorite width={152} navigation={navigation} item={row.item} onPress={() => navigation.push('Item', { id: row.item.id })} />}
                 keyExtractor={(item) => item.id}
               />
             </ScrollView>                       

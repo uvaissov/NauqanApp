@@ -29,7 +29,7 @@ const SwiperApp = ({
                 <ImageBackground  
                   style={{flex: 1, height: undefined, width: undefined }} 
                   source={item.source} 
-                  resizeMode="stretch"
+                  resizeMode="cover"
                 >
                   <LinearGradient
                     colors={['rgba(0, 0, 0, 0.50)', 'rgba(0, 0, 0, 0.25)', 'transparent', 'transparent', 'rgba(0, 0, 0, 0.25)', 'rgba(0, 0, 0, 0.50)']}
@@ -60,7 +60,7 @@ const SwiperApp = ({
                   <Image 
                     style={{flex: 1, height: undefined, width: undefined }} 
                     source={item.source} 
-                    resizeMode="stretch"
+                    resizeMode="cover"
                   />
                 </View>      
               </View>

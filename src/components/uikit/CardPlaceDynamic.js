@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import { addFavoritePlace, delFavoritePlace } from '../../actions/FavoriteActions'
-import { BG_COLOR } from '../../constants/global'
+import { BG_COLOR, genImageUri } from '../../constants/global'
 
 class CardPlaceDynamic extends Component {
   state = {
@@ -23,7 +23,7 @@ class CardPlaceDynamic extends Component {
   }
 
   _calcHeightViewByWidth= (width) => {
-    return width * 1.335
+    return width
   }
 
   _calcHeightRowByWidth= (width) => {
@@ -43,18 +43,19 @@ class CardPlaceDynamic extends Component {
     const { view, row, favoriteView, touchZone } = styles
     const { fadeAnim, width } = this.state
     const selected = places.includes(item.id)
-    return (<TouchableHighlight style={[view, { height: this._calcHeightViewByWidth(width), width, marginHorizontal: 5, marginBottom: 10 }, style]} onPress={onPress} >
+    console.log(item)
+    return (<TouchableHighlight style={[view, { width, marginHorizontal: 5, marginBottom: 10 }, style]} onPress={onPress} >
       <Animated.View style={{flex: 1, overflow: 'hidden', borderRadius: 6, opacity: fadeAnim}}>
         <View style={{ flex: 1 }}>
           <Image 
-            style={{flex: 1, height: undefined, width: undefined }} 
-            source={item.source} 
-            resizeMode="stretch"
+            style={{flex: 1, height: this._calcHeightViewByWidth(width), width: undefined }} 
+            source={{uri: genImageUri(item.img)}} 
+            resizeMode="cover"
           />
         </View>
-        <View style={[row, { height: this._calcHeightRowByWidth(width)}]}>
+        <View style={[row]}>
           <View style={{ flex: 1 }}>
-            <Text style={{ color: '#170701', fontSize: 16, lineHeight: 19, opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{item.title}</Text>
+            <Text style={{ color: '#170701', fontSize: 16, lineHeight: 19, opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{item.name}</Text>
             <Text style={{ color: '#563DD0', fontSize: 12, lineHeight: 19, fontFamily: 'Roboto-Regular' }}>{item.count} предложений</Text>            
           </View>
           {
@@ -83,8 +84,8 @@ class CardPlaceDynamic extends Component {
 const styles = StyleSheet.create({
   row: {
     paddingLeft: 10,
-    paddingTop: 8,
-    height: 51,
+    paddingTop: 8,    
+    paddingBottom: 8,
     flexDirection: 'row',
     backgroundColor: BG_COLOR,
     position: 'relative'

@@ -105,9 +105,10 @@ const Header = ({
         showSearchResult === false && 
         <ScrollView showsHorizontalScrollIndicator={false} ref={(view) => { this._scrollView = view }} horizontal style={{ flexDirection: 'row', padding: 15 }}>
           {
-            categories.map((cat) => {            
+            categories.map((cat) => {  
+              const selected = cat.id === category.id         
               return (
-                <ButtonGrad key={cat.id} code={cat.id} color={cat.id !== category.id ? 'rgba(0, 0, 0, 0.54)' : cat.mainColor} text={cat.name} onPress={() => this.changeCatalog(cat.id)} />
+                <ButtonGrad selected={selected} cat={cat} key={cat.id} code={cat.id} color={!selected ? 'rgba(0, 0, 0, 0.54)' : cat.mainColor} text={cat.name} onPress={() => this.changeCatalog(cat.id)} />
               )
             }
             )

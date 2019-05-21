@@ -107,7 +107,7 @@ class MapPlaces extends Component {
           }
           
         </View>
-        <Header style={{position: 'absolute', width: w, top: 0, zIndex: 10}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />
+        <Header style={{position: 'absolute', width: w, top: 0, zIndex: 10}} leftIcon="md-menu" title="Главная" onPress={() => navigation.openDrawer()} />
         {/* footer static and get 10% from display */}
         <View style={[styles.shadowBox, { backgroundColor: TRASPARENT, height: h * 0.1}]} >          
           <View style={[{flex: 1, backgroundColor: BG_COLOR, flexDirection: 'row', justifyContent: 'space-between'}, styles.scrollView]}>

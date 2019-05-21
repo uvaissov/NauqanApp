@@ -13,7 +13,8 @@ export const getZav = (id) => async (dispatch) => {
     return error
   }
   
-  try {    
+  try {
+    dispatch({ type: ITEM_FETCHED, payload: {} })
     const URL = `${hostName}/zavedeniya?id=${id}`
     const res = await fetch(URL, {
       method: 'GET'
@@ -23,6 +24,13 @@ export const getZav = (id) => async (dispatch) => {
   } catch (error) {
     return onError(error)
   }  
+}
+
+export const cleanZav = () => {
+  return {
+    type: ITEM_FETCHED,
+    payload: {}
+  }
 }
 
 export const getPlacesByZav = (id) => async (dispatch) => {
@@ -35,7 +43,8 @@ export const getPlacesByZav = (id) => async (dispatch) => {
     return error
   }
     
-  try {    
+  try {
+    dispatch({ type: ITEM_PLACES_FETCHED, payload: [] })
     const URL = `${hostName}//product?zav_id=${id}`
     const res = await fetch(URL, {
       method: 'GET'

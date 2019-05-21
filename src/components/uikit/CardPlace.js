@@ -32,14 +32,14 @@ class CardPlace extends Component {
     const { view, row, favoriteView, touchZone } = styles
     const { fadeAnim } = this.state
     const selected = places.includes(item.id)
-
+   
     return (<TouchableHighlight style={[view, { height: 203, width: 152, marginHorizontal: 5, marginBottom: 10 }]} onPress={() => navigation.push('Item', {id: item.id, catName})} >
       <Animated.View style={{flex: 1, overflow: 'hidden', borderRadius: 6, opacity: fadeAnim}}>
         <View style={{ flex: 1 }}>
           <Image 
             style={{flex: 1, height: undefined, width: undefined }} 
             source={{uri: genImageUri(item.img)}} 
-            resizeMode="stretch"
+            resizeMode="cover"
           />
         </View>
         <View style={row}>
