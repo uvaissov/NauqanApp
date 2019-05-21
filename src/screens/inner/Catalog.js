@@ -27,7 +27,7 @@ class Catalog extends Component {
     //this.props.cleanSubCategories()
     //this.props.cleanPlaces()
     this.props.getSubCategories(name)
-    this.props.getPlacesByCatalog(name,this.props.dir)    
+    this.props.getPlacesByCatalog(name, this.props.dir)    
   }
   _showSearchResult = (value) => { 
     this.props._visibleSearchResult(value)
