@@ -25,7 +25,8 @@ const Header = ({
   visibleSort,
   showSearchResult,
   searchByCatalog,
-  dir
+  dir,
+  onSelectDir
 }) => {
   const { headerGradView, viewStyle, textStyle, inputStyle, leftButtonStyle, rightButtonStyle } = styles  
   this.changeCatalog = (name) => {
@@ -51,6 +52,9 @@ const Header = ({
   }
   this.search = (text) => {
     searchByCatalog(text)    
+  }
+  this.onSelectDir = (value) => {
+    onSelectDir(value)
   }
 
   this.viewHeader = () => {
@@ -86,7 +90,7 @@ const Header = ({
           sortPress && showSearchResult === false &&
           <TouchableOpacity onPress={() => this.show(true)} style={[rightButtonStyle]}>
             <Icon name="sort" height="24" width="24" fill="#fff" />
-            <ModalSort visible={visibleSort} hideSort={() => this.show(false)} dir={dir} />           
+            <ModalSort visible={visibleSort} hideSort={() => this.show(false)} dir={dir} onSelectDir={onSelectDir} />           
           </TouchableOpacity>
         }
         {

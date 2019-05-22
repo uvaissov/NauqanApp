@@ -11,7 +11,9 @@ import {
   TOP_PLACES_FETCHED,
   TOP_PLACES_FAILED,
   SEARCH_FETCHED,
-  SEARCH_FAILED
+  SEARCH_FAILED,
+  SELECT_DIR_CATALOG,
+  SELECT_SUB_CATALOG
 } from '../types'
 
 import { hostName } from '../constants/global'
@@ -33,6 +35,20 @@ export const _visibleSubCategory = (value) => {
 export const _visibleSearchResult = (value) => {
   return {
     type: VISIBLE_SEARCH_RESULT,
+    payload: value
+  }
+}
+
+export const _onSelectDir = (value) => {
+  return {
+    type: SELECT_DIR_CATALOG,
+    payload: value
+  }
+}
+
+export const onSelectSubCat = (value) => {
+  return {
+    type: SELECT_SUB_CATALOG,
     payload: value
   }
 }
@@ -109,7 +125,7 @@ export const cleanSubCategories = () => {
   }
 }
 
-export const getPlacesByCatalog = (id, dir) => async (dispatch) => {
+export const getPlacesByCatalog = (id, dir, sub_id) => async (dispatch) => {
   function onSuccess(success) {
     dispatch({ type: PLACES_FETCHED, payload: success })
     return success
@@ -119,8 +135,15 @@ export const getPlacesByCatalog = (id, dir) => async (dispatch) => {
     return error
   }
   try {
-    dispatch({ type: PLACES_FETCHED, payload: [] })
-    const URL = `${hostName}/zavedeniya?filt=${dir}${id === 'all' ? '' : `&cat_id=${id}`}` 
+    dispatch({ type: PLACES_FETCHED, payload: [] }) 
+    if (!sub_id) {
+      dispatch({ type: SELECT_SUB_CATALOG, payload: undefined }) 
+    }
+    const cat_id = id === 'all' ? '' : `&cat_id=${id}`
+    const sub_cat_id = !sub_id ? '' : `&sub_cat_id=${sub_id}`
+    const URL = `${hostName}/zavedeniya?filt=${dir}${cat_id}${sub_cat_id}`
+
+    console.log(URL)
     const res = await fetch(URL, {
       method: 'GET'
     })

@@ -1,11 +1,14 @@
 import React from 'react'
-import { View, StyleSheet, Text, Modal, FlatList, TouchableWithoutFeedback } from 'react-native'
+import { View, StyleSheet, Text, Modal, FlatList, TouchableWithoutFeedback, TouchableOpacity } from 'react-native'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 //import { w } from '../../../constants/global'
 
-const ModalSort = ({visible, hideSort, dir}) => {
+const ModalSort = ({visible, hideSort, dir, onSelectDir}) => {
   const { viewStyle, rowView, rowText } = styles   
   const data = [{name: 'Показать от А до Я', dir: 'asc'}, {name: 'Показать от Я до А', dir: 'desc'}]
+  this._getColor = (item) => {
+    return dir === item.dir ? '#FF5621' : 'rgba(0, 0, 0, 0.87)'
+  }
   return (
     <Modal 
       visible={visible}
@@ -18,7 +21,18 @@ const ModalSort = ({visible, hideSort, dir}) => {
           <View style={viewStyle}>
             <FlatList
               data={data}
-              renderItem={(item) => <View style={rowView}><Text style={[rowText, { }]}>{item.item.name}</Text></View>}
+              keyExtractor={(item) => item.dir}
+              renderItem={(item) => (
+                <TouchableOpacity onPress={() => { 
+                  onSelectDir(item.item.dir) 
+                  hideSort()
+                }} 
+                >
+                  <View style={rowView}>
+                    <Text style={[rowText, {color: this._getColor(item.item) }]}>{item.item.name}</Text>
+                  </View>
+                </TouchableOpacity>
+              )}
             />        
           </View>        
         </View>
@@ -53,8 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     fontWeight: 'normal',
-    fontFamily: 'Roboto-Regular',
-    color: 'rgba(0, 0, 0, 0.87)'
+    fontFamily: 'Roboto-Regular'
   }
 })
 

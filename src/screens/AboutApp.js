@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
-import { StatusBar, Text, StyleSheet, View, ScrollView, Image } from 'react-native'
+import { Text, StyleSheet, View, ScrollView, Image } from 'react-native'
 //import LinearGradient from 'react-native-linear-gradient'
 import { connect } from 'react-redux'
 import { Divider } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
-
+import CustomStatusBar from '../components/uikit/CustomStatusBar'
 import { Header } from '../components/uikit/item/Header'
 import { w, normalize } from '../constants/global'
 
@@ -13,9 +13,9 @@ class AboutApp extends Component {
     const { navigation } = this.props
     return (
       <View style={styles.container}>        
-        <ScrollView>          
+        <ScrollView>
+          <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />      
           <Header leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-menu" onPress={() => navigation.openDrawer()} />
-          <StatusBar animated showHideTransition='slide' backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
           <View style={{ width: w, height: getComponentHeight(w * 0.8) }}>
             <LinearGradient style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} colors={['#FF662E', '#FFA470']} useAngle angle={146.71}>
               <Image 

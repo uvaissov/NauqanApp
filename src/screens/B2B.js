@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
-import { StatusBar, Text, TextInput, StyleSheet, View, ScrollView, ImageBackground} from 'react-native'
+import { Text, TextInput, StyleSheet, View, ScrollView, ImageBackground} from 'react-native'
 //import LinearGradient from 'react-native-linear-gradient'
 import { connect } from 'react-redux'
 import { Divider, Button } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
-
+import CustomStatusBar from '../components/uikit/CustomStatusBar'
 import { Header } from '../components/uikit/item/Header'
 import Icon from '../components/svgkit/Icon'
 
@@ -15,6 +15,7 @@ class B2B extends Component {
     const { navigation } = this.props
     return (
       <View style={styles.container}>        
+        <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
         <ScrollView>
           <ImageBackground  
             style={{width: '100%', flex: 2, transform: [{perspective: 850}], justifyContent: 'center'}}
@@ -23,7 +24,6 @@ class B2B extends Component {
             imageStyle={{opacity: 0.2, transform: [{scale: 0.7}]}}
           >
             <Header leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-menu" onPress={() => navigation.openDrawer()} />
-            <StatusBar animated showHideTransition='slide' backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
             <View style={{ width: w, height: getComponentHeight(w * 0.8) }}>
               <LinearGradient style={{ }} colors={['#FF662E', '#FFA470']} useAngle angle={146.71}>
                 <Icon name="b2b_big" height={getComponentHeight(w * 0.8)} width={w} />

@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
-import { Image, StyleSheet, View, Text, ScrollView, StatusBar, TouchableOpacity, FlatList, ImageBackground } from 'react-native'
+import { Image, StyleSheet, View, Text, ScrollView, TouchableOpacity, FlatList, ImageBackground } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { Button } from 'react-native-elements'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
+import CustomStatusBar from '../components/uikit/CustomStatusBar'
 import { getCategories, getSubCategories, getPlacesTop } from '../actions/CatalogActions'
 import { initFavorites } from '../actions/FavoriteActions'
 import { HeaderMain, SwiperApp, ButtonGrad} from '../components/uikit'
@@ -31,6 +32,7 @@ class Main extends Component {
     /**when first loading show this splash screen */
     if (loading) {
       return (<View style={StyleSheet.absoluteFill}>
+        <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
         <ImageBackground  
           style={{width: '100%', flex: 1, transform: [{perspective: 850}], justifyContent: 'center'}}
           source={require('../../resources/images/background.png')} 
@@ -66,10 +68,10 @@ class Main extends Component {
 
     return (
       <View style={styles.container}>        
+        <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
         {/* Start scroll component */}
         <ScrollView overScrollMode="never" bounces={false} style={[{ flex: 1}]}>
-          <HeaderMain style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />          
-          <StatusBar animated showHideTransition='slide' backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
+          <HeaderMain style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />                    
           <SwiperApp data={[{ id: '1', source: require('../../resources/demo/promo.png') }, { id: '2', source: require('../../resources/demo/promo.png') }]} />
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 15 }}> 
             {

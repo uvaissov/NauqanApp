@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
-import { Text, StyleSheet, View, ImageBackground, ScrollView, StatusBar, InteractionManager} from 'react-native'
+import { Text, StyleSheet, View, ImageBackground, ScrollView, InteractionManager} from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { Divider } from 'react-native-elements'
 import { connect } from 'react-redux'
 import Moment from 'moment'
+import CustomStatusBar from '../../components/uikit/CustomStatusBar'
 import { getSale } from '../../actions/SaleActions'
 import { Header } from '../../components/uikit/item/Header'
 import { w, normalize, genImageUri } from '../../constants/global'
@@ -28,6 +29,7 @@ class Sale extends Component {
     if (this.state.didFinishInitialAnimation === false || !item.id) {
       return (
         <View style={styles.container}>
+          <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
           {/*<Spinner
             //visibility of Overlay Loading Spinner
             visible
@@ -41,9 +43,9 @@ class Sale extends Component {
     }
     return (
       <View style={styles.container}>
+        <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
         <ScrollView>
           <Header leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-arrow-back" title="Главная" onPress={() => navigation.goBack()} />
-          <StatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
           <View style={{ width: w, height: getComponentHeight(w) }}>
             <ImageBackground  
               style={{flex: 1, height: undefined, width: undefined }} 

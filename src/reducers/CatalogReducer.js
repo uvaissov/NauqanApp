@@ -11,7 +11,9 @@ import {
   TOP_PLACES_FETCHED,
   TOP_PLACES_FAILED,
   SEARCH_FETCHED,
-  SEARCH_FAILED
+  SEARCH_FAILED,
+  SELECT_DIR_CATALOG,
+  SELECT_SUB_CATALOG
 } from '../types'
 
 const INITIAL_STATE = {
@@ -26,7 +28,8 @@ const INITIAL_STATE = {
   visibleSearchResult: false,
   loading: true,
   error: undefined,
-  dir: 'asc'
+  dir: 'asc',
+  selectedSubCat: undefined
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -115,7 +118,20 @@ export default (state = INITIAL_STATE, action) => {
     return {
       ...state
     }
-  }  
+  }
+  case SELECT_DIR_CATALOG: {    
+    return {
+      ...state,
+      dir: action.payload
+    }
+  }
+  case SELECT_SUB_CATALOG: {    
+    return {
+      ...state,
+      selectedSubCat: action.payload
+    }
+  }
+  
   default: return state
   }
 }

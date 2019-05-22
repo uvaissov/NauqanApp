@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet, ScrollView } from 'react-native'
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
 import { BG_COLOR } from '../../constants/global'
 import CardPlace from './CardPlace'
 
@@ -8,14 +8,17 @@ const SubCategory = ({
   item,
   navigation,
   mainColor,
-  places
+  places,
+  onSelectSubCat
 }) => {
   const { view } = styles
   return (
     <View style={[view, style]} >
       <View style={{paddingHorizontal: 15, flexDirection: 'row', justifyContent: 'space-between'}}>
         <Text style={{ fontWeight: '500', fontFamily: 'Roboto-Regular', lineHeight: 16}}>Категория: {item.categoryName}</Text>
-        <Text style={{ fontWeight: '500', fontFamily: 'Roboto-Regular', color: mainColor, lineHeight: 16, textTransform: 'uppercase'}}>Все</Text>
+        <TouchableOpacity onPress={() => onSelectSubCat(item.id)}>
+          <Text style={{ fontWeight: '500', fontFamily: 'Roboto-Regular', color: mainColor, lineHeight: 16, textTransform: 'uppercase'}}>Все</Text>
+        </TouchableOpacity>
       </View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} >
         <View style={{ flexDirection: 'row', padding: 15 }}>

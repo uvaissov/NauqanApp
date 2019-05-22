@@ -1,11 +1,13 @@
 import React from 'react'
-import { View, StyleSheet, Text, Modal, FlatList, TouchableWithoutFeedback } from 'react-native'
+import { View, StyleSheet, Text, Modal, FlatList, TouchableWithoutFeedback, TouchableOpacity } from 'react-native'
 //import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { w } from '../../../constants/global'
 
-const ModalSubCategory = ({visible, hideSort, sub_categories, catName, catColor}) => {
-  const { viewStyle, rowView, rowText } = styles   
-  //const data = [{name: 'Показать от А до Я', dir: 'asc'}, {name: 'Показать от Я до А', dir: 'desc'}]
+const ModalSubCategory = ({ visible, hideSort, sub_categories, catName, catColor, onSelectSubCat, selectedSubCat }) => {
+  const { viewStyle, rowView, rowText } = styles 
+  this._getColor = (id) => {
+    return selectedSubCat === id ? '#FF5621' : 'rgba(0, 0, 0, 0.87)'
+  }
   return (
     <Modal 
       visible={visible}
@@ -16,10 +18,22 @@ const ModalSubCategory = ({visible, hideSort, sub_categories, catName, catColor}
       <TouchableWithoutFeedback onPress={() => { hideSort() }}>
         <View style={[StyleSheet.absoluteFill, {backgroundColor: 'rgba(0,0,0,0.1)', justifyContent: 'center', alignItems: 'center'}]}>        
           <View style={viewStyle}>
-            <View style={rowView}><Text style={[rowText, { color: catColor }]}>{catName}</Text></View>
+            <TouchableOpacity onPress={() => { onSelectSubCat(undefined) }}>
+              <View style={rowView}><Text style={[rowText, { color: catColor }]}>{catName}</Text></View>
+            </TouchableOpacity>
             <FlatList
               data={sub_categories}
-              renderItem={(item) => <View style={rowView}><Text style={rowText}>{item.item.name}</Text></View>}
+              keyExtractor={(item) => { 
+                return `id:${item.id}` 
+              }
+              }
+              renderItem={(item) => (
+                <TouchableOpacity onPress={() => { onSelectSubCat(item.item.id) }}>
+                  <View style={rowView}>
+                    <Text style={[rowText, { color: this._getColor(item.item.id)}]}>{item.item.name}</Text>
+                  </View>
+                </TouchableOpacity>
+              )}
             />        
           </View>        
         </View>

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, FlatList, ScrollView} from 'r
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
 import { w, h, TRASPARENT, BG_COLOR } from '../constants/global'
+import CustomStatusBar from '../components/uikit/CustomStatusBar'
 import { Header } from '../components/uikit/favorite/Header'
 import CardPlaceDynamic from '../components/uikit/CardPlaceDynamic'
 
@@ -12,6 +13,7 @@ class Favorite extends Component {
     const itemWidth = w * 0.466
     return (
       <View style={styles.container}>
+        <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
         <Header 
           visibleSort
           //sortPress={this._showSort} 

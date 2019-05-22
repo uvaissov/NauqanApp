@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
-import { StatusBar, Text, StyleSheet, View, ImageBackground, FlatList, ScrollView, InteractionManager, Image, TouchableOpacity} from 'react-native'
+import { Text, StyleSheet, View, ImageBackground, FlatList, ScrollView, InteractionManager, Image, TouchableOpacity} from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 //import Spinner from 'react-native-loading-spinner-overlay'
 import LinearGradient from 'react-native-linear-gradient'
 import { connect } from 'react-redux'
 import { Divider } from 'react-native-elements'
+import CustomStatusBar from '../../components/uikit/CustomStatusBar'
 import { getZav, getPlacesByZav, cleanZav } from '../../actions/ItemActions'
 import { Header } from '../../components/uikit/item/Header'
 import { CardItem } from '../../components/uikit/item/CardItem'
@@ -34,6 +35,7 @@ class Item extends Component {
     if (this.state.didFinishInitialAnimation === false || !zav.id) {
       return (
         <View style={styles.container}>
+          <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
           {/*<Spinner
             //visibility of Overlay Loading Spinner
             visible
@@ -50,9 +52,9 @@ class Item extends Component {
 
     return (
       <View style={styles.container}>                
+        <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
         <ScrollView>    
-          <Header iconFunnel iconSearch leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-arrow-back" title="Главная" onPress={() => navigation.goBack()} />
-          <StatusBar animated backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />          
+          <Header iconFunnel iconSearch leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-arrow-back" title="Главная" onPress={() => navigation.goBack()} />              
           <View style={{ width: w, height: getComponentHeight(w) }}>
             <ImageBackground  
               style={{flex: 1, height: undefined, width: undefined }} 
