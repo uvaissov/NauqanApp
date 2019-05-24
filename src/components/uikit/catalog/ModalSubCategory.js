@@ -1,12 +1,14 @@
 import React from 'react'
-import { View, StyleSheet, Text, Modal, FlatList, TouchableWithoutFeedback, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, Modal, FlatList, TouchableWithoutFeedback, TouchableOpacity, Image } from 'react-native'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 //import { ifIphoneX } from 'react-native-iphone-x-helper'
-import { w } from '../../../constants/global'
+import { w, genImageUri } from '../../../constants/global'
 
-const ModalSubCategory = ({ visible, hideSort, sub_categories, catName, catColor, onSelectSubCat, selectedSubCat }) => {
+const ModalSubCategory = ({ visible, hideSort, sub_categories, onSelectSubCat, selectedSubCat, category }) => {
+  const { name: catName, mainColor: catColor, enableIcon } = category
   const { viewStyle, rowView, rowText } = styles 
-  this._getColor = (id) => {
-    return selectedSubCat === id ? '#FF5621' : 'rgba(0, 0, 0, 0.87)'
+  this._getIcon = (id) => {
+    return selectedSubCat === id ? <MaterialIcons name="lens" size={24} style={{color: 'black'}} /> : <MaterialIcons name="panorama-fish-eye" size={24} style={{color:'black'}} />
   }
   return (
     <Modal 
@@ -19,7 +21,10 @@ const ModalSubCategory = ({ visible, hideSort, sub_categories, catName, catColor
         <View style={[StyleSheet.absoluteFill, {backgroundColor: 'rgba(0,0,0,0.1)', justifyContent: 'center', alignItems: 'center'}]}>        
           <View style={viewStyle}>
             <TouchableOpacity onPress={() => { onSelectSubCat(undefined) }}>
-              <View style={rowView}><Text style={[rowText, { color: catColor }]}>{catName}</Text></View>
+              <View style={[rowView, { alignItems: 'center'}]}>
+                <Image style={{ height: 20, width: 20, marginRight: 5 }} source={{uri: genImageUri(enableIcon)}} resizeMode="contain" />
+                <Text style={[rowText, { color: catColor, fontSize: 20, fontWeight: '500', lineHeight: 28 }]}>{catName}</Text>
+              </View>
             </TouchableOpacity>
             <FlatList
               data={sub_categories}
@@ -27,13 +32,18 @@ const ModalSubCategory = ({ visible, hideSort, sub_categories, catName, catColor
                 return `id:${item.id}` 
               }
               }
-              renderItem={(item) => (
-                <TouchableOpacity onPress={() => { onSelectSubCat(item.item.id) }}>
-                  <View style={rowView}>
-                    <Text style={[rowText, { color: this._getColor(item.item.id)}]}>{item.item.name}</Text>
-                  </View>
-                </TouchableOpacity>
-              )}
+              renderItem={(item) => {
+                const icons = this._getIcon(item.item.id)
+                return (
+                  <TouchableOpacity onPress={() => { onSelectSubCat(item.item.id) }}>
+                    <View style={rowView}>
+                      <Text style={[rowText]}>{item.item.name}</Text>
+                      {icons}
+                    </View>
+                  </TouchableOpacity>
+                )
+              }
+              }
             />        
           </View>        
         </View>
@@ -55,11 +65,14 @@ const styles = StyleSheet.create({
     borderRadius: 4
   },
   rowView: {
-    padding: 15
+    padding: 15,
+    paddingLeft: 25,
+    flexDirection: 'row'
   },
   rowText: {
-    fontSize: 14,
-    lineHeight: 20,
+    flex: 1,
+    fontSize: 16,
+    lineHeight: 24,
     fontWeight: 'normal',
     fontFamily: 'Roboto-Regular',
     color: 'rgba(0, 0, 0, 0.87)'

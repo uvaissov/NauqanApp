@@ -2,6 +2,7 @@ import { Dimensions, Platform, PixelRatio } from 'react-native'
 
 export const hostName = 'http://nauqan.ibeacon.kz'
 export const FAVORITE_STORE = '@MyLocalStore:favorite'
+export const CITY_STORE = '@MyLocalStore:city'
 export const WHITE = '#fff'
 export const BLACK = '#000'
 

@@ -1,10 +1,10 @@
 import React from 'react'
-import { ScrollView, View, Image, ImageBackground, Text, Platform, Animated, Easing} from 'react-native'
+import { ScrollView, View, Image, ImageBackground, Platform, Animated, Easing } from 'react-native'
 import { createDrawerNavigator, createAppContainer, DrawerItems, createStackNavigator } from 'react-navigation'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import LinearGradient from 'react-native-linear-gradient'
-//import { fromRight } from 'react-navigation-transitions'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import CityOption from '../components/uikit/CityOption'
 import Main from './Main'
 import Favorite from './Favorite'
 import MapPlaces from './MapPlaces'
@@ -48,8 +48,8 @@ const CustomDrawerComponent = (props) => (
           resizeMode="stretch"
         />        
       </ImageBackground>
-      <View style={{ flex: 1}}>
-        <Text> СПИСОК ГОРОДОВ </Text>
+      <View style={{ width: '80%', marginBottom: 15}}>
+        <CityOption name={props} />
       </View>
     </View>
     <ScrollView style={{ backgroundColor: '#FAFAFA'}}>
@@ -214,12 +214,14 @@ const Screens = createDrawerNavigator({
     activeTintColor: '#FF6E36',
     inactiveTintColor: 'rgba(0, 0, 0, 0.54)',
     activeBackgroundColor: '#FFFFFF',
+    cityName: this.props,
     itemsContainerStyle: {
       backgroundColor: '#FAFAFA'
     },
     labelStyle: { fontSize: 14, fontFamily: 'Roboto-Regular', fontWeight: 'normal', fontStyle: 'normal', color: 'rgba(23, 7, 1, 0.87)' }
   },
   contentComponent: CustomDrawerComponent
+ 
 })
 
 export default createAppContainer(Screens)

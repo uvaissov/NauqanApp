@@ -26,7 +26,8 @@ const Header = ({
   showSearchResult,
   searchByCatalog,
   dir,
-  onSelectDir
+  onSelectDir,
+  text
 }) => {
   const { headerGradView, viewStyle, textStyle, inputStyle, leftButtonStyle, rightButtonStyle } = styles  
   this.changeCatalog = (name) => {
@@ -50,20 +51,20 @@ const Header = ({
   this.show = (value) => {
     sortPress(value)
   }
-  this.search = (text) => {
-    searchByCatalog(text)    
+  this.search = (value) => {
+    searchByCatalog(value)    
   }
   this.onSelectDir = (value) => {
     onSelectDir(value)
   }
 
   this.viewHeader = () => {
-    if (showSearchResult === true) {
+    /*if (showSearchResult === true) {
       if (isIphoneX()) {
         return 90
       }
       return 70
-    }
+    }*/
     if (isIphoneX()) {
       return 210
     }
@@ -71,7 +72,7 @@ const Header = ({
   }
   return (
     <View style={[viewStyle, {height: this.viewHeader()}]}>
-      <NavigationEvents onWillBlur={() => searchPress(false)} />
+      <NavigationEvents onWillBlur={() => console.log('onWillBlur')} />
       <LinearGradient style={[headerGradView, style]} colors={[mainColor, secondColor]} useAngle angle={135}>
         {leftIcon &&
           <TouchableOpacity onPress={onPress}>
@@ -84,7 +85,7 @@ const Header = ({
         }
         {
           showSearchResult === true &&
-          <TextInput autoFocus style={[inputStyle, { paddingBottom: 0, paddingLeft: leftIcon ? 15 : 0 }]} onChangeText={(text) => this.search(text)} />
+          <TextInput value={text} autoFocus style={[inputStyle, { paddingBottom: 0, paddingLeft: leftIcon ? 15 : 0 }]} onChangeText={(value) => this.search(value)} />
         }        
         {
           sortPress && showSearchResult === false &&
@@ -106,8 +107,7 @@ const Header = ({
           </TouchableOpacity>
         }
       </LinearGradient>
-      {
-        showSearchResult === false && 
+      {        
         <ScrollView showsHorizontalScrollIndicator={false} ref={(view) => { this._scrollView = view }} horizontal style={{ flexDirection: 'row', padding: 15 }}>
           {
             categories.map((cat) => {  

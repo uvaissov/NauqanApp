@@ -23,15 +23,16 @@ import { ModalSubCategory } from '../../components/uikit/catalog/ModalSubCategor
 
 class Catalog extends Component { 
   componentDidMount() {
-    this._loadData(this.props.navigation.getParam('catalog'), this.props.dir, undefined)
+    this.props._visibleSearchResult(false)
+    this._loadData(this.props.navigation.getParam('catalog'), this.props.dir, undefined, undefined)
   }  
   onSelectDir = (value) => {
     this.props._onSelectDir(value)
     this._loadData(this.props.navigation.getParam('catalog'), value)
   }
-  _loadData = (cat_id, dir, sub_cat_id) => {
+  _loadData = (cat_id, dir, sub_cat_id, text) => {
     this.props.getSubCategories(cat_id)
-    this.props.getPlacesByCatalog(cat_id, dir, sub_cat_id)  
+    this.props.getPlacesByCatalog(cat_id, dir, sub_cat_id, text)  
   }
   _showSort = (value) => { 
     this.props._visibleSort(value)
@@ -41,13 +42,16 @@ class Catalog extends Component {
   }
   _navigateToCatalog = (cat_id) => {    
     this.props.navigation.navigate('Catalog', {catalog: cat_id, scrollTo: undefined})
-    this._loadData(cat_id, this.props.dir, undefined)
+    this.props._visibleSearchResult(false)
+    this._loadData(cat_id, this.props.dir, undefined, undefined)
   }
   _showSearchResult = (value) => { 
     this.props._visibleSearchResult(value)
   }
   _searchByCatalog=(text) => {
-    this.props.searchByCatalog(text, this.props.navigation.getParam('catalog'))
+    //this.props.searchByCatalog(text, this.props.navigation.getParam('catalog'))
+    const { dir, selectedSubCat } = this.props
+    this.props.getPlacesByCatalog(this.props.navigation.getParam('catalog'), dir, selectedSubCat, text)  
   }
 
   _selectResult=(row) => {
@@ -61,8 +65,8 @@ class Catalog extends Component {
 
   _onSelectSubCat = (sub_cat_id) => {
     this.props.onSelectSubCat(sub_cat_id)
-    this._showSubCat(false)
-    this.props.getPlacesByCatalog(this.props.navigation.getParam('catalog'), this.props.dir, sub_cat_id)
+    this._showSubCat(false)    
+    this.props.getPlacesByCatalog(this.props.navigation.getParam('catalog'), this.props.dir, sub_cat_id, this.props.text)
   }
 
   render() {
@@ -73,18 +77,19 @@ class Catalog extends Component {
       places, 
       showSort, 
       showSubCategoryOption, 
-      showSearchResult, 
+      showSearchResult = false, 
       searchResults,
       dir,
-      selectedSubCat
+      selectedSubCat,
+      text
     } = this.props
     const category = categories.filter(cat => cat.id === navigation.getParam('catalog'))[0]
     const scrollTo = navigation.getParam('scrollTo')
     const itemWidth = w * 0.466
     this._renderController = () => {
-      if (showSearchResult === true) {
+      /*if (showSearchResult === true) {
         return this._resultRender()
-      }
+      }*/
       return this._subCategoryRender() 
     }
 
@@ -105,21 +110,17 @@ class Catalog extends Component {
         </View>
       )
     }
-
+    this.selectedSubCatText = () => {
+      const [sub] = sub_categories.filter((subIter) => subIter.id === selectedSubCat)
+      return (<Text style={{ fontSize: 16}}>{sub.name}</Text>)
+    }
     this._subCategoryRender = () => {
       return (
         <View style={{flex: 1}}>
           <TouchableOpacity onPress={() => this._showSubCat(true)} >
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 15, backgroundColor: '#EEEEEE'}}>
               {
-                selectedSubCat && (
-                  () => {
-                    console.log(sub_categories)
-                    console.log(selectedSubCat)
-                    const [sub] = sub_categories.filter((subIter) => subIter.id === selectedSubCat)
-                    return (<Text style={{ fontSize: 16}}>{sub.name}</Text>)
-                  }
-                )
+                selectedSubCat && this.selectedSubCatText()
               }
               {
                 !selectedSubCat &&
@@ -129,7 +130,7 @@ class Catalog extends Component {
               <Ionicons name={'md-arrow-dropdown'} style={{ fontSize: 16}} color={'#000000'} />            
             </View>
           </TouchableOpacity>      
-          <ModalSubCategory selectedSubCat={selectedSubCat} onSelectSubCat={this._onSelectSubCat} catColor={category.mainColor} catName={category.name} visible={showSubCategoryOption} hideSort={() => this._showSubCat(false)} sub_categories={sub_categories} />
+          <ModalSubCategory category={category} selectedSubCat={selectedSubCat} onSelectSubCat={this._onSelectSubCat} visible={showSubCategoryOption} hideSort={() => this._showSubCat(false)} sub_categories={sub_categories} />
           <ScrollView style={[{ flex: 1}]}>          
             <View style={{ paddingTop: 10}}>
               {
@@ -181,6 +182,7 @@ class Catalog extends Component {
           searchByCatalog={this._searchByCatalog}
           dir={dir}
           onSelectDir={this.onSelectDir}
+          text={text}
         />
         {this._renderController()}
         
@@ -211,9 +213,10 @@ const mapStateToProps = state => {
     showSort: state.catalog.visibleSort,
     showSubCategoryOption: state.catalog.visibleSubCategory,
     showSearchResult: state.catalog.visibleSearchResult,
-    searchResults: state.catalog.searchResults,
+    //searchResults: state.catalog.searchResults,
     dir: state.catalog.dir,
-    selectedSubCat: state.catalog.selectedSubCat
+    selectedSubCat: state.catalog.selectedSubCat,
+    text: state.catalog.text
   }
 }
 export default connect(mapStateToProps, { _visibleSort, _visibleSubCategory, _visibleSearchResult, getSubCategories, cleanSubCategories, cleanPlaces, getPlacesByCatalog, searchByCatalog, _onSelectDir, onSelectSubCat })(Catalog)

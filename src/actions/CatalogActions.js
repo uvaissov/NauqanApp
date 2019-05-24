@@ -13,7 +13,8 @@ import {
   SEARCH_FETCHED,
   SEARCH_FAILED,
   SELECT_DIR_CATALOG,
-  SELECT_SUB_CATALOG
+  SELECT_SUB_CATALOG,
+  SEARCH_TEXT_CHANGE
 } from '../types'
 
 import { hostName } from '../constants/global'
@@ -125,7 +126,7 @@ export const cleanSubCategories = () => {
   }
 }
 
-export const getPlacesByCatalog = (id, dir, sub_id) => async (dispatch) => {
+export const getPlacesByCatalog = (id, dir, sub_id, text) => async (dispatch) => {
   function onSuccess(success) {
     dispatch({ type: PLACES_FETCHED, payload: success })
     return success
@@ -135,15 +136,15 @@ export const getPlacesByCatalog = (id, dir, sub_id) => async (dispatch) => {
     return error
   }
   try {
-    dispatch({ type: PLACES_FETCHED, payload: [] }) 
+    dispatch({ type: SEARCH_TEXT_CHANGE, payload: text }) 
     if (!sub_id) {
       dispatch({ type: SELECT_SUB_CATALOG, payload: undefined }) 
     }
     const cat_id = id === 'all' ? '' : `&cat_id=${id}`
     const sub_cat_id = !sub_id ? '' : `&sub_cat_id=${sub_id}`
-    const URL = `${hostName}/zavedeniya?filt=${dir}${cat_id}${sub_cat_id}`
+    const textSearch = !text ? '' : `&text=${text}`
 
-    console.log(URL)
+    const URL = `${hostName}/zavedeniya?filt=${dir}${cat_id}${sub_cat_id}${textSearch}`
     const res = await fetch(URL, {
       method: 'GET'
     })

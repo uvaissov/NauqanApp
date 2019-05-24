@@ -13,7 +13,8 @@ import {
   SEARCH_FETCHED,
   SEARCH_FAILED,
   SELECT_DIR_CATALOG,
-  SELECT_SUB_CATALOG
+  SELECT_SUB_CATALOG,
+  SEARCH_TEXT_CHANGE
 } from '../types'
 
 const INITIAL_STATE = {
@@ -26,6 +27,7 @@ const INITIAL_STATE = {
   visibleSort: false,
   visibleSubCategory: false,
   visibleSearchResult: false,
+  text: '',
   loading: true,
   error: undefined,
   dir: 'asc',
@@ -39,6 +41,12 @@ export default (state = INITIAL_STATE, action) => {
     return {
       ...state,
       visibleSort: action.payload
+    }
+  }
+  case SEARCH_TEXT_CHANGE: {    
+    return {
+      ...state,
+      text: action.payload
     }
   }
   case VISIBLE_SUB_CATEGORY: {    
@@ -116,7 +124,8 @@ export default (state = INITIAL_STATE, action) => {
   }
   case PLACES_FAILED: {    
     return {
-      ...state
+      ...state,
+      places: []
     }
   }
   case SELECT_DIR_CATALOG: {    

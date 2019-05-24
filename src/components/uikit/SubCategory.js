@@ -24,7 +24,6 @@ const SubCategory = ({
         <View style={{ flexDirection: 'row', padding: 15 }}>
           {
             places.map((place) => { 
-              console.log(place)        
               return (<CardPlace key={place.id} navigation={navigation} item={place} />)
             })
           }          
