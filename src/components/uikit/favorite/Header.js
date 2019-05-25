@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     alignItems: 'flex-end',
     ...ifIphoneX({
-      height: 90
+      height: 70
     }, {
       height: 70
     })

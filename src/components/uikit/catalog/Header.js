@@ -66,7 +66,7 @@ const Header = ({
       return 70
     }*/
     if (isIphoneX()) {
-      return 210
+      return 180
     }
     return 180
   }
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     alignItems: 'flex-end',
     ...ifIphoneX({
-      height: 90
+      height: 70
     }, {
       height: 70
     })

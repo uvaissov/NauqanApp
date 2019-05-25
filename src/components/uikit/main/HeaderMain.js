@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',    
     position: 'relative',
     ...ifIphoneX({
-      height: 90
+      height: 70
     }, {
       height: 70
     }),

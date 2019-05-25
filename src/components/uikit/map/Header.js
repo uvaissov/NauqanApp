@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   viewStyle: {       
     position: 'relative',
     ...ifIphoneX({
-      height: 120
+      height: 90
     }, {
       height: 90
     })

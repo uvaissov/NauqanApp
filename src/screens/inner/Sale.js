@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import Moment from 'moment'
 import CustomStatusBar from '../../components/uikit/CustomStatusBar'
 import { getSale } from '../../actions/SaleActions'
-import { Header } from '../../components/uikit/item/Header'
+import Header from '../../components/uikit/item/Header'
 import { w, normalize, genImageUri } from '../../constants/global'
 
 class Sale extends Component {
