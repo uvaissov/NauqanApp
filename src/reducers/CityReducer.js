@@ -3,7 +3,7 @@ import {
 } from '../types'
 
 const INITIAL_STATE = {
-  data: {},
+  items: [],
   selected: null,
   name: 'Выберите город'
 }
@@ -13,10 +13,10 @@ export default (state = INITIAL_STATE, action) => {
   case CITY_FETCHED: {
     return {
       ...state,
-      data: action.payload
+      items: action.payload
     }
   }
-  case CITY_FAILED: {    
+  case CITY_FAILED: {
     return {
       ...state
     }

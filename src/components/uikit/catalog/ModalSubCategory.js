@@ -8,7 +8,7 @@ const ModalSubCategory = ({ visible, hideSort, sub_categories, onSelectSubCat, s
   const { name: catName, mainColor: catColor, enableIcon } = category
   const { viewStyle, rowView, rowText } = styles 
   this._getIcon = (id) => {
-    return selectedSubCat === id ? <MaterialIcons name="lens" size={24} style={{color: 'black'}} /> : <MaterialIcons name="panorama-fish-eye" size={24} style={{color:'black'}} />
+    return selectedSubCat === id ? <MaterialIcons name="lens" size={24} style={{color: 'black'}} /> : <MaterialIcons name="panorama-fish-eye" size={24} style={{color: 'black'}} />
   }
   return (
     <Modal 

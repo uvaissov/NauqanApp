@@ -1,5 +1,5 @@
 
-import { ITEM_FETCHED, ITEM_FAILED, ITEM_PLACES_FETCHED, ITEM_PLACES_FAILED } from '../types'
+import { ITEM_FETCHED, ITEM_FAILED, ITEM_PLACES_FETCHED, ITEM_PLACES_FAILED, SEARCH_PLACE_CHANGE, SELECT_DIR_ITEM } from '../types'
 
 import { hostName } from '../constants/global'
 
@@ -33,7 +33,14 @@ export const cleanZav = () => {
   }
 }
 
-export const getPlacesByZav = (id) => async (dispatch) => {
+export const selectDirItem = (dir) => {
+  return {
+    type: SELECT_DIR_ITEM,
+    payload: dir
+  }
+}
+
+export const getPlacesByZav = (id, text, dir) => async (dispatch) => {
   function onSuccess(value) {
     dispatch({ type: ITEM_PLACES_FETCHED, payload: value })
     return value
@@ -44,8 +51,12 @@ export const getPlacesByZav = (id) => async (dispatch) => {
   }
     
   try {
-    dispatch({ type: ITEM_PLACES_FETCHED, payload: [] })
-    const URL = `${hostName}//product?zav_id=${id}`
+    dispatch({ type: SEARCH_PLACE_CHANGE, payload: text })
+
+    const textSearch = !text ? '' : `&text=${text}`
+    const dirSearch = !dir ? '' : `&filt_type=price&filt=${dir}`
+    const URL = `${hostName}//product?zav_id=${id}${textSearch}${dirSearch}`
+    console.log(textSearch)
     const res = await fetch(URL, {
       method: 'GET'
     })

@@ -126,7 +126,7 @@ export const cleanSubCategories = () => {
   }
 }
 
-export const getPlacesByCatalog = (id, dir, sub_id, text) => async (dispatch) => {
+export const getPlacesByCatalog = (id, dir, sub_id, text) => async (dispatch, getState) => {
   function onSuccess(success) {
     dispatch({ type: PLACES_FETCHED, payload: success })
     return success
@@ -143,8 +143,9 @@ export const getPlacesByCatalog = (id, dir, sub_id, text) => async (dispatch) =>
     const cat_id = id === 'all' ? '' : `&cat_id=${id}`
     const sub_cat_id = !sub_id ? '' : `&sub_cat_id=${sub_id}`
     const textSearch = !text ? '' : `&text=${text}`
+    const cityId = getState().city.selected ? `&city_id=${getState().city.selected}` : ''
 
-    const URL = `${hostName}/zavedeniya?filt=${dir}${cat_id}${sub_cat_id}${textSearch}`
+    const URL = `${hostName}/zavedeniya?filt=${dir}${cityId}${cat_id}${sub_cat_id}${textSearch}`
     const res = await fetch(URL, {
       method: 'GET'
     })
@@ -162,7 +163,7 @@ export const cleanPlaces = () => {
   }
 }
 
-export const getPlacesTop = () => async (dispatch) => {
+export const getPlacesTop = () => async (dispatch, getState) => {
   function onSuccess(success) {
     dispatch({ type: TOP_PLACES_FETCHED, payload: success })
     return success
@@ -172,7 +173,9 @@ export const getPlacesTop = () => async (dispatch) => {
     return error
   }
   try {
-    const URL = `${hostName}/zavedeniya?v_tope=1`
+    const cityId = getState().city.selected ? `&city_id=${getState().city.selected}` : ''
+    const URL = `${hostName}/zavedeniya?v_tope=1${cityId}`
+    console.log(URL)
     const res = await fetch(URL, {
       method: 'GET'
     })

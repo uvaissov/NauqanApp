@@ -1,10 +1,12 @@
 import {
-  ITEM_FETCHED, ITEM_FAILED, ITEM_PLACES_FETCHED, ITEM_PLACES_FAILED
+  ITEM_FETCHED, ITEM_FAILED, ITEM_PLACES_FETCHED, ITEM_PLACES_FAILED, SEARCH_PLACE_CHANGE, SELECT_DIR_ITEM
 } from '../types'
 
 const INITIAL_STATE = {
   item: {},
-  items: []
+  items: [],
+  text: '',
+  dir: 'asc'
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -28,9 +30,23 @@ export default (state = INITIAL_STATE, action) => {
   }
   case ITEM_PLACES_FAILED: {
     return {
-      ...state
+      ...state,
+      items: []
     }
   }
+  case SEARCH_PLACE_CHANGE: {
+    return {
+      ...state,
+      text: action.payload
+    }
+  }  
+  case SELECT_DIR_ITEM: {
+    return {
+      ...state,
+      dir: action.payload
+    }
+  }  
+  
   default: return state
   }
 }

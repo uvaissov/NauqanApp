@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, ImageBackground } from 'react-native'
 //import SwiperFlatList from 'react-native-swiper-flatlist'
 import Swiper from 'react-native-swiper'
 import LinearGradient from 'react-native-linear-gradient'
-import { w } from '../../../constants/global'
+import { w, genImageUri } from '../../../constants/global'
 
 const getComponentHeight = (weight) => {
   return weight * 0.732
@@ -25,10 +25,10 @@ const SwiperApp = ({
         {
           data.map((item) => {
             return (
-              <View key={item.id} style={[child, { backgroundColor: 'skyblue', width: w }]}>      
+              <View key={item.id} style={[child, { width: w }]}>      
                 <ImageBackground  
                   style={{flex: 1, height: undefined, width: undefined }} 
-                  source={item.source} 
+                  source={{uri: genImageUri(item.img)}}
                   resizeMode="cover"
                 >
                   <LinearGradient
@@ -59,7 +59,7 @@ const SwiperApp = ({
                 <View style={[child, { flex: 1, borderRadius: radius, overflow: 'hidden'}]}>
                   <Image 
                     style={{flex: 1, height: undefined, width: undefined }} 
-                    source={item.source} 
+                    source={{uri: genImageUri(item.img)}}
                     resizeMode="cover"
                   />
                 </View>      

@@ -1,10 +1,12 @@
-import { Dimensions, Platform, PixelRatio } from 'react-native'
+import { Dimensions, Platform, PixelRatio, StatusBar } from 'react-native'
 
 export const hostName = 'http://nauqan.ibeacon.kz'
 export const FAVORITE_STORE = '@MyLocalStore:favorite'
 export const CITY_STORE = '@MyLocalStore:city'
 export const WHITE = '#fff'
 export const BLACK = '#000'
+
+export const statusBarHeight = StatusBar.currentHeight
 
 export const BORDER_COLOR = '#ddd'
 export const BG_COLOR = '#FAFAFA'
@@ -29,7 +31,7 @@ export function genImageUri(path) {
 }
 
 export function normalize(size) {
-  const newSize = size * scale 
+  const newSize = size * scale
   let result
   if (Platform.OS === 'ios') {
     result = Math.round(PixelRatio.roundToNearestPixel(newSize))

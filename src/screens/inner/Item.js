@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { Divider } from 'react-native-elements'
 import CustomStatusBar from '../../components/uikit/CustomStatusBar'
 import { getZav, getPlacesByZav, cleanZav } from '../../actions/ItemActions'
-import { Header } from '../../components/uikit/item/Header'
+import Header from '../../components/uikit/item/Header'
 import { CardItem } from '../../components/uikit/item/CardItem'
 import { w, genImageUri, normalize } from '../../constants/global'
 
@@ -19,7 +19,7 @@ class Item extends Component {
   // Lifecycle methods
   componentDidMount() {
     this.props.getZav(this.props.navigation.getParam('id'))
-    this.props.getPlacesByZav(this.props.navigation.getParam('id'))
+    this.props.getPlacesByZav(this.props.navigation.getParam('id'), this.props.text, this.props.dir)
     
     // 1: Component is mounted off-screen
     InteractionManager.runAfterInteractions(() => {
@@ -54,7 +54,7 @@ class Item extends Component {
       <View style={styles.container}>                
         <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
         <ScrollView>    
-          <Header iconFunnel iconSearch leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-arrow-back" title="Главная" onPress={() => navigation.goBack()} />              
+          <Header itemId={this.props.navigation.getParam('id')} iconFunnel iconSearch leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-arrow-back" title="Главная" onPress={() => navigation.goBack()} />              
           <View style={{ width: w, height: getComponentHeight(w) }}>
             <ImageBackground  
               style={{flex: 1, height: undefined, width: undefined }} 

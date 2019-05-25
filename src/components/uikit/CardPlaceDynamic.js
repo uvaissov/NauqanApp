@@ -1,9 +1,20 @@
-import React, {Component} from 'react'
-import { View, StyleSheet, Image, Text, TouchableHighlight, TouchableOpacity, Animated } from 'react-native'
+import React, { Component } from 'react'
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  TouchableHighlight,
+  TouchableOpacity,
+  Animated
+} from 'react-native'
 import { connect } from 'react-redux'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
-import { addFavoritePlace, delFavoritePlace } from '../../actions/FavoriteActions'
+import {
+  addFavoritePlace,
+  delFavoritePlace
+} from '../../actions/FavoriteActions'
 import { BG_COLOR, genImageUri } from '../../constants/global'
 
 class CardPlaceDynamic extends Component {
@@ -13,7 +24,8 @@ class CardPlaceDynamic extends Component {
     width: this.props.width
   }
   componentDidMount() {
-    Animated.timing( // Animate over time
+    Animated.timing(
+      // Animate over time
       this.state.fadeAnim, // The animated value to drive
       {
         toValue: 1, // Animate to opacity: 1 (opaque)
@@ -22,19 +34,19 @@ class CardPlaceDynamic extends Component {
     ).start() // Starts the animation
   }
 
-  _calcHeightViewByWidth= (width) => {
+  _calcHeightViewByWidth = width => {
     return width
   }
 
-  _calcHeightRowByWidth= (width) => {
+  _calcHeightRowByWidth = width => {
     return width * 0.3
   }
 
-  _addToFav = (id) => {
+  _addToFav = id => {
     this.props.addFavoritePlace(id)
   }
 
-  _remFromFav = (id) => {
+  _remFromFav = id => {
     this.props.delFavoritePlace(id)
   }
 
@@ -44,39 +56,91 @@ class CardPlaceDynamic extends Component {
     const { fadeAnim, width } = this.state
     const selected = places.includes(item.id)
     console.log(item)
-    return (<TouchableHighlight style={[view, { width, marginHorizontal: 5, marginBottom: 10 }, style]} onPress={onPress} >
-      <Animated.View style={{flex: 1, overflow: 'hidden', borderRadius: 6, opacity: fadeAnim}}>
-        <View style={{ flex: 1 }}>
-          <Image 
-            style={{flex: 1, height: this._calcHeightViewByWidth(width), width: undefined }} 
-            source={{uri: genImageUri(item.img)}} 
-            resizeMode="cover"
-          />
-        </View>
-        <View style={[row]}>
+    return (
+      <TouchableHighlight
+        style={[view, { width, marginHorizontal: 5, marginBottom: 10 }, style]}
+        onPress={onPress}
+      >
+        <Animated.View
+          style={{
+            flex: 1,
+            overflow: 'hidden',
+            borderRadius: 6,
+            opacity: fadeAnim
+          }}
+        >
           <View style={{ flex: 1 }}>
-            <Text style={{ color: '#170701', fontSize: 16, lineHeight: 19, opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{item.name}</Text>
-            <Text style={{ color: '#563DD0', fontSize: 12, lineHeight: 19, fontFamily: 'Roboto-Regular' }}>{item.count} предложений</Text>            
+            <Image
+              style={{
+                flex: 1,
+                height: this._calcHeightViewByWidth(width),
+                width: undefined
+              }}
+              source={{ uri: genImageUri(item.img) }}
+              resizeMode="cover"
+            />
           </View>
-          {
-            trash &&
-            <TouchableOpacity onPress={() => this._remFromFav(item.id)} style={touchZone}>
-              <View style={favoriteView}>
-                <EvilIcons name={'trash'} size={16} style={!selected ? { color: '#170701' } : { color: '#FF6E36' }} />
-              </View>
-            </TouchableOpacity>
-          }
-          {
-            favorite &&
-            <TouchableOpacity onPress={() => (selected ? this._remFromFav(item.id) : this._addToFav(item.id))} style={touchZone}>
-              <View style={favoriteView}>
-                <MaterialIcons name={selected === true ? 'favorite' : 'favorite-border'} size={14} style={!selected ? { color: '#170701' } : { color: '#FF6E36' }} />
-              </View>
-            </TouchableOpacity>
-          }
-        </View>
-      </Animated.View>
-    </TouchableHighlight>
+          <View style={[row]}>
+            <View style={{ flex: 1 }}>
+              <Text
+                style={{
+                  color: '#170701',
+                  fontSize: 16,
+                  lineHeight: 19,
+                  opacity: 0.87,
+                  fontFamily: 'Roboto-Regular'
+                }}
+              >
+                {item.name}
+              </Text>
+              <Text
+                style={{
+                  color: '#563DD0',
+                  fontSize: 12,
+                  lineHeight: 19,
+                  fontFamily: 'Roboto-Regular'
+                }}
+              >
+                {item.count} предложений
+              </Text>
+            </View>
+            {trash && (
+              <TouchableOpacity
+                onPress={() => this._remFromFav(item.id)}
+                style={touchZone}
+              >
+                <View style={favoriteView}>
+                  <EvilIcons
+                    name={'trash'}
+                    size={16}
+                    style={
+                      !selected ? { color: '#170701' } : { color: '#FF6E36' }
+                    }
+                  />
+                </View>
+              </TouchableOpacity>
+            )}
+            {favorite && (
+              <TouchableOpacity
+                onPress={() =>
+                  (selected ? this._remFromFav(item.id) : this._addToFav(item.id))
+                }
+                style={touchZone}
+              >
+                <View style={favoriteView}>
+                  <MaterialIcons
+                    name={selected === true ? 'favorite' : 'favorite-border'}
+                    size={14}
+                    style={
+                      !selected ? { color: '#170701' } : { color: '#FF6E36' }
+                    }
+                  />
+                </View>
+              </TouchableOpacity>
+            )}
+          </View>
+        </Animated.View>
+      </TouchableHighlight>
     )
   }
 }
@@ -84,26 +148,26 @@ class CardPlaceDynamic extends Component {
 const styles = StyleSheet.create({
   row: {
     paddingLeft: 10,
-    paddingTop: 8,    
+    paddingTop: 8,
     paddingBottom: 8,
     flexDirection: 'row',
     backgroundColor: BG_COLOR,
     position: 'relative'
   },
   touchZone: {
-    position: 'absolute', 
-    top: 0, 
+    position: 'absolute',
+    top: 0,
     right: 0,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
-    height: 40, 
+    height: 40,
     width: 40,
     borderRadius: 20
   },
-  favoriteView: {    
-    height: 28, 
-    width: 28, 
-    justifyContent: 'center', 
+  favoriteView: {
+    height: 28,
+    width: 28,
+    justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 14,
     shadowOffset: {
@@ -125,7 +189,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 1.22,
-    
+
     elevation: 4
   }
 })
@@ -135,4 +199,7 @@ const mapStateToProps = state => {
     places: state.favorite.places
   }
 }
-export default connect(mapStateToProps, { addFavoritePlace, delFavoritePlace })(CardPlaceDynamic)
+export default connect(
+  mapStateToProps,
+  { addFavoritePlace, delFavoritePlace }
+)(CardPlaceDynamic)

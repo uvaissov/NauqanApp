@@ -1,10 +1,10 @@
-import AsyncStorage from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import { CITY_FETCHED, CITY_FAILED, CITY_SELECT } from '../types'
 
 import { hostName, CITY_STORE } from '../constants/global'
 
-export const getCityies = () => async (dispatch) => {
-  function onSuccess([value]) {
+export const getCities = () => async (dispatch) => {
+  function onSuccess(value) {
     dispatch({ type: CITY_FETCHED, payload: value })
     return value
   }
@@ -35,14 +35,22 @@ export const initCity = () => async (dispatch) => {
     return error
   }
   
-  try {    
-    const value = await AsyncStorage.getItem(CITY_STORE)
+  try {
+    const value = await AsyncStorage.getItem(CITY_STORE) || '2'
     if (value !== null) {
-      return onSuccess(JSON.parse(value))      
+      return onSuccess(parseInt(value, 10))
     }
     return value
   } catch (error) {
     return onError(error)
   }  
+}
+
+export const selectCity = (value) => {
+  AsyncStorage.setItem(CITY_STORE, value.toString())
+  return {
+    type: CITY_SELECT,
+    payload: value
+  }
 }
 

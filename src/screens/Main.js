@@ -7,7 +7,9 @@ import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
 import CustomStatusBar from '../components/uikit/CustomStatusBar'
 import { getCategories, getSubCategories, getPlacesTop } from '../actions/CatalogActions'
+import { initCity, getCities } from '../actions/CityActions'
 import { initFavorites } from '../actions/FavoriteActions'
+import { getPromoDataFirst, getPromoDataSecond } from '../actions/SwiperActions'
 import { HeaderMain, SwiperApp, ButtonGrad} from '../components/uikit'
 import CardPlaceDynamic from '../components/uikit/CardPlaceDynamic'
 import { w, h, BG_COLOR, TRASPARENT } from '../constants/global'
@@ -16,19 +18,35 @@ import { w, h, BG_COLOR, TRASPARENT } from '../constants/global'
 const PushNotification = require('react-native-push-notification')
 
 class Main extends Component {
+  state = {
+    cityId: this.props.cityId
+  }
   componentDidMount() {
-    this._initData()
+    this.props.initCity()
+    this.props.getCities()
+    this.props.initFavorites()
+    this.props.getPromoDataFirst()
+    this.props.getPromoDataSecond()
+  }
+  componentDidUpdate(prevState) {
+    if (prevState.cityId !== this.props.cityId) {
+      this._initData()
+    }
   }
 
-  _initData= () => {
-    this.props.initFavorites()
+  //Этот метож вызываеться из-за зависимости при параметре город
+  _initData = () => {   
     this.props.getPlacesTop()
-    this.props.getCategories()
+    this.props.getCategories()    
   }
 
   render() {
-    const { navigation, mainCategory, categories, topPlaces, loading, error } = this.props   
+    const { navigation, mainCategory, categories, topPlaces, loading, error, cityId, promo1, promo2 } = this.props   
     
+    if (cityId !== this.state.cityId) {
+      //this.setState({cityId})
+    }
+
     /**when first loading show this splash screen */
     if (loading) {
       return (<View style={StyleSheet.absoluteFill}>
@@ -72,7 +90,7 @@ class Main extends Component {
         {/* Start scroll component */}
         <ScrollView overScrollMode="never" bounces={false} style={[{ flex: 1}]}>
           <HeaderMain style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />                    
-          <SwiperApp data={[{ id: '1', source: require('../../resources/demo/promo.png') }, { id: '2', source: require('../../resources/demo/promo.png') }]} />
+          <SwiperApp data={promo1} />
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 15 }}> 
             {
               mainCategory.map((itemName) => {
@@ -84,7 +102,7 @@ class Main extends Component {
               )
             }           
           </View>
-          <SwiperApp data={[{ id: '3', source: require('../../resources/demo/picture.png') }, { id: '4', source: require('../../resources/demo/picture.png') }]} radius={6} />
+          <SwiperApp data={promo2} radius={6} />
           <View style={{ flexDirection: 'row', margin: 15}}>
             <View style={{ flex: 1, justifyContent: 'center'}}><Text style={{ fontWeight: 'bold', 
               fontFamily: 'Roboto-Regular',
@@ -243,7 +261,20 @@ const mapStateToProps = state => {
     loading: state.catalog.loading,
     mainCategory: state.catalog.mainCategory,
     topPlaces: state.catalog.topPlaces,
-    error: state.catalog.error
+    error: state.catalog.error,
+    cityId: state.city.selected,
+    promo1: state.swiper.promo1,
+    promo2: state.swiper.promo2
   }
 }
-export default connect(mapStateToProps, { getCategories, getSubCategories, getPlacesTop, initFavorites })(Main)
+export default connect(mapStateToProps, 
+  { 
+    getCategories, 
+    getSubCategories, 
+    getPlacesTop, 
+    getCities, 
+    initFavorites, 
+    initCity,
+    getPromoDataFirst, 
+    getPromoDataSecond
+  })(Main)
