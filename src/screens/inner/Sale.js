@@ -63,7 +63,7 @@ class Sale extends Component {
               </View>
             }
           </View>
-          <View style={{ marginHorizontal: 15, marginVertical: 10 }}>
+          <View style={{ margin: 10 }}>
             <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(24), color: 'rgba(0, 0, 0, 0.87)' }}>{item.name}</Text>
             {
               item.date_en && 

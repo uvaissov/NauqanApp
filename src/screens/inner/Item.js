@@ -107,7 +107,7 @@ class Item extends Component {
             </ImageBackground>
           </View>
           <View style={{ alignItems: 'center', marginTop: 43 }}>
-            <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(16), color: 'black'}}>{zav.name}</Text>
+            <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(16), color: 'black', marginHorizontal: 15}}>{zav.name}</Text>
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', margin: 5}}>
               <Image style={{ height: 14, width: 14, marginRight: 5 }} source={{uri: genImageUri(category.enableIcon)}} resizeMode="contain" />
               <Text style={{fontFamily: 'Roboto-Regular', color: category.mainColor, fontSize: normalize(12)}}>{category.name}</Text>
