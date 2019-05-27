@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Image, ImageBackground } from 'react-native'
+import { View, StyleSheet, Image, ImageBackground, TouchableWithoutFeedback } from 'react-native'
 //import SwiperFlatList from 'react-native-swiper-flatlist'
 import Swiper from 'react-native-swiper'
 import LinearGradient from 'react-native-linear-gradient'
@@ -15,7 +15,8 @@ const getComponentHeightSM = (weight, padding) => {
 
 const SwiperApp = ({
   data,
-  radius
+  radius,
+  navigation
 }) => {
   const { child } = styles
   
@@ -25,22 +26,24 @@ const SwiperApp = ({
         {
           data.map((item) => {
             return (
-              <View key={item.id} style={[child, { width: w }]}>      
-                <ImageBackground  
-                  style={{flex: 1, height: undefined, width: undefined }} 
-                  source={{uri: genImageUri(item.img)}}
-                  resizeMode="cover"
-                >
-                  <LinearGradient
-                    colors={['rgba(0, 0, 0, 0.50)', 'rgba(0, 0, 0, 0.25)', 'transparent', 'transparent', 'rgba(0, 0, 0, 0.25)', 'rgba(0, 0, 0, 0.50)']}
-                    start={{ x: 0, y: 1 }}
-                    end={{ x: 1, y: 1 }}
-                    useAngle
-                    angle={180}
-                    style={{flex: 1}}
-                  />        
-                </ImageBackground>
-              </View>
+              <TouchableWithoutFeedback onPress={() => navigation.navigate('Item', {id: item.id })}>
+                <View key={item.id} style={[child, { width: w }]}>      
+                  <ImageBackground  
+                    style={{flex: 1, height: undefined, width: undefined }} 
+                    source={{uri: genImageUri(item.img)}}
+                    resizeMode="cover"
+                  >
+                    <LinearGradient
+                      colors={['transparent', 'transparent', 'transparent', 'transparent', 'rgba(0, 0, 0, 0.25)', 'rgba(0, 0, 0, 0.50)']}
+                      start={{ x: 0, y: 1 }}
+                      end={{ x: 1, y: 1 }}
+                      useAngle
+                      angle={180}
+                      style={{flex: 1}}
+                    />        
+                  </ImageBackground>
+                </View>
+              </TouchableWithoutFeedback>
             )
           }
           )
@@ -55,15 +58,17 @@ const SwiperApp = ({
         {
           data.map((item) => {
             return (
-              <View key={item.id} style={{ width: w, paddingHorizontal: 15, height: getComponentHeightSM(w, 30) }}>
-                <View style={[child, { flex: 1, borderRadius: radius, overflow: 'hidden'}]}>
-                  <Image 
-                    style={{flex: 1, height: undefined, width: undefined }} 
-                    source={{uri: genImageUri(item.img)}}
-                    resizeMode="cover"
-                  />
-                </View>      
-              </View>
+              <TouchableWithoutFeedback onPress={() => navigation.navigate('Sale', {id: item.id })}>
+                <View key={item.id} style={{ width: w, paddingHorizontal: 15, height: getComponentHeightSM(w, 30) }}>
+                  <View style={[child, { flex: 1, borderRadius: radius, overflow: 'hidden'}]}>
+                    <Image 
+                      style={{flex: 1, height: undefined, width: undefined }} 
+                      source={{uri: genImageUri(item.img)}}
+                      resizeMode="cover"
+                    />
+                  </View>      
+                </View>
+              </TouchableWithoutFeedback>
             )
           }
           )

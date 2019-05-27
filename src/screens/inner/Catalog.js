@@ -12,7 +12,8 @@ import {
   getPlacesByCatalog, 
   searchByCatalog, 
   _onSelectDir,
-  onSelectSubCat
+  onSelectSubCat,
+  searchTextChange
 } from '../../actions/CatalogActions'
 import { Header } from '../../components/uikit'
 import CustomStatusBar from '../../components/uikit/CustomStatusBar'
@@ -52,6 +53,10 @@ class Catalog extends Component {
     //this.props.searchByCatalog(text, this.props.navigation.getParam('catalog'))
     const { dir, selectedSubCat } = this.props
     this.props.getPlacesByCatalog(this.props.navigation.getParam('catalog'), dir, selectedSubCat, text)  
+  }
+
+  _searchTextChange = (text) => {
+    this.props.searchTextChange(text)
   }
 
   _selectResult=(row) => {
@@ -180,6 +185,7 @@ class Catalog extends Component {
           onPress={() => navigation.goBack()}
           showSearchResult={showSearchResult}
           searchByCatalog={this._searchByCatalog}
+          searchTextChange={this._searchTextChange}
           dir={dir}
           onSelectDir={this.onSelectDir}
           text={text}
@@ -219,4 +225,4 @@ const mapStateToProps = state => {
     text: state.catalog.text
   }
 }
-export default connect(mapStateToProps, { _visibleSort, _visibleSubCategory, _visibleSearchResult, getSubCategories, cleanSubCategories, cleanPlaces, getPlacesByCatalog, searchByCatalog, _onSelectDir, onSelectSubCat })(Catalog)
+export default connect(mapStateToProps, { searchTextChange, _visibleSort, _visibleSubCategory, _visibleSearchResult, getSubCategories, cleanSubCategories, cleanPlaces, getPlacesByCatalog, searchByCatalog, _onSelectDir, onSelectSubCat })(Catalog)

@@ -12,7 +12,7 @@ import { initFavorites } from '../actions/FavoriteActions'
 import { getPromoDataFirst, getPromoDataSecond } from '../actions/SwiperActions'
 import { HeaderMain, SwiperApp, ButtonGrad} from '../components/uikit'
 import CardPlaceDynamic from '../components/uikit/CardPlaceDynamic'
-import { w, h, BG_COLOR, TRASPARENT } from '../constants/global'
+import { w, h, BG_COLOR, TRASPARENT, statusBarHeight } from '../constants/global'
 
 //const PushNotificationIOS = require('react-native-push-notification')
 const PushNotification = require('react-native-push-notification')
@@ -88,9 +88,10 @@ class Main extends Component {
       <View style={styles.container}>        
         <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
         {/* Start scroll component */}
+        <HeaderMain style={{position: 'absolute', width: w, top: (statusBarHeight), zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />                    
+          
         <ScrollView overScrollMode="never" bounces={false} style={[{ flex: 1}]}>
-          <HeaderMain style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />                    
-          <SwiperApp data={promo1} />
+          <SwiperApp navigation={navigation} data={promo1} />
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 15 }}> 
             {
               mainCategory.map((itemName) => {
@@ -102,7 +103,7 @@ class Main extends Component {
               )
             }           
           </View>
-          <SwiperApp data={promo2} radius={6} />
+          <SwiperApp navigation={navigation} data={promo2} radius={6} />
           <View style={{ flexDirection: 'row', margin: 15}}>
             <View style={{ flex: 1, justifyContent: 'center'}}><Text style={{ fontWeight: 'bold', 
               fontFamily: 'Roboto-Regular',
@@ -128,7 +129,7 @@ class Main extends Component {
                 alwaysBounceVertical={false}
                 columnWrapperStyle={{ justifyContent: 'flex-start'}}
                 data={topPlaces}
-                numColumns={10} 
+                numColumns={9} 
                 renderItem={(row) => <CardPlaceDynamic favorite width={152} navigation={navigation} item={row.item} onPress={() => navigation.push('Item', { id: row.item.id })} />}
                 keyExtractor={(item) => item.id}
               />
@@ -153,16 +154,16 @@ class Main extends Component {
           </View>       
         </ScrollView>
         {/* footer static and get 10% from display */}
-        <View style={[styles.shadowBox, { backgroundColor: TRASPARENT, height: h * 0.1}]} >          
+        <View style={[styles.shadowBox, { backgroundColor: TRASPARENT, height: h * 0.07}]} >          
           <View style={[{flex: 1, backgroundColor: BG_COLOR, flexDirection: 'row', justifyContent: 'space-between'}, styles.scrollView]}>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('Main')} >
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="home" size={24} style={{ color: '#FF6E36' }} /><Text style={{ color: '#FF6E36' }} >Главная</Text></View>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="home" size={24} style={{ color: '#FF6E36', textAlign: 'center' }} /><Text style={{ color: '#FF6E36' }} >Главная</Text></View>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('MapPlaces')} >
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="room" size={24} /><Text>Карта заведений</Text></View>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="room" size={24} /><Text style={{textAlign: 'center'}}>Заведения на карте</Text></View>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('Favorite')} >
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="favorite" size={24} /><Text>Избранные</Text></View>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="favorite" size={24} /><Text style={{textAlign: 'center'}}>Избранные</Text></View>
             </TouchableOpacity>
           </View>
         </View>        

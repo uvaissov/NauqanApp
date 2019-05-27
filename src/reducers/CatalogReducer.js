@@ -83,10 +83,14 @@ export default (state = INITIAL_STATE, action) => {
       error: action.error
     }
   }
-  case TOP_PLACES_FETCHED: {    
+  case TOP_PLACES_FETCHED: { 
+    let array = action.payload
+    if (array && array.length > 27) {
+      array = [...array.splice(0, 27)]
+    }   
     return {
       ...state,
-      topPlaces: action.payload
+      topPlaces: array
     }
   }
   case TOP_PLACES_FAILED: {    

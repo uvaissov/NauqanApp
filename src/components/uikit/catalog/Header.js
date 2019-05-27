@@ -25,6 +25,7 @@ const Header = ({
   visibleSort,
   showSearchResult,
   searchByCatalog,
+  searchTextChange,
   dir,
   onSelectDir,
   text
@@ -52,7 +53,14 @@ const Header = ({
     sortPress(value)
   }
   this.search = (value) => {
-    searchByCatalog(value)    
+    searchTextChange(value) 
+    if (this.searchWaiting) {
+      clearTimeout(this.searchWaiting)
+    }
+    this.searchWaiting = setTimeout(() => {
+      this.searchWaiting = null
+      searchByCatalog(value)  
+    }, 1500)   
   }
   this.onSelectDir = (value) => {
     onSelectDir(value)

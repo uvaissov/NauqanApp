@@ -110,16 +110,16 @@ class MapPlaces extends Component {
         <CustomStatusBar backgroundColor="grey" barStyle="default" absolute={{position: 'absolute', width: w, top: 0, zIndex: 10}} />
         <Header style={{position: 'absolute', width: w, top: 18, zIndex: 10}} leftIcon="md-menu" title="Главная" onPress={() => navigation.openDrawer()} />
         {/* footer static and get 10% from display */}
-        <View style={[styles.shadowBox, { backgroundColor: TRASPARENT, height: h * 0.1}]} >          
+        <View style={[styles.shadowBox, { backgroundColor: TRASPARENT, height: h * 0.07}]} >          
           <View style={[{flex: 1, backgroundColor: BG_COLOR, flexDirection: 'row', justifyContent: 'space-between'}, styles.scrollView]}>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('Main')} >
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="home" size={24} /><Text>Главная</Text></View>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="home" size={24} /><Text style={{textAlign: 'center'}}>Главная</Text></View>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('MapPlaces')} >
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="room" size={24} style={{ color: '#FF6E36' }} /><Text style={{ color: '#FF6E36' }} >Карта заведений</Text></View>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="room" size={24} style={{ color: '#FF6E36' }} /><Text style={{ color: '#FF6E36', textAlign: 'center' }} >Заведения на карте</Text></View>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('Favorite')} >
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="favorite" size={24} /><Text>Избранные</Text></View>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="favorite" size={24} /><Text style={{textAlign: 'center'}}>Избранные</Text></View>
             </TouchableOpacity>
           </View>
         </View>  

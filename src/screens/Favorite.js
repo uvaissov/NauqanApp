@@ -37,16 +37,16 @@ class Favorite extends Component {
             />
           </ScrollView>
         </View>
-        <View style={[styles.shadowBox, { backgroundColor: TRASPARENT, height: h * 0.1}]} >          
+        <View style={[styles.shadowBox, { backgroundColor: TRASPARENT, height: h * 0.07}]} >          
           <View style={[{flex: 1, backgroundColor: BG_COLOR, flexDirection: 'row', justifyContent: 'space-between'}, styles.scrollView]}>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('Main')} >
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="home" size={24} /><Text>Главная</Text></View>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="home" size={24} /><Text style={{textAlign: 'center'}}>Главная</Text></View>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('MapPlaces')} >
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="room" size={24} /><Text >Карта заведений</Text></View>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="room" size={24} /><Text style={{textAlign: 'center'}}>Карта заведений</Text></View>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('Favorite')} >
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="favorite" size={24} style={{ color: '#FF6E36' }} /><Text style={{ color: '#FF6E36' }} >Избранные</Text></View>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="favorite" size={24} style={{ color: '#FF6E36', textAlign: 'center' }} /><Text style={{ color: '#FF6E36' }} >Избранные</Text></View>
             </TouchableOpacity>
           </View>
         </View>

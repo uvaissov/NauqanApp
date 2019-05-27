@@ -125,6 +125,9 @@ export const cleanSubCategories = () => {
     payload: []
   }
 }
+export const searchTextChange = (text) => {
+  return { type: SEARCH_TEXT_CHANGE, payload: text }
+}
 
 export const getPlacesByCatalog = (id, dir, sub_id, text) => async (dispatch, getState) => {
   function onSuccess(success) {
@@ -136,7 +139,7 @@ export const getPlacesByCatalog = (id, dir, sub_id, text) => async (dispatch, ge
     return error
   }
   try {
-    dispatch({ type: SEARCH_TEXT_CHANGE, payload: text }) 
+    //dispatch({ type: SEARCH_TEXT_CHANGE, payload: text }) 
     if (!sub_id) {
       dispatch({ type: SELECT_SUB_CATALOG, payload: undefined }) 
     }
