@@ -7,15 +7,18 @@
  */
 
 import React, {Component} from 'react'
-import {StyleSheet, Text, View} from 'react-native'
+import {StyleSheet, View} from 'react-native'
 import CustomStatusBar from '../components/uikit/CustomStatusBar'
+import Header from '../components/uikit/item/Header'
+import { w } from '../constants/global'
 
 class Setting extends Component {
   render() {
+    const { navigation } = this.props
     return (
       <View style={styles.container}>
         <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
-        <Text style={styles.welcome}>Настройки</Text>
+        <Header leftColor="black" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-menu" onPress={() => navigation.openDrawer()} />
       </View>
     )
   }
@@ -24,8 +27,7 @@ class Setting extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
     backgroundColor: '#F5FCFF'
   },
   welcome: {

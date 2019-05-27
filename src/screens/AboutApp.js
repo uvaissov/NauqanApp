@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Divider } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
 import CustomStatusBar from '../components/uikit/CustomStatusBar'
-import { Header } from '../components/uikit/item/Header'
+import Header from '../components/uikit/item/Header'
 import { w, normalize } from '../constants/global'
 
 class AboutApp extends Component {  

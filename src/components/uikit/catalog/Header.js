@@ -45,9 +45,9 @@ const Header = ({
     })
     setTimeout(() => {
       if (this._scrollView) {
-        this._scrollView.scrollTo({x: idx * 110}) 
+        this._scrollView.scrollTo({x: idx * 110, animated: true})  
       }
-    }, 100)
+    }, 200)
   }
   this.show = (value) => {
     sortPress(value)
@@ -74,12 +74,12 @@ const Header = ({
       return 70
     }*/
     if (isIphoneX()) {
-      return 180
+      return 160
     }
-    return 180
+    return 160
   }
   return (
-    <View style={[viewStyle, {height: this.viewHeader()}]}>
+    <View style={[viewStyle]}>
       <NavigationEvents onWillBlur={() => console.log('onWillBlur')} />
       <LinearGradient style={[headerGradView, style]} colors={[mainColor, secondColor]} useAngle angle={135}>
         {leftIcon &&
@@ -116,7 +116,7 @@ const Header = ({
         }
       </LinearGradient>
       {        
-        <ScrollView showsHorizontalScrollIndicator={false} ref={(view) => { this._scrollView = view }} horizontal style={{ flexDirection: 'row', padding: 15 }}>
+        <ScrollView scrollEventThrottle={16} showsHorizontalScrollIndicator ref={(view) => { this._scrollView = view }} horizontal style={{ flexDirection: 'row', paddingHorizontal: 15 }}>
           {
             categories.map((cat) => {  
               const selected = cat.id === category.id         

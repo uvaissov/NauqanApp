@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Text, StyleSheet, View, ImageBackground, FlatList, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, View, ImageBackground, FlatList, ScrollView, Image, TouchableHighlight } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 //import Spinner from 'react-native-loading-spinner-overlay'
 import { ColorDotsLoader } from 'react-native-indicator'
@@ -127,16 +127,16 @@ class Item extends Component {
                 <View style={{ flexDirection: 'row', alignItems: 'center', padding: 5, marginTop: 5 }}>
                   <Text style={{ fontFamily: 'Roboto-Regular', fontWeight: '500', flex: 1, fontSize: normalize(14), color: 'rgba(0, 0, 0, 0.5)' }}>Предложения</Text>
                   <View style={{ flexDirection: 'row'}}>
-                    <TouchableOpacity style={{ marginLeft: 10}} onPress={() => this._selectHorizontalItem(true)}>
+                    <TouchableHighlight style={{ marginLeft: 10}} onPress={() => this._selectHorizontalItem(true)}>
                       <View style={[styles.buttonView, horizontal ? styles.buttonViewShadow : null]}>
                         <MaterialIcons name="view-list" size={28} style={{ color: 'rgba(0, 0, 0, 0.5)' }} />
                       </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ marginLeft: 10}} onPress={() => this._selectHorizontalItem(false)}>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={{ marginLeft: 10}} onPress={() => this._selectHorizontalItem(false)}>
                       <View style={[styles.buttonView, !horizontal ? styles.buttonViewShadow : null]}>
                         <MaterialIcons name="view-module" size={28} style={{ color: 'rgba(0, 0, 0, 0.5)' }} />
                       </View>
-                    </TouchableOpacity>
+                    </TouchableHighlight>
                   </View>
                 </View>
                 <View style={{ paddingVertical: 5}}>
