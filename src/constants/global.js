@@ -1,4 +1,5 @@
 import { Dimensions, Platform, PixelRatio, StatusBar } from 'react-native'
+import { isIphoneX } from 'react-native-iphone-x-helper'
 
 export const hostName = 'http://nauqan.ibeacon.kz'
 export const FAVORITE_STORE = '@MyLocalStore:favorite'
@@ -6,7 +7,7 @@ export const CITY_STORE = '@MyLocalStore:city'
 export const WHITE = '#fff'
 export const BLACK = '#000'
 
-export const statusBarHeight = StatusBar.currentHeight
+export const statusBarHeight = Platform.OS === 'ios' ? isIphoneX() ? 30 : 20 : StatusBar.currentHeight
 
 export const BORDER_COLOR = '#ddd'
 export const BG_COLOR = '#FAFAFA'
