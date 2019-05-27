@@ -160,7 +160,7 @@ class Main extends Component {
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="home" size={24} style={{ color: '#FF6E36', textAlign: 'center' }} /><Text style={{ color: '#FF6E36' }} >Главная</Text></View>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('MapPlaces')} >
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="room" size={24} /><Text style={{textAlign: 'center'}}>Заведения на карте</Text></View>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="room" size={24} /><Text numberOfLines={1} style={{textAlign: 'center'}}>Заведения на карте</Text></View>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('Favorite')} >
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="favorite" size={24} /><Text style={{textAlign: 'center'}}>Избранные</Text></View>

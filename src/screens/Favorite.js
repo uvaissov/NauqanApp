@@ -2,14 +2,17 @@ import React, {Component} from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, ScrollView} from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
-import { w, h, TRASPARENT, BG_COLOR } from '../constants/global'
+import { w, h, TRASPARENT, BG_COLOR, normalize } from '../constants/global'
 import CustomStatusBar from '../components/uikit/CustomStatusBar'
 import { Header } from '../components/uikit/favorite/Header'
 import CardPlaceDynamic from '../components/uikit/CardPlaceDynamic'
 
 class Favorite extends Component {  
+  _selectHorizontalItem = (value) => {
+    console.log(value)
+  }
   render() {
-    const { navigation, places } = this.props
+    const { navigation, places, horizontal } = this.props
     const itemWidth = w * 0.466
     return (
       <View style={styles.container}>
@@ -26,6 +29,21 @@ class Favorite extends Component {
           onPress={() => navigation.openDrawer()} 
         />  
         <View style={{flex: 1, backgroundColor: 'white'}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', padding: 5, marginTop: 5 }}>
+            <Text style={{ fontFamily: 'Roboto-Regular', fontWeight: '500', flex: 1, fontSize: normalize(14), color: 'rgba(0, 0, 0, 0.5)' }}>Предложения</Text>
+            <View style={{ flexDirection: 'row'}}>
+              <TouchableOpacity style={{ marginLeft: 10}} onPress={() => this._selectHorizontalItem(true)}>
+                <View style={[styles.buttonView, horizontal ? styles.buttonViewShadow : null]}>
+                  <MaterialIcons name="view-list" size={28} style={{ color: 'rgba(0, 0, 0, 0.5)' }} />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity style={{ marginLeft: 10}} onPress={() => this._selectHorizontalItem(false)}>
+                <View style={[styles.buttonView, !horizontal ? styles.buttonViewShadow : null]}>
+                  <MaterialIcons name="view-module" size={28} style={{ color: 'rgba(0, 0, 0, 0.5)' }} />
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
           <ScrollView>
             <FlatList 
               columnWrapperStyle={{ justifyContent: 'space-between'}}
@@ -76,7 +94,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    places: state.favorite.places
+    places: state.favorite.places,
+    horizontal: state.favorite.horizontal
   }
 }
 export default connect(mapStateToProps, { })(Favorite)

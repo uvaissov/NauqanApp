@@ -55,7 +55,6 @@ class CardPlaceDynamic extends Component {
     const { view, row, favoriteView, touchZone } = styles
     const { fadeAnim, width } = this.state
     const selected = places.includes(item.id)
-    console.log(item)
     return (
       <TouchableHighlight
         style={[view, { width, marginHorizontal: 5, marginBottom: 10 }, style]}
