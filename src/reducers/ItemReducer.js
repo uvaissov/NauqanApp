@@ -1,12 +1,13 @@
 import {
-  ITEM_FETCHED, ITEM_FAILED, ITEM_PLACES_FETCHED, ITEM_PLACES_FAILED, SEARCH_PLACE_CHANGE, SELECT_DIR_ITEM
+  ITEM_FETCHED, ITEM_FAILED, ITEM_PLACES_FETCHED, ITEM_PLACES_FAILED, SEARCH_PLACE_CHANGE, SELECT_DIR_ITEM, SELECT_HORIZONTAL_ITEM
 } from '../types'
 
 const INITIAL_STATE = {
   item: {},
   items: [],
   text: '',
-  dir: 'asc'
+  dir: 'asc',
+  horizontal: false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -45,7 +46,13 @@ export default (state = INITIAL_STATE, action) => {
       ...state,
       dir: action.payload
     }
-  }  
+  }
+  case SELECT_HORIZONTAL_ITEM: {
+    return {
+      ...state,
+      horizontal: action.payload
+    } 
+  }
   
   default: return state
   }

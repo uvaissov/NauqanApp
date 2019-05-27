@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
-import { Text, StyleSheet, View, ImageBackground, ScrollView, InteractionManager} from 'react-native'
+import { Text, StyleSheet, View, ImageBackground, ScrollView } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
+import { ColorDotsLoader } from 'react-native-indicator'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Divider } from 'react-native-elements'
 import { connect } from 'react-redux'
 import Moment from 'moment'
@@ -17,11 +19,8 @@ class Sale extends Component {
   // Lifecycle methods
   componentDidMount() {
     this.props.getSale(this.props.navigation.getParam('id'))    
-    // 1: Component is mounted off-screen
-    InteractionManager.runAfterInteractions(() => {
-      this.setState({
-        didFinishInitialAnimation: true
-      })
+    this.setState({
+      didFinishInitialAnimation: true
     })
   }
   render() {
@@ -30,15 +29,9 @@ class Sale extends Component {
       return (
         <View style={styles.container}>
           <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
-          {/*<Spinner
-            //visibility of Overlay Loading Spinner
-            visible
-            //Text with the Spinner 
-            textContent={'Загрузка...'}
-            //Text style of the Spinner Text
-            textStyle={{color: '#FFF'}}
-          />
-          */}
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <ColorDotsLoader />
+          </View>
         </View>)
     }
     return (
@@ -73,8 +66,12 @@ class Sale extends Component {
           <View style={{ marginHorizontal: 15, marginVertical: 10 }}>
             <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(24), color: 'rgba(0, 0, 0, 0.87)' }}>{item.name}</Text>
             {
-              item.date_en &&
-              <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(12), color: 'rgba(0, 0, 0, 0.4)', lineHeight: 14, margin: 10}}>Действует до {Moment(item.date_en).format('DD.MM.YYYY')}</Text>
+              item.date_en && 
+              <View style={{flexDirection: 'row', alignItems: 'center'}} >
+                <MaterialIcons name="access-time" size={14} style={{ color: '#FF6E36' }} />
+                <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(12), color: 'rgba(0, 0, 0, 0.4)', lineHeight: 14, margin: 10}}>Действует до {Moment(item.date_en).format('DD.MM.YYYY')}</Text>
+              </View>
+              
             }    
             {
               item.skidka_price && 

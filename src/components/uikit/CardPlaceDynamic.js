@@ -69,11 +69,11 @@ class CardPlaceDynamic extends Component {
             opacity: fadeAnim
           }}
         >
-          <View style={{ flex: 1 }}>
+          <View style={{ height: this._calcHeightViewByWidth(width), width }}>
             <Image
               style={{
                 flex: 1,
-                height: this._calcHeightViewByWidth(width),
+                height: undefined,
                 width: undefined
               }}
               source={{ uri: genImageUri(item.img) }}
@@ -82,13 +82,16 @@ class CardPlaceDynamic extends Component {
           </View>
           <View style={[row]}>
             <View style={{ flex: 1 }}>
-              <Text
+              <Text 
+                ellipsizeMode="tail" 
+                numberOfLines={1}
                 style={{
                   color: '#170701',
                   fontSize: 16,
                   lineHeight: 19,
                   opacity: 0.87,
-                  fontFamily: 'Roboto-Regular'
+                  fontFamily: 'Roboto-Regular',
+                  marginRight: 35
                 }}
               >
                 {item.name}

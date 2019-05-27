@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
 import { BG_COLOR } from '../../constants/global'
-import CardPlace from './CardPlace'
+import CardPlaceDynamic from './CardPlaceDynamic'
 
 const SubCategory = ({ 
   style,
@@ -24,7 +24,7 @@ const SubCategory = ({
         <View style={{ flexDirection: 'row', padding: 15 }}>
           {
             places.map((place) => { 
-              return (<CardPlace key={place.id} navigation={navigation} item={place} />)
+              return (<CardPlaceDynamic width={152} favorite key={place.id} item={place} onPress={() => navigation.push('Item', { id: place.id })} />)
             })
           }          
         </View>

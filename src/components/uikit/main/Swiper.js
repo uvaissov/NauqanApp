@@ -22,11 +22,11 @@ const SwiperApp = ({
   
   this._renderSwiper = () => (
     <View style={{paddingHorizontal: 0}}>
-      <Swiper height={getComponentHeight(w, 30)} autoplay activeDotColor="#FFFFFF" dotColor="rgba(255, 255, 255, 0.38)" >
+      <Swiper height={getComponentHeight(w, 30)} autoplay autoplayTimeout={3.5} activeDotColor="#FFFFFF" dotColor="rgba(255, 255, 255, 0.38)" >
         {
           data.map((item) => {
             return (
-              <TouchableWithoutFeedback onPress={() => navigation.navigate('Item', {id: item.id })}>
+              <TouchableWithoutFeedback key={item.id} onPress={() => navigation.navigate('Item', {id: item.id })}>
                 <View key={item.id} style={[child, { width: w }]}>      
                   <ImageBackground  
                     style={{flex: 1, height: undefined, width: undefined }} 
@@ -54,11 +54,11 @@ const SwiperApp = ({
 
   this._renderSwiperRadius = () => (
     <View style={{paddingHorizontal: 0}}>
-      <Swiper height={getComponentHeightSM(w, 30)} autoplay activeDotColor="#FFFFFF" dotColor="rgba(255, 255, 255, 0.38)" >
+      <Swiper height={getComponentHeightSM(w, 30)} autoplay autoplayTimeout={4.7} activeDotColor="#FFFFFF" dotColor="rgba(255, 255, 255, 0.38)" >
         {
           data.map((item) => {
             return (
-              <TouchableWithoutFeedback onPress={() => navigation.navigate('Sale', {id: item.id })}>
+              <TouchableWithoutFeedback key={item.id} onPress={() => navigation.navigate('Sale', {id: item.id })}>
                 <View key={item.id} style={{ width: w, paddingHorizontal: 15, height: getComponentHeightSM(w, 30) }}>
                   <View style={[child, { flex: 1, borderRadius: radius, overflow: 'hidden'}]}>
                     <Image 

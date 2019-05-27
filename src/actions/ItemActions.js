@@ -1,5 +1,5 @@
 
-import { ITEM_FETCHED, ITEM_FAILED, ITEM_PLACES_FETCHED, ITEM_PLACES_FAILED, SEARCH_PLACE_CHANGE, SELECT_DIR_ITEM } from '../types'
+import { ITEM_FETCHED, ITEM_FAILED, ITEM_PLACES_FETCHED, ITEM_PLACES_FAILED, SEARCH_PLACE_CHANGE, SELECT_DIR_ITEM, SELECT_HORIZONTAL_ITEM } from '../types'
 
 import { hostName } from '../constants/global'
 
@@ -37,6 +37,13 @@ export const selectDirItem = (dir) => {
   return {
     type: SELECT_DIR_ITEM,
     payload: dir
+  }
+}
+
+export const selectHorizontalItem = (value) => {
+  return {
+    type: SELECT_HORIZONTAL_ITEM,
+    payload: value
   }
 }
 

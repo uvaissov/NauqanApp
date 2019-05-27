@@ -1,55 +1,81 @@
 import React, {Component} from 'react'
-import { Text, StyleSheet, View, ImageBackground, FlatList, ScrollView, InteractionManager, Image, TouchableOpacity} from 'react-native'
+import { Text, StyleSheet, View, ImageBackground, FlatList, ScrollView, Image, TouchableOpacity } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 //import Spinner from 'react-native-loading-spinner-overlay'
+import { ColorDotsLoader } from 'react-native-indicator'
 import LinearGradient from 'react-native-linear-gradient'
 import { connect } from 'react-redux'
 import { Divider } from 'react-native-elements'
 import CustomStatusBar from '../../components/uikit/CustomStatusBar'
-import { getZav, getPlacesByZav, cleanZav } from '../../actions/ItemActions'
+import { getZav, getPlacesByZav, cleanZav, selectHorizontalItem } from '../../actions/ItemActions'
 import Header from '../../components/uikit/item/Header'
-import { CardItem } from '../../components/uikit/item/CardItem'
+import CardItem from '../../components/uikit/item/CardItem'
 import { w, genImageUri, normalize } from '../../constants/global'
 
 class Item extends Component { 
   state = {
     didFinishInitialAnimation: false
-  }
+  }  
 
   // Lifecycle methods
   componentDidMount() {
+    console.log('componentDidMount Item')
     this.props.getZav(this.props.navigation.getParam('id'))
     this.props.getPlacesByZav(this.props.navigation.getParam('id'), this.props.text, this.props.dir)
-    
     // 1: Component is mounted off-screen
-    InteractionManager.runAfterInteractions(() => {
-      this.setState({
-        didFinishInitialAnimation: true
-      })
+    this.setState({
+      didFinishInitialAnimation: true
     })
+  }
+
+  onPressCartItem = (id) => {
+    this.props.navigation.push('Sale', { id})
+  }
+
+  _selectHorizontalItem = (value) => {
+    this.props.selectHorizontalItem(value)
+  }
+
+  keyExtractor =(item) => item.key  
+
+  renderItem = (item) => {
+    const horizontal = this.props.horizontal
+    const widthItem = horizontal ? (w - 8) : (w / 2) - 8  
+    return (<CardItem favorite horizontal={horizontal} style={{width: widthItem}} push={() => this.onPressCartItem(item.item.id)} item={item.item} />)
   }
   
   render() {
-    const widthItem = (w / 2) - 8  
-    const { navigation, items, zav, categories } = this.props
+    const { navigation, items, zav, categories, horizontal } = this.props
     if (this.state.didFinishInitialAnimation === false || !zav.id) {
       return (
         <View style={styles.container}>
           <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
-          {/*<Spinner
-            //visibility of Overlay Loading Spinner
-            visible
-            //Text with the Spinner 
-            textContent={'Загрузка...'}
-            //Text style of the Spinner Text
-            textStyle={{color: '#FFF'}}
-          />
-          */}
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <ColorDotsLoader />
+          </View>
         </View>)
     }
 
     const [category] = categories.filter((cat) => cat.id === zav.cat_id)
-
+    
+    const flatList = horizontal ? (
+      <FlatList
+        key={`${1}:id`}
+        numColumns={1}       
+        data={items}
+        renderItem={this.renderItem}
+        keyExtractor={this.keyExtractor}
+      />
+    ) : (
+      <FlatList 
+        key={`${2}:id`}
+        columnWrapperStyle={{ justifyContent: 'space-between'}}
+        numColumns={2}
+        data={items}
+        renderItem={this.renderItem}
+        keyExtractor={this.keyExtractor}
+      />
+    )
     return (
       <View style={styles.container}>                
         <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
@@ -101,27 +127,20 @@ class Item extends Component {
                 <View style={{ flexDirection: 'row', alignItems: 'center', padding: 5, marginTop: 5 }}>
                   <Text style={{ fontFamily: 'Roboto-Regular', fontWeight: '500', flex: 1, fontSize: normalize(14), color: 'rgba(0, 0, 0, 0.5)' }}>Предложения</Text>
                   <View style={{ flexDirection: 'row'}}>
-                    <TouchableOpacity style={{ marginLeft: 10}}>
-                      <View style={[styles.buttonView]}>
+                    <TouchableOpacity style={{ marginLeft: 10}} onPress={() => this._selectHorizontalItem(true)}>
+                      <View style={[styles.buttonView, horizontal ? styles.buttonViewShadow : null]}>
                         <MaterialIcons name="view-list" size={28} style={{ color: 'rgba(0, 0, 0, 0.5)' }} />
                       </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ marginLeft: 10}}>
-                      <View style={[styles.buttonView, styles.buttonViewShadow]}>
+                    <TouchableOpacity style={{ marginLeft: 10}} onPress={() => this._selectHorizontalItem(false)}>
+                      <View style={[styles.buttonView, !horizontal ? styles.buttonViewShadow : null]}>
                         <MaterialIcons name="view-module" size={28} style={{ color: 'rgba(0, 0, 0, 0.5)' }} />
                       </View>
                     </TouchableOpacity>
                   </View>
                 </View>
                 <View style={{ paddingVertical: 5}}>
-                  <FlatList 
-                    columnWrapperStyle={{ justifyContent: 'space-between'}}
-                    numColumns={2}
-                    data={items}
-                    renderItem={(item) => <CardItem style={{width: widthItem}} navigation={navigation} item={item.item} />}
-                    keyExtractor={(item) => item.key}
-                  />
-                
+                  {flatList}                
                 </View>
               </View>
             }
@@ -160,7 +179,8 @@ const mapStateToProps = state => {
   return {
     categories: state.catalog.categories,    
     items: state.item.items,
-    zav: state.item.item
+    zav: state.item.item,
+    horizontal: state.item.horizontal
   }
 }
-export default connect(mapStateToProps, { getZav, getPlacesByZav, cleanZav })(Item)
+export default connect(mapStateToProps, { getZav, getPlacesByZav, cleanZav, selectHorizontalItem })(Item)
