@@ -47,7 +47,7 @@ const Header = ({
       if (this._scrollView) {
         this._scrollView.scrollTo({x: idx * 110, animated: true})  
       }
-    }, 200)
+    }, 300)
   }
   this.show = (value) => {
     sortPress(value)
@@ -115,8 +115,8 @@ const Header = ({
           </TouchableOpacity>
         }
       </LinearGradient>
-      {        
-        <ScrollView scrollEventThrottle={16} showsHorizontalScrollIndicator ref={(view) => { this._scrollView = view }} horizontal style={{ flexDirection: 'row', paddingHorizontal: 15 }}>
+      <View>
+        <ScrollView scrollEventThrottle={16} showsHorizontalScrollIndicator ref={(view) => { this._scrollView = view }} horizontal >
           {
             categories.map((cat) => {  
               const selected = cat.id === category.id         
@@ -127,8 +127,7 @@ const Header = ({
             )
           }        
         </ScrollView> 
-      }
-           
+      </View>
     </View>
   )
 }

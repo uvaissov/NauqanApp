@@ -2,6 +2,7 @@
   package="com.nauqanapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -38,15 +39,16 @@
         </intent-filter>
       </receiver>
       <service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService">
-        <intent-filter>
-          <action android:name="com.google.firebase.MESSAGING_EVENT" />
-        </intent-filter>
-      </service> 
-      <service android:name="io.invertase.firebase.messaging.RNFirebaseInstanceIdService">
-        <intent-filter>
-          <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-        </intent-filter>
-      </service> 
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name="io.invertase.firebase.messaging.RNFirebaseInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:name="io.invertase.firebase.messaging.RNFirebaseBackgroundMessagingService" /> 
       <meta-data
         android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyA9VnGE48M6z6uYb_GGizFdtR5r8mzN2VU"/>

@@ -15,15 +15,18 @@ import {
   addFavoritePlace,
   delFavoritePlace
 } from '../../actions/FavoriteActions'
-import { BG_COLOR, genImageUri } from '../../constants/global'
+import { BG_COLOR, genImageUri, ITEM, hostName } from '../../constants/global'
 
 class CardPlaceDynamic extends Component {
   state = {
     fadeAnim: new Animated.Value(0), // Initial value for opacity: 0
-    selected: false,
-    width: this.props.width
+    selected: false
   }
-  componentDidMount() {
+  async componentDidMount() {
+    const item = this.props.item
+    if (!item.img) {
+      this._fecthData(item)
+    }
     Animated.timing(
       // Animate over time
       this.state.fadeAnim, // The animated value to drive
@@ -33,8 +36,13 @@ class CardPlaceDynamic extends Component {
       }
     ).start() // Starts the animation
   }
+  _fecthData = (item) => {
+    fetch(`${hostName}/zavedeniya?id=${item.id}`, { method: 'GET' })
+      .then(res => res.json())
+      .then(data => { this.setState({item: data[0]}) })         
+  }
 
-  _calcHeightViewByWidth = width => {
+  _calcHeightViewByWidth = width => { 
     return width
   }
 
@@ -42,19 +50,29 @@ class CardPlaceDynamic extends Component {
     return width * 0.3
   }
 
-  _addToFav = id => {
-    this.props.addFavoritePlace(id)
+  _addToFav = (id, name) => {
+    this.props.addFavoritePlace(id, ITEM, name)
   }
 
   _remFromFav = id => {
-    this.props.delFavoritePlace(id)
+    this.props.delFavoritePlace(id, ITEM)
   }
 
   render() {
-    const { item, style, onPress, favorite, trash, places } = this.props
+    const { style, onPress, favorite, trash, places, horizontal, width } = this.props
+    let { item } = this.state 
+    if (!item) {
+      item = this.props.item
+    }
     const { view, row, favoriteView, touchZone } = styles
-    const { fadeAnim, width } = this.state
-    const selected = places.includes(item.id)
+    const { fadeAnim } = this.state
+    const selected = places.findIndex(({ id, type}) => { return (id === item.id && type === ITEM) }) > -1
+    let heightParam = width
+    let widthParam = width
+    if (horizontal) {
+      widthParam *= 0.3
+      heightParam *= 0.35
+    }
     return (
       <TouchableHighlight
         style={[view, { width, marginHorizontal: 5, marginBottom: 10 }, style]}
@@ -65,10 +83,11 @@ class CardPlaceDynamic extends Component {
             flex: 1,
             overflow: 'hidden',
             borderRadius: 6,
-            opacity: fadeAnim
+            opacity: fadeAnim,
+            flexDirection: horizontal ? 'row' : 'column'
           }}
         >
-          <View style={{ height: this._calcHeightViewByWidth(width), width }}>
+          <View style={{ height: heightParam, width: widthParam }}>
             <Image
               style={{
                 flex: 1,
@@ -83,7 +102,7 @@ class CardPlaceDynamic extends Component {
             <View style={{ flex: 1 }}>
               <Text 
                 ellipsizeMode="tail" 
-                numberOfLines={1}
+                numberOfLines={horizontal ? 2 : 1}
                 style={{
                   color: '#170701',
                   fontSize: 16,
@@ -95,6 +114,7 @@ class CardPlaceDynamic extends Component {
               >
                 {item.name}
               </Text>
+              <View style={{flex: 1}} />
               <Text
                 style={{
                   color: '#563DD0',
@@ -116,7 +136,7 @@ class CardPlaceDynamic extends Component {
                     name={'trash'}
                     size={16}
                     style={
-                      !selected ? { color: '#170701' } : { color: '#FF6E36' }
+                      { color: '#170701' }
                     }
                   />
                 </View>
@@ -125,7 +145,7 @@ class CardPlaceDynamic extends Component {
             {favorite && (
               <TouchableOpacity
                 onPress={() =>
-                  (selected ? this._remFromFav(item.id) : this._addToFav(item.id))
+                  (selected ? this._remFromFav(item.id) : this._addToFav(item.id, item.name))
                 }
                 style={touchZone}
               >
@@ -154,7 +174,8 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     flexDirection: 'row',
     backgroundColor: BG_COLOR,
-    position: 'relative'
+    position: 'relative',
+    flex: 1
   },
   touchZone: {
     position: 'absolute',

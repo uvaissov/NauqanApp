@@ -13,31 +13,62 @@ import { getPromoDataFirst, getPromoDataSecond } from '../actions/SwiperActions'
 import { HeaderMain, SwiperApp, ButtonGrad} from '../components/uikit'
 import CardPlaceDynamic from '../components/uikit/CardPlaceDynamic'
 import { w, h, BG_COLOR, TRASPARENT, statusBarHeight } from '../constants/global'
+import NotifyService from '../services/NotifyService'
+
 
 //const PushNotificationIOS = require('react-native-push-notification')
-const PushNotification = require('react-native-push-notification')
+//const PushNotification = require('react-native-push-notification')
 
 class Main extends Component {
   state = {
     cityId: this.props.cityId
   }
-  componentDidMount() {
+  async componentDidMount() {
     this.props.initCity()
+    this.props.getCategories() 
     this.props.getCities()
     this.props.initFavorites()
     this.props.getPromoDataFirst()
     this.props.getPromoDataSecond()
+    this.notify = new NotifyService(this.onOpen1, this.onOpen2)
+    this.notify.start() // Инициализация уведомлении
   }
   componentDidUpdate(prevState) {
-    if (prevState.cityId !== this.props.cityId) {
+    if (prevState.cityId !== this.props.cityId) {      
+      firebase.messaging().unsubscribeFromTopic(`cityId_${prevState.cityId}`)
+      firebase.messaging().subscribeToTopic(`cityId_${this.props.cityId}`)
       this._initData()
     }
   }
 
+  componentWillUnmount() {
+    console.log('componentWillUnmount')
+    this.notify.notificationDisplayedListener()
+    this.notify.notificationListener()
+    this.notify.notificationOpenedListener()
+  }  
+
+  onOpen1 = (value) => {
+    console.log('onOpen1', value)
+    this.redirectMessage(value)
+  }
+  onOpen2 = (value) => {
+    console.log('onOpen2', value)
+    this.redirectMessage(value)
+  }
+  getCurrentCityId = () => {
+    return this.props.cityId
+  }
+
+  redirectMessage = (value) => {
+    const { id, type } = value
+    if (type && id) {
+      this.props.navigation.push('Item', {id: 26})
+    }
+  }
   //Этот метож вызываеться из-за зависимости при параметре город
   _initData = () => {   
-    this.props.getPlacesTop()
-    this.props.getCategories()    
+    this.props.getPlacesTop()  
   }
 
   render() {
@@ -191,69 +222,6 @@ const styles = StyleSheet.create({
   shadowGradient: {
     height: 4
   }
-})
-
-const messaging = firebase.messaging()
-
-messaging.hasPermission()
-  .then((enabled) => {
-    if (enabled) {
-      messaging.getToken()
-        .then(token => { console.log('token', token) })
-        .catch(error => { console.log(error) })
-    } else {
-      messaging.requestPermission()
-        .then(() => { /* got permission */ })
-        .catch(error => { console.log(error) })
-    }
-  })
-  .catch(error => { console.log(error) })
-
-firebase.notifications().onNotification((notification) => {
-  const { title, body } = notification
-  PushNotification.localNotification({
-    title,
-    message: body // (required)
-  })
-})
-
-PushNotification.configure({
-
-  // (optional) Called when Token is generated (iOS and Android)
-  onRegister(token) {
-    console.log('TOKEN:', token)
-  },
-
-  // (required) Called when a remote or local notification is opened or received
-  onNotification(notification) {
-    console.log('NOTIFICATION:', notification)
-
-    // process the notification
-
-    // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
-    //notification.finish(PushNotificationIOS.FetchResult.NoData);
-  },
-
-  // ANDROID ONLY: GCM or FCM Sender ID (product_number) (optional - not required for local notifications, but is need to receive remote push notifications)
-  //senderID: "YOUR GCM (OR FCM) SENDER ID",
-
-  // IOS ONLY (optional): default: all - Permissions to register.
-  permissions: {
-    alert: true,
-    badge: true,
-    sound: true
-  },
-
-  // Should the initial notification be popped automatically
-  // default: true
-  popInitialNotification: true,
-
-  /**
-    * (optional) default: true
-    * - Specified if permissions (ios) and token (android and ios) will requested or not,
-    * - if not, you must call PushNotificationsHandler.requestPermissions() later
-    */
-  requestPermissions: true
 })
 
 const mapStateToProps = state => {

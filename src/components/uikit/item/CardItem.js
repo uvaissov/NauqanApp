@@ -8,21 +8,41 @@ import {
   addFavoritePlace,
   delFavoritePlace
 } from '../../../actions/FavoriteActions'
-import { BG_COLOR, normalize, genImageUri } from '../../../constants/global'
+import { BG_COLOR, normalize, genImageUri, SALE, hostName } from '../../../constants/global'
 
-class CardItem extends Component {  
-  _addToFav = id => {
-    this.props.addFavoritePlace(id)
+class CardItem extends Component {   
+  state = {
+
+  }  
+  componentDidMount() {
+    const item = this.props.item
+    if (!item.img) {
+      this._fecthData(item)
+    }
+  }
+
+  _fecthData = (item) => {
+    fetch(`${hostName}/product?id=${item.id}`, { method: 'GET' })
+      .then(res => res.json())
+      .then(data => { this.setState({item: data[0]}) })         
+  }
+
+  _addToFav = (id, name) => {
+    this.props.addFavoritePlace(id, SALE, name)
   }
 
   _remFromFav = id => {
-    this.props.delFavoritePlace(id)
+    this.props.delFavoritePlace(id, SALE)
   }
 
   render() {
-    const { item, push, style, horizontal, favorite, trash, places } = this.props
+    const { push, style, horizontal, favorite, trash, places } = this.props
+    let { item } = this.state 
+    if (!item) {
+      item = this.props.item
+    }
     const { view, row } = styles
-    const selected = places.includes(item.id)
+    const selected = places.findIndex(({ id, type}) => id === item.id && type === SALE) > -1
     let height = style.width
     let width = style.width
     if (horizontal) {
@@ -87,7 +107,7 @@ class CardItem extends Component {
                     name={'trash'}
                     size={16}
                     style={
-                      !selected ? { color: '#170701' } : { color: '#FF6E36' }
+                      { color: '#170701' }
                     }
                   />
                 </View>
@@ -96,7 +116,7 @@ class CardItem extends Component {
             {favorite && (
               <TouchableOpacity
                 onPress={() =>
-                  (selected ? this._remFromFav(item.id) : this._addToFav(item.id))
+                  (selected ? this._remFromFav(item.id) : this._addToFav(item.id, item.name))
                 }
                 style={[styles.touchZone, !horizontal ? {bottom: 5} : {top: 5}]}
               >
@@ -189,7 +209,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    places: state.favorite.places
+    places: state.favorite.places,
+    horizontal: state.favorite.horizontal
   }
 }
 export default connect(

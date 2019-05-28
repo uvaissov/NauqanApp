@@ -2,18 +2,46 @@ import React, {Component} from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, ScrollView} from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
-import { w, h, TRASPARENT, BG_COLOR, normalize } from '../constants/global'
+import { w, h, TRASPARENT, BG_COLOR, normalize, ITEM } from '../constants/global'
 import CustomStatusBar from '../components/uikit/CustomStatusBar'
 import { Header } from '../components/uikit/favorite/Header'
 import CardPlaceDynamic from '../components/uikit/CardPlaceDynamic'
+import CardItem from '../components/uikit/item/CardItem'
+import { selectHorizontalItem } from '../actions/FavoriteActions'
 
 class Favorite extends Component {  
   _selectHorizontalItem = (value) => {
-    console.log(value)
+    this.props.selectHorizontalItem(value)
+  }
+  _renderItem = (row) => {
+    const { navigation, horizontal } = this.props
+    const widthItem = horizontal ? (w - 8) : (w / 2) - 8
+    console.log('widthItem:', widthItem)    
+    if (row.item.type === ITEM) {
+      return (<CardPlaceDynamic horizontal={horizontal} trash width={widthItem} onPress={() => navigation.push('Item', {id: row.item.id})} item={{ id: row.item.id, name: row.item.name }} />)
+    }
+    return (<CardItem style={{width: widthItem}} horizontal={horizontal} trash push={() => navigation.push('Sale', {id: row.item.id})} item={{ id: row.item.id, name: row.item.name }} />)
   }
   render() {
     const { navigation, places, horizontal } = this.props
-    const itemWidth = w * 0.466
+    const flatList = horizontal ? (
+      <FlatList
+        key={`${1}:id`}
+        numColumns={1}       
+        data={places}
+        renderItem={this._renderItem}
+        keyExtractor={(item) => `${item.id} - ${item.type}`}
+      />
+    ) : (
+      <FlatList 
+        key={`${2}:id`}
+        columnWrapperStyle={{ justifyContent: 'space-between'}}
+        data={places}
+        numColumns={2} 
+        renderItem={this._renderItem}
+        keyExtractor={(item) => `${item.id} - ${item.type}`}
+      />      
+    )
     return (
       <View style={styles.container}>
         <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
@@ -45,14 +73,7 @@ class Favorite extends Component {
             </View>
           </View>
           <ScrollView>
-            <FlatList 
-              columnWrapperStyle={{ justifyContent: 'space-between'}}
-              data={places}
-              numColumns={2} 
-              renderItem={(row) => <CardPlaceDynamic trash width={itemWidth} onPress={() => navigation.push('Item', {id: row.item})} item={{ id: row.item, name: 'Adidas', count: 15, img: require('../../resources/demo/adidas.png')}} />}
-              keyExtractor={(item) => item}
-              style={{ padding: 5 }}
-            />
+            {flatList}
           </ScrollView>
         </View>
         <View style={[styles.shadowBox, { backgroundColor: TRASPARENT, height: h * 0.07}]} >          
@@ -98,4 +119,4 @@ const mapStateToProps = state => {
     horizontal: state.favorite.horizontal
   }
 }
-export default connect(mapStateToProps, { })(Favorite)
+export default connect(mapStateToProps, { selectHorizontalItem })(Favorite)

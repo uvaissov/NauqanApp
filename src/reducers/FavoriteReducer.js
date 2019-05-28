@@ -1,11 +1,13 @@
 import {
   FAV_PLACE_FETCHED,
-  FAV_PLACE_FAILED
+  FAV_PLACE_FAILED,
+  SELECT_HORIZONTAL_FAVORITE
 } from '../types'
   
 const INITIAL_STATE = {
   places: [], 
-  items: []
+  items: [],
+  horizontal: false
 }
   
 export default (state = INITIAL_STATE, action) => {
@@ -20,6 +22,12 @@ export default (state = INITIAL_STATE, action) => {
     return {
       ...state      
     }
+  }
+  case SELECT_HORIZONTAL_FAVORITE: {
+    return {
+      ...state,
+      horizontal: action.payload
+    } 
   }
   default: return state
   }

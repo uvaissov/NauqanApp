@@ -2,7 +2,7 @@ import { Dimensions, Platform, PixelRatio, StatusBar } from 'react-native'
 import { isIphoneX } from 'react-native-iphone-x-helper'
 
 export const hostName = 'http://nauqan.ibeacon.kz'
-export const FAVORITE_STORE = '@MyLocalStore:favorite'
+export const FAVORITE_STORE = '@MyLocalStore:favoriteList'
 export const CITY_STORE = '@MyLocalStore:city'
 export const WHITE = '#fff'
 export const BLACK = '#000'
@@ -14,6 +14,9 @@ export const BG_COLOR = '#FAFAFA'
 export const TRASPARENT = 'transparent'
 
 export const MAIN_COLOR = '#4388D6'
+
+export const ITEM = 'ITEM'
+export const SALE = 'SALE'
 
 export const win = Dimensions.get('window')
 export const w = win.width
