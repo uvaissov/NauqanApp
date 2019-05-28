@@ -15,7 +15,7 @@ class Favorite extends Component {
   }
   _renderItem = (row) => {
     const { navigation, horizontal } = this.props
-    const widthItem = horizontal ? (w - 8) : (w / 2) - 8
+    const widthItem = horizontal ? (w - 8) : (w / 2) - 10
     console.log('widthItem:', widthItem)    
     if (row.item.type === ITEM) {
       return (<CardPlaceDynamic horizontal={horizontal} trash width={widthItem} onPress={() => navigation.push('Item', {id: row.item.id})} item={{ id: row.item.id, name: row.item.name }} />)
@@ -26,7 +26,7 @@ class Favorite extends Component {
     const { navigation, places, horizontal } = this.props
     const flatList = horizontal ? (
       <FlatList
-        key={`${1}:id`}
+        key={`${1}_id`}
         numColumns={1}       
         data={places}
         renderItem={this._renderItem}
@@ -34,7 +34,7 @@ class Favorite extends Component {
       />
     ) : (
       <FlatList 
-        key={`${2}:id`}
+        key={`${2}_id`}
         columnWrapperStyle={{ justifyContent: 'space-between'}}
         data={places}
         numColumns={2} 

@@ -39,8 +39,8 @@ class Item extends Component {
   keyExtractor =(item) => item.key  
 
   renderItem = (item) => {
-    const horizontal = this.props.horizontal
-    const widthItem = horizontal ? (w - 8) : (w / 2) - 8  
+    const { horizontal } = this.props
+    const widthItem = horizontal ? (w - 8) : (w / 2) - 10  
     return (<CardItem favorite horizontal={horizontal} style={{width: widthItem}} push={() => this.onPressCartItem(item.item.id)} item={item.item} />)
   }
   
@@ -56,11 +56,11 @@ class Item extends Component {
         </View>)
     }
 
-    const [category] = categories.filter((cat) => cat.id === zav.cat_id)
+    const [category = {}] = categories.filter((cat) => cat.id === zav.cat_id)
     
     const flatList = horizontal ? (
       <FlatList
-        key={`${1}:id`}
+        key={`${1}_id`}
         numColumns={1}       
         data={items}
         renderItem={this.renderItem}
@@ -68,7 +68,7 @@ class Item extends Component {
       />
     ) : (
       <FlatList 
-        key={`${2}:id`}
+        key={`${2}_id`}
         columnWrapperStyle={{ justifyContent: 'space-between'}}
         numColumns={2}
         data={items}
@@ -166,10 +166,10 @@ const styles = StyleSheet.create({
   },
   buttonViewShadow: {
     shadowOffset: {
-      width: 5,
-      height: 5
+      width: 0,
+      height: 2
     },
-    shadowOpacity: 0.8,
+    shadowOpacity: 0.4,
     shadowRadius: 1.22,
     elevation: 4
   }

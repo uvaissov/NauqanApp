@@ -4,7 +4,7 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import CustomStatusBar from '../components/uikit/CustomStatusBar'
 import { Header } from '../components/uikit/map/Header'
-import { w, h, TRASPARENT, BG_COLOR } from '../constants/global'
+import { w, h, TRASPARENT, BG_COLOR, statusBarHeight } from '../constants/global'
 
 class MapPlaces extends Component {
   state = {
@@ -107,7 +107,7 @@ class MapPlaces extends Component {
           }
           
         </View>
-        <CustomStatusBar backgroundColor="grey" barStyle="default" absolute={{position: 'absolute', width: w, top: 0, zIndex: 10}} />
+        <CustomStatusBar backgroundColor="grey" barStyle="default" absolute={{position: 'absolute', width: w, top: statusBarHeight, zIndex: 10}} />
         <Header style={{position: 'absolute', width: w, top: 18, zIndex: 10}} leftIcon="md-menu" title="Главная" onPress={() => navigation.openDrawer()} />
         {/* footer static and get 10% from display */}
         <View style={[styles.shadowBox, { backgroundColor: TRASPARENT, height: h * 0.07}]} >          

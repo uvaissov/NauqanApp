@@ -163,7 +163,8 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 1.22,
-    margin: 4,
+    marginHorizontal: 5, 
+    marginBottom: 10,
     elevation: 4,
     position: 'relative'
   },
@@ -209,8 +210,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    places: state.favorite.places,
-    horizontal: state.favorite.horizontal
+    places: state.favorite.places
   }
 }
 export default connect(

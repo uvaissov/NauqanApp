@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>713343863173-ns9k2bealtjd4q70rvhtvqv5p8drj0lk.apps.googleusercontent.com</string>
+	<string>713343863173-t0v9r0te2agcmm2vb6ne8fru06d1tt8p.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.713343863173-ns9k2bealtjd4q70rvhtvqv5p8drj0lk</string>
+	<string>com.googleusercontent.apps.713343863173-t0v9r0te2agcmm2vb6ne8fru06d1tt8p</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBLQHmHpF8m-2g6mWOs-VuXBRSxkMT9RnY</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>org.reactjs.native.example.NauqanApp</string>
+	<string>com.reactjs.NauqanApp</string>
 	<key>PROJECT_ID</key>
 	<string>naucanapp-1556952948082</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:713343863173:ios:b9c36bb9ef651c10</string>
+	<string>1:713343863173:ios:e065df95d7f4a065</string>
 	<key>DATABASE_URL</key>
 	<string>https://naucanapp-1556952948082.firebaseio.com</string>
 </dict>

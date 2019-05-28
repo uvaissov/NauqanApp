@@ -50,6 +50,7 @@
 		3B661543AF3B4D74A33E0358 /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D19810E74D524316A6CA4102 /* libRNSVG-tvOS.a */; };
 		3F4380657D634F4A94CC2AA2 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F9D60280DD743CBB5F2FBF2 /* libRNSVG.a */; };
 		4890AA657C55480F8C2073B7 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C42864FB690940B089316047 /* Roboto-Regular.ttf */; };
+		4B0E48B8229DC4D800B50739 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0E48B7229DC4D800B50739 /* UserNotifications.framework */; };
 		4B43BF5E2291CBA500FCE786 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B43BF5B2291CB9700FCE786 /* libRCTPushNotification.a */; };
 		4B43BF622291D56B00FCE786 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4B43BF612291D56A00FCE786 /* GoogleService-Info.plist */; };
 		4BCFC36D229C422D003C0C85 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BCFC36A229C41DF003C0C85 /* libART.a */; };
@@ -495,6 +496,7 @@
 		3F9D60280DD743CBB5F2FBF2 /* libRNSVG.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSVG.a; sourceTree = "<group>"; };
 		410188D997B840B3A47DF279 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-MediumItalic.ttf"; path = "../assets/fonts/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
 		44885117B9C2412C8E1CBD32 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		4B0E48B7229DC4D800B50739 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		4B3885F025A542B987C33B56 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		4B43BF552291CB9700FCE786 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		4B43BF612291D56A00FCE786 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "NauqanApp/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -553,6 +555,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B0E48B8229DC4D800B50739 /* UserNotifications.framework in Frameworks */,
 				4BCFC36D229C422D003C0C85 /* libART.a in Frameworks */,
 				4B43BF5E2291CBA500FCE786 /* libRCTPushNotification.a in Frameworks */,
 				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
@@ -737,6 +740,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4B0E48B7229DC4D800B50739 /* UserNotifications.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
@@ -1047,6 +1051,9 @@
 						DevelopmentTeam = ZS7TGSTLHR;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};

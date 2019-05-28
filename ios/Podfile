@@ -42,6 +42,8 @@ target 'NauqanApp' do
     pod 'Firebase/Core', '~> 5.20.1'
     pod 'Firebase/Messaging', '~> 5.20.1'
     #pod 'Firebase/Core'
+    #pod 'Firebase/Messaging'
+    #pod 'Firebase/Core'
     #pod 'Firebase/Analytics'
     #pod 'Firebase/Messaging', '~> 5.20.1'
     

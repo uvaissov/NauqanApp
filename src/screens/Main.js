@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import AsyncStorage from '@react-native-community/async-storage'
 import { Image, StyleSheet, View, Text, ScrollView, TouchableOpacity, FlatList, ImageBackground } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { Button } from 'react-native-elements'
@@ -15,7 +16,6 @@ import CardPlaceDynamic from '../components/uikit/CardPlaceDynamic'
 import { w, h, BG_COLOR, TRASPARENT, statusBarHeight } from '../constants/global'
 import NotifyService from '../services/NotifyService'
 
-
 //const PushNotificationIOS = require('react-native-push-notification')
 //const PushNotification = require('react-native-push-notification')
 
@@ -30,13 +30,15 @@ class Main extends Component {
     this.props.initFavorites()
     this.props.getPromoDataFirst()
     this.props.getPromoDataSecond()
+    this.checkPermission()
     this.notify = new NotifyService(this.onOpen1, this.onOpen2)
     this.notify.start() // Инициализация уведомлении
+    firebase.messaging().subscribeToTopic('all')
   }
   componentDidUpdate(prevState) {
     if (prevState.cityId !== this.props.cityId) {      
       firebase.messaging().unsubscribeFromTopic(`cityId_${prevState.cityId}`)
-      firebase.messaging().subscribeToTopic(`cityId_${this.props.cityId}`)
+      firebase.messaging().subscribeToTopic(`cityId_${this.props.cityId}`)      
       this._initData()
     }
   }
@@ -59,6 +61,28 @@ class Main extends Component {
   getCurrentCityId = () => {
     return this.props.cityId
   }
+  
+  //3
+  async getToken() {
+    let fcmToken = await AsyncStorage.getItem('fcmToken')
+    if (!fcmToken) {
+      fcmToken = await firebase.messaging().getToken()
+      if (fcmToken) {
+        // user has a device token
+        await AsyncStorage.setItem('fcmToken', fcmToken)
+      }
+    }
+    console.log('fcmToken', fcmToken)
+  }
+
+  async checkPermission() {
+    const enabled = await firebase.messaging().hasPermission()
+    if (enabled) {
+      this.getToken()
+    } else {
+      this.requestPermission()
+    }
+  }
 
   redirectMessage = (value) => {
     const { id, type } = value
@@ -66,6 +90,19 @@ class Main extends Component {
       this.props.navigation.push('Item', {id: 26})
     }
   }
+  
+  //2
+  async requestPermission() {
+    try {
+      await firebase.messaging().requestPermission()
+      // User has authorised
+      this.getToken()
+    } catch (error) {
+      // User has rejected permissions
+      console.log('permission rejected')
+    }
+  }
+
   //Этот метож вызываеться из-за зависимости при параметре город
   _initData = () => {   
     this.props.getPlacesTop()  
