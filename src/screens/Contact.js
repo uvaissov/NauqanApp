@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     color: 'rgba(0, 0, 0, 0.87)',
     fontFamily: 'Roboto-Regular',
     fontWeight: '300',
-    marginHorizontal: 10
+    margin: 10
   },
   containerText: {
     borderRadius: 6,
