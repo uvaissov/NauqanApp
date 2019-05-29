@@ -77,13 +77,13 @@ class Sale extends Component {
               item.skidka_price && 
               <View style={{ flexDirection: 'row'}}>
                 <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(16), color: '#979797', textDecorationLine: 'line-through' }} >{item.price}</Text>
-                <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(16), color: '#FF6E36', marginLeft: 5}}>{item.skidka_price}</Text>
+                <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(16), color: '#FF6E36', marginLeft: 5}}>{item.skidka_price} тенге</Text>
               </View>
             }
             {
               !item.skidka_price && 
               <View style={{ flexDirection: 'row'}}>
-                <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(16), color: '#FF6E36', marginLeft: 5}}>{item.price}</Text>
+                <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(16), color: '#FF6E36', marginLeft: 5}}>{item.price} тенге</Text>
               </View>
             }        
             
