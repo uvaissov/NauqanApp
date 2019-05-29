@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import {
   View,
   StyleSheet,
-  Image,
   Text,
   TouchableHighlight,
   TouchableOpacity,
   Animated
 } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import { connect } from 'react-redux'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
@@ -87,15 +87,11 @@ class CardPlaceDynamic extends Component {
             flexDirection: horizontal ? 'row' : 'column'
           }}
         >
-          <View style={{ height: heightParam, width: widthParam }}>
-            <Image
-              style={{
-                flex: 1,
-                height: undefined,
-                width: undefined
-              }}
-              source={{ uri: genImageUri(item.img) }}
-              resizeMode="cover"
+          <View style={{ height: heightParam, width: widthParam }}>            
+            <FastImage 
+              style={{flex: 1, height: undefined, width: undefined }} 
+              source={{uri: genImageUri(item.img)}}
+              resizeMode={FastImage.resizeMode.cover}
             />
           </View>
           <View style={[row]}>

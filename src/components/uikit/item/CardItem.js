@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Image, Text, TouchableHighlight, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, TouchableHighlight, TouchableOpacity, Animated } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import { connect } from 'react-redux'
@@ -12,13 +13,22 @@ import { BG_COLOR, normalize, genImageUri, SALE, hostName } from '../../../const
 
 class CardItem extends Component {   
   state = {
-
+    fadeAnim: new Animated.Value(0) // Initial value for opacity: 0
   }  
   componentDidMount() {
     const item = this.props.item
     if (!item.img) {
       this._fecthData(item)
+      console.log('_fecthData')      
     }
+    Animated.timing(
+      // Animate over time
+      this.state.fadeAnim, // The animated value to drive
+      {
+        toValue: 1, // Animate to opacity: 1 (opaque)
+        duration: 300 // Make it take a while
+      }
+    ).start() // Starts the animation
   }
 
   componentDidUpdate() {
@@ -41,6 +51,7 @@ class CardItem extends Component {
 
   render() {
     const { push, style, horizontal, favorite, trash, places } = this.props
+    const { fadeAnim } = this.state
     let { item } = this.state 
     if (!item) {
       item = this.props.item
@@ -55,12 +66,12 @@ class CardItem extends Component {
     }
     return (
       <TouchableHighlight style={[style, view]} onPress={() => push()} >      
-        <View style={{flex: 1, overflow: 'hidden', borderRadius: 6, flexDirection: horizontal ? 'row' : 'column' }}>        
+        <Animated.View style={{flex: 1, overflow: 'hidden', borderRadius: 6, flexDirection: horizontal ? 'row' : 'column', opacity: fadeAnim }}>        
           <View style={{ height, width }}>
-            <Image 
+            <FastImage 
               style={{flex: 1, height: undefined, width: undefined }} 
               source={{uri: genImageUri(item.img)}}
-              resizeMode="cover"
+              resizeMode={FastImage.resizeMode.cover}
             />          
           </View>        
           <View style={row}>
@@ -143,7 +154,7 @@ class CardItem extends Component {
         </View>
           }
           
-        </View>
+        </Animated.View>
       </TouchableHighlight>
 
     )

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import LinearGradient from 'react-native-linear-gradient'
 import { connect } from 'react-redux'
 import { getPlacesByZav, selectDirItem } from '../../../actions/ItemActions'
 import { ModalSort} from './ModalSort'
@@ -104,14 +105,22 @@ class Header extends Component {
         </TouchableOpacity>
       ) : null
     return (
-      <View style={[viewStyle, style, { backgroundColor: headerColor }]}>
+      <LinearGradient 
+        colors={['rgba(0, 0, 0, 0.9)', 'rgba(0, 0, 0, 0)']}
+        start={{ x: 0, y: 1 }}
+        end={{ x: 1, y: 1 }}
+        locations={[0, 0.8]}
+        useAngle
+        angle={180}
+        style={[viewStyle, style, { backgroundColor: headerColor }]}
+      >
         <ModalSort dir={dir} onSelectDir={this.onSelectDir} visible={this.state.showModalSort} hideSort={() => this.setState({showModalSort: false})} />
         {showLeftIcon}
         <View style={{ flex: 1 }}>{showSearchInput}</View>
         {showIconFunnel}
         {showSearchIcon}
         {showCloseIcon}
-      </View>
+      </LinearGradient>
     )
   }
 }

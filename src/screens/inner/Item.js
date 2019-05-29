@@ -3,14 +3,13 @@ import { Text, StyleSheet, View, ImageBackground, FlatList, ScrollView, Image, T
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 //import Spinner from 'react-native-loading-spinner-overlay'
 import { ColorDotsLoader } from 'react-native-indicator'
-import LinearGradient from 'react-native-linear-gradient'
 import { connect } from 'react-redux'
 import { Divider } from 'react-native-elements'
 import CustomStatusBar from '../../components/uikit/CustomStatusBar'
 import { getZav, getPlacesByZav, cleanZav, selectHorizontalItem } from '../../actions/ItemActions'
 import Header from '../../components/uikit/item/Header'
 import CardItem from '../../components/uikit/item/CardItem'
-import { w, genImageUri, normalize } from '../../constants/global'
+import { w, genImageUri, normalize, statusBarHeight } from '../../constants/global'
 
 class Item extends Component { 
   state = {
@@ -39,7 +38,7 @@ class Item extends Component {
     this.props.selectHorizontalItem(value)
   }
 
-  keyExtractor =(item) => item.id  
+  keyExtractor =(item) => item.id.toString()  
 
   renderItem = (item) => {
     const { horizontal } = this.props
@@ -58,7 +57,6 @@ class Item extends Component {
           </View>
         </View>)
     }
-
     const [category = {}] = categories.filter((cat) => cat.id === zav.cat_id)
     
     const flatList = horizontal ? (
@@ -82,23 +80,15 @@ class Item extends Component {
     return (
       <View style={styles.container}>                
         <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
-        <ScrollView>    
-          <Header itemId={this.props.navigation.getParam('id')} iconFunnel iconSearch leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-arrow-back" title="Главная" onPress={() => navigation.goBack()} />              
+        <Header itemId={this.props.navigation.getParam('id')} iconFunnel iconSearch leftColor="white" style={{position: 'absolute', width: w, top: statusBarHeight, zIndex: 1}} leftIcon="md-arrow-back" title="Главная" onPress={() => navigation.goBack()} />              
+        <ScrollView>          
           <View style={{ width: w, height: getComponentHeight(w) }}>
             <ImageBackground  
               style={{flex: 1, height: undefined, width: undefined }} 
               source={{uri: genImageUri(zav.img)}} 
               resizeMode="cover"
             >
-              <LinearGradient
-                colors={['rgba(0, 0, 0, 0.50)', 'transparent']}
-                start={{ x: 0, y: 1 }}
-                end={{ x: 1, y: 1 }}
-                locations={[0, 0.8]}
-                useAngle
-                angle={180}
-                style={{flex: 1}}
-              /> 
+              
               <View style={{flex: 1}}>
                 
                 <View style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 36, backgroundColor: 'white', position: 'absolute', height: 72, width: 72, bottom: -36, left: ((w / 2) - 36)}}>
@@ -146,8 +136,7 @@ class Item extends Component {
                   {flatList}                
                 </View>
               </View>
-            }
-            
+            }            
           </View>
         </ScrollView>
       </View>

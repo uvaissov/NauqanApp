@@ -25,6 +25,7 @@ const SwiperApp = ({
       <Swiper height={getComponentHeight(w, 30)} autoplay autoplayTimeout={3.5} activeDotColor="#FFFFFF" dotColor="rgba(255, 255, 255, 0.38)" >
         {
           data.map((item) => {
+            console.log('item', item)            
             return (
               <TouchableWithoutFeedback key={item.id} onPress={() => navigation.navigate('Item', {id: item.id })}>
                 <View key={item.id} style={[child, { width: w }]}>      

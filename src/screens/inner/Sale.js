@@ -9,7 +9,7 @@ import Moment from 'moment'
 import CustomStatusBar from '../../components/uikit/CustomStatusBar'
 import { getSale } from '../../actions/SaleActions'
 import Header from '../../components/uikit/item/Header'
-import { w, normalize, genImageUri } from '../../constants/global'
+import { w, normalize, genImageUri, statusBarHeight } from '../../constants/global'
 
 class Sale extends Component {
   state = {
@@ -37,13 +37,13 @@ class Sale extends Component {
     return (
       <View style={styles.container}>
         <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
-        <ScrollView>
-          <Header leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-arrow-back" title="Главная" onPress={() => navigation.goBack()} />
+        <Header leftColor="white" style={{position: 'absolute', width: w, top: statusBarHeight, zIndex: 1}} leftIcon="md-arrow-back" title="Главная" onPress={() => navigation.goBack()} />
+        <ScrollView >          
           <View style={{ width: w, height: getComponentHeight(w) }}>
             <ImageBackground  
               style={{flex: 1, height: undefined, width: undefined }} 
               source={{uri: genImageUri(item.img)}} 
-              resizeMode="stretch"
+              resizeMode="cover"
             >
               <LinearGradient
                 colors={['rgba(0, 0, 0, 0.50)', 'transparent']}
