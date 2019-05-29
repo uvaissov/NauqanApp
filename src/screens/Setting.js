@@ -9,8 +9,8 @@
 import React, {Component} from 'react'
 import {StyleSheet, View} from 'react-native'
 import CustomStatusBar from '../components/uikit/CustomStatusBar'
-import Header from '../components/uikit/item/Header'
-import { w } from '../constants/global'
+import { Header } from '../components/uikit/favorite/Header'
+//import { w } from '../constants/global'
 
 class Setting extends Component {
   render() {
@@ -18,7 +18,7 @@ class Setting extends Component {
     return (
       <View style={styles.container}>
         <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
-        <Header leftColor="black" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-menu" onPress={() => navigation.openDrawer()} />
+        <Header mainColor="#8366D8" secondColor="#4786FF" title="Настройка" leftColor="black" leftIcon="md-menu" onPress={() => navigation.openDrawer()} /> 
       </View>
     )
   }

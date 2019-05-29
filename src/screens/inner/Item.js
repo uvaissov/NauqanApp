@@ -27,6 +27,9 @@ class Item extends Component {
       didFinishInitialAnimation: true
     })
   }
+  componentDidUpdate() {
+    console.log('update')    
+  }
 
   onPressCartItem = (id) => {
     this.props.navigation.push('Sale', { id})
@@ -36,7 +39,7 @@ class Item extends Component {
     this.props.selectHorizontalItem(value)
   }
 
-  keyExtractor =(item) => item.key  
+  keyExtractor =(item) => item.id  
 
   renderItem = (item) => {
     const { horizontal } = this.props
@@ -60,7 +63,7 @@ class Item extends Component {
     
     const flatList = horizontal ? (
       <FlatList
-        key={`${1}_id`}
+        key={23}
         numColumns={1}       
         data={items}
         renderItem={this.renderItem}
@@ -68,7 +71,7 @@ class Item extends Component {
       />
     ) : (
       <FlatList 
-        key={`${2}_id`}
+        key={12}
         columnWrapperStyle={{ justifyContent: 'space-between'}}
         numColumns={2}
         data={items}

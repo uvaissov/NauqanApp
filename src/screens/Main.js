@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import AsyncStorage from '@react-native-community/async-storage'
 import { Image, StyleSheet, View, Text, ScrollView, TouchableOpacity, FlatList, ImageBackground } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
+//import LinearGradient from 'react-native-linear-gradient'
 import { Button } from 'react-native-elements'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
@@ -28,12 +28,13 @@ class Main extends Component {
     this.props.getCategories() 
     this.props.getCities()
     this.props.initFavorites()
-    this.props.getPromoDataFirst()
-    this.props.getPromoDataSecond()
     this.checkPermission()
     this.notify = new NotifyService(this.onOpen1, this.onOpen2)
     this.notify.start() // Инициализация уведомлении
     firebase.messaging().subscribeToTopic('all')
+    this.refresherContent = setInterval(() => {
+      this._initData() //обновляем информацию на главной странице каждые 3 мин
+    }, 1000 * (3 * 60))
   }
   componentDidUpdate(prevState) {
     if (prevState.cityId !== this.props.cityId) {      
@@ -48,14 +49,13 @@ class Main extends Component {
     this.notify.notificationDisplayedListener()
     this.notify.notificationListener()
     this.notify.notificationOpenedListener()
+    clearInterval(this.refresherContent)
   }  
 
   onOpen1 = (value) => {
-    console.log('onOpen1', value)
     this.redirectMessage(value)
   }
   onOpen2 = (value) => {
-    console.log('onOpen2', value)
     this.redirectMessage(value)
   }
   getCurrentCityId = () => {
@@ -105,7 +105,9 @@ class Main extends Component {
 
   //Этот метож вызываеться из-за зависимости при параметре город
   _initData = () => {   
-    this.props.getPlacesTop()  
+    this.props.getPromoDataFirst()
+    this.props.getPromoDataSecond()
+    this.props.getPlacesTop()
   }
 
   render() {
@@ -117,34 +119,39 @@ class Main extends Component {
 
     /**when first loading show this splash screen */
     if (loading) {
+      const size = w * 0.27
       return (<View style={StyleSheet.absoluteFill}>
         <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
         <ImageBackground  
           style={{width: '100%', flex: 1, transform: [{perspective: 850}], justifyContent: 'center'}}
           source={require('../../resources/images/background.png')} 
-          resizeMode="cover"        
+          resizeMode="cover" 
+          imageStyle={{opacity: 0.2}}      
         >   
           {error &&
           <View>
             <Text>{error.message}</Text>
             <Text>{error.stack}</Text>
           </View>
-          }
-          
-          <LinearGradient
-            colors={['rgba(250, 250, 250, 0)', '#FAFAFA']}
-            start={{x: 0.0, y: 0.25}} 
-            end={{x: 0.5, y: 1.0}}
-            locations={[0, 0.6]}
-            useAngle
-            angle={180}
-            style={{flex: 1}}
-          />          
+          }       
           <Image 
-            style={{ position: 'absolute', height: 200, width: 200, top: (h / 2) - 100, left: (w / 2) - 100 }} 
+            style={{ position: 'absolute', height: size, width: size, top: (h / 2) - (size / 2), left: (w / 2) - (size / 2) }} 
             source={require('../../resources/images/logo.png')}
             resizeMode="stretch"
           />
+          <Text style={{ 
+            fontFamily: 'Roboto-Regular',
+            fontStyle: 'normal', 
+            fontSize: 16, 
+            lineHeight: 19,
+            textAlign: 'center', 
+            position: 'absolute', 
+            height: 50, 
+            width: 150, 
+            top: (h / 2) + ((size / 2) + 20), 
+            left: (w / 2) - (75) }} 
+          >
+                Все скидки здесь</Text>
           {error &&
             <Button title="ПОВТОРИТЬ" onPress={() => this._initData()} />            
           }

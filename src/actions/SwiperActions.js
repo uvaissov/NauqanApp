@@ -2,7 +2,7 @@ import { PROMO_1_FETCHED, PROMO_2_FETCHED, PROMO_FAILED } from '../types'
 
 import { hostName } from '../constants/global'
 
-export const getPromoDataFirst = () => async (dispatch) => {
+export const getPromoDataFirst = () => async (dispatch, getState) => {
   function onSuccess(value) {
     dispatch({ type: PROMO_1_FETCHED, payload: value })
     return value
@@ -13,7 +13,8 @@ export const getPromoDataFirst = () => async (dispatch) => {
   }
   
   try {
-    const URL = `${hostName}/sl_zav`
+    const cityId = getState().city.selected ? `?city_id=${getState().city.selected}` : ''
+    const URL = `${hostName}/sl_zav${cityId}`
     const res = await fetch(URL, {
       method: 'GET'
     })
@@ -24,7 +25,7 @@ export const getPromoDataFirst = () => async (dispatch) => {
   }  
 }
 
-export const getPromoDataSecond = () => async (dispatch) => {
+export const getPromoDataSecond = () => async (dispatch, getState) => {
   function onSuccess(value) {
     dispatch({ type: PROMO_2_FETCHED, payload: value })
     return value
@@ -35,7 +36,8 @@ export const getPromoDataSecond = () => async (dispatch) => {
   }
   
   try {
-    const URL = `${hostName}/sl_prod`
+    const cityId = getState().city.selected ? `?city_id=${getState().city.selected}` : ''
+    const URL = `${hostName}/sl_prod${cityId}`
     const res = await fetch(URL, {
       method: 'GET'
     })

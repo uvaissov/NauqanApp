@@ -14,9 +14,9 @@ class AboutApp extends Component {
     return (
       <View style={styles.container}>        
         <ScrollView>
-          <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />      
-          <Header leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-menu" onPress={() => navigation.openDrawer()} />
+          <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />                
           <View style={{ width: w, height: getComponentHeight(w * 0.8) }}>
+            <Header leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-menu" onPress={() => navigation.openDrawer()} />
             <LinearGradient style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} colors={['#FF662E', '#FFA470']} useAngle angle={146.71}>
               <Image 
                 style={{ height: 124, width: 131 }} 

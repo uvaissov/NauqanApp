@@ -21,6 +21,10 @@ class CardItem extends Component {
     }
   }
 
+  componentDidUpdate() {
+    console.log('update card item')    
+  }
+
   _fecthData = (item) => {
     fetch(`${hostName}/product?id=${item.id}`, { method: 'GET' })
       .then(res => res.json())

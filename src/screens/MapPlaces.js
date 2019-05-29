@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
 import { StyleSheet, View, TouchableOpacity, Text, Image, InteractionManager } from 'react-native'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
+import LinearGradient from 'react-native-linear-gradient'
+import { connect } from 'react-redux'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import CustomStatusBar from '../components/uikit/CustomStatusBar'
 import { Header } from '../components/uikit/map/Header'
-import { w, h, TRASPARENT, BG_COLOR, statusBarHeight } from '../constants/global'
+import { w, h, TRASPARENT, BG_COLOR, statusBarHeight, hostName, genImageUri } from '../constants/global'
 
 class MapPlaces extends Component {
   state = {
@@ -12,24 +14,7 @@ class MapPlaces extends Component {
     latitude: null,
     longitude: null,
     error: null,
-    coordinate1: {
-      latitude: 43.2214459,
-      longitude: 76.8471801,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421
-    },
-    coordinate2: {
-      latitude: 43.2218459,
-      longitude: 76.8521801,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421
-    },
-    coordinate3: {
-      latitude: 43.2221459,
-      longitude: 76.8501801,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421
-    }
+    points: []
   }
 
   componentDidMount() {
@@ -41,28 +26,41 @@ class MapPlaces extends Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude
         })
+        this.loadPoint(position.coords.latitude, position.coords.longitude)
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 }
     )
     // 1: Component is mounted off-screen
     InteractionManager.runAfterInteractions(() => {
-      // 2: Component is done animating
-      // 3: Start fetching the team
-      //this.props.dispatchTeamFetchStart()
-     
-      // 4: set didFinishInitialAnimation to false
-      // This will render the navigation bar and a list of players
       setTimeout(() => {
         this.setState({
           didFinishInitialAnimation: true
         })
-      }, 250)
-    })
+      }, 350)
+    })    
   }
 
+  async componentDidUpdate(prevState) {
+    if (prevState.didFinishInitialAnimation === false && this.state.didFinishInitialAnimation === true) {
+      console.log('first fetch')
+      //this.loadPoint()
+    }
+  }
+
+  loadPoint = (lat, lng) => {
+    console.log('lat', lat)
+    console.log('lng', lng)
+    
+    fetch(`${hostName}/get_zav?lat=${lng}&lng=${lat}&rad=5`)
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({ points: data})
+      })
+  }  
+
   render() {
-    const { navigation } = this.props
+    const { navigation, categories } = this.props
     return (
       <View style={styles.container}>
         <View style={{flex: 1}} >          
@@ -72,43 +70,38 @@ class MapPlaces extends Component {
               provider={PROVIDER_GOOGLE} // remove if not using Google Maps
               style={{width: w, flex: 1}}
               region={{
-                latitude: 43.2214459,
-                longitude: 76.8501801,
+                latitude: this.state.latitude || 43.2214459,
+                longitude: this.state.longitude || 76.8501801,
                 latitudeDelta: 0.015,
                 longitudeDelta: 0.0121
               }}
             > 
-              <Marker title="Тут был Вася!" coordinate={this.state.coordinate1}>
-                <Image 
-                  style={{height: 38, width: 29 }} 
-                  source={require('../../resources/icons/png/topPlaces.png')} 
-                  resizeMode="stretch"
+              {
+                this.state.points.map((point) => {
+                  console.log(point) 
+                  const [category = {}] = categories.filter((cat) => cat.id === point.cat_id)             
+                  return (
+                    <Marker key={point.name} title={`${point.name} \n ${point.address}`} coordinate={{ latitude: point.lng, longitude: point.lat }}>                      
+                      <LinearGradient style={[styles.button]} colors={[category.mainColor.trim(), category.secondaryColor.trim()]} useAngle angle={135}>
+                        <Image style={{height: 18, width: 18}} source={{uri: genImageUri(category.promoIcon)}} resizeMode="contain" />
+                      </LinearGradient>
+                    </Marker>
+                  )
+                })
+              }
+              
+              {
+                !!this.state.latitude && !!this.state.longitude && <MapView.Marker
+                  coordinate={{ latitude: this.state.latitude, longitude: this.state.longitude}}
+                  title={'Your Location'}
                 />
-              </Marker>
-              <Marker coordinate={this.state.coordinate2} >
-                <Image 
-                  style={{height: 38, width: 29 }} 
-                  source={require('../../resources/icons/png/topPlaces.png')} 
-                  resizeMode="stretch"
-                />
-              </Marker>
-              <Marker coordinate={this.state.coordinate3} >
-                <Image 
-                  style={{height: 38, width: 29 }} 
-                  source={require('../../resources/icons/png/topPlaces.png')} 
-                  resizeMode="stretch"
-                />
-              </Marker>
-              {!!this.state.latitude && !!this.state.longitude && <MapView.Marker
-                coordinate={{ latitude: this.state.latitude, longitude: this.state.longitude}}
-                title={'Your Location'}
-              />}
+              }
             </MapView>
           }
           
         </View>
-        <CustomStatusBar backgroundColor="grey" barStyle="default" absolute={{position: 'absolute', width: w, top: statusBarHeight, zIndex: 10}} />
-        <Header style={{position: 'absolute', width: w, top: 18, zIndex: 10}} leftIcon="md-menu" title="Главная" onPress={() => navigation.openDrawer()} />
+        <CustomStatusBar backgroundColor="grey" barStyle="default" absolute={{position: 'absolute', width: w, top: 0, zIndex: 10}} />
+        <Header style={{position: 'absolute', width: w, top: statusBarHeight, zIndex: 10}} leftIcon="md-menu" title="Главная" onPress={() => navigation.openDrawer()} />
         {/* footer static and get 10% from display */}
         <View style={[styles.shadowBox, { backgroundColor: TRASPARENT, height: h * 0.07}]} >          
           <View style={[{flex: 1, backgroundColor: BG_COLOR, flexDirection: 'row', justifyContent: 'space-between'}, styles.scrollView]}>
@@ -144,7 +137,27 @@ const styles = StyleSheet.create({
 
     elevation: 3,
     position: 'relative'
+  },
+  button: {
+    height: 45,
+    width: 45,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: TRASPARENT,
+    borderRadius: 30,
+    shadowOffset: {
+      width: 0,
+      height: 4
+    },
+    shadowOpacity: 0.24,
+    shadowRadius: 4,    
+    elevation: 4
   }
 })
 
-export default MapPlaces
+const mapStateToProps = state => {
+  return {
+    categories: state.catalog.categories
+  }
+}
+export default connect(mapStateToProps, { })(MapPlaces)

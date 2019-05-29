@@ -18,7 +18,7 @@ const SwiperApp = ({
   radius,
   navigation
 }) => {
-  const { child } = styles
+  const { child, shadow } = styles
   
   this._renderSwiper = () => (
     <View style={{paddingHorizontal: 0}}>
@@ -59,10 +59,10 @@ const SwiperApp = ({
           data.map((item) => {
             return (
               <TouchableWithoutFeedback key={item.id} onPress={() => navigation.navigate('Sale', {id: item.id })}>
-                <View key={item.id} style={{ width: w, paddingHorizontal: 15, height: getComponentHeightSM(w, 30) }}>
-                  <View style={[child, { flex: 1, borderRadius: radius, overflow: 'hidden'}]}>
+                <View key={item.id} style={[{ width: w }]}>
+                  <View style={[child, { marginHorizontal: 15, height: getComponentHeightSM(w, 30) }, shadow]}>
                     <Image 
-                      style={{flex: 1, height: undefined, width: undefined }} 
+                      style={{flex: 1, height: undefined, width: undefined, borderRadius: radius }} 
                       source={{uri: genImageUri(item.img)}}
                       resizeMode="cover"
                     />
@@ -98,6 +98,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'stretch', //TODO: Importate para que la imagen abarque toda la pantalla
     backgroundColor: 'transparent'
+  },
+  shadow: {
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 1.22,
+
+    elevation: 4
   }
 })
 
