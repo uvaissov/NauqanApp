@@ -152,7 +152,7 @@ class Catalog extends Component {
                           columnWrapperStyle={{ justifyContent: 'space-between'}}
                           data={places}
                           numColumns={2} 
-                          renderItem={(row) => <CardPlaceDynamic favorite width={itemWidth} onPress={() => navigation.push('Item', {id: row.item})} item={row.item} />}
+                          renderItem={(row) => <CardPlaceDynamic favorite width={itemWidth} onPress={() => navigation.push('Item', {id: row.item.id })} item={row.item} />}
                           keyExtractor={(item) => item.id}
                           style={{ padding: 5 }}
                         />

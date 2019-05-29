@@ -123,7 +123,7 @@ class CardPlaceDynamic extends Component {
                   fontFamily: 'Roboto-Regular'
                 }}
               >
-                {item.count} предложений
+                {item.prod_count} предложений
               </Text>
             </View>
             {trash && (
