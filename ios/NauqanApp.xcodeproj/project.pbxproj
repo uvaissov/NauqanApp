@@ -384,6 +384,13 @@
 			remoteGlobalIDString = 3D05745F1DE6004600184BB4;
 			remoteInfo = "RCTPushNotification-tvOS";
 		};
+		4B4871A122A0407600702CDD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4B48716B22A0407600702CDD /* SplashScreen.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D7682761D8E76B80014119E;
+			remoteInfo = SplashScreen;
+		};
 		4B630B79227D6E3D0069A6CE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6A25BD5FE17040899D9B687C /* RNSVG.xcodeproj */;
@@ -500,6 +507,7 @@
 		4B3885F025A542B987C33B56 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		4B43BF552291CB9700FCE786 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		4B43BF612291D56A00FCE786 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "NauqanApp/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4B48716B22A0407600702CDD /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		4BCFC364229C41DE003C0C85 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
 		4BD068322292569000C662A6 /* NauqanApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = NauqanApp.entitlements; path = NauqanApp/NauqanApp.entitlements; sourceTree = "<group>"; };
 		4D4F117A2141471595124EB0 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../assets/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
@@ -800,6 +808,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		4B48716C22A0407600702CDD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4B4871A222A0407600702CDD /* libSplashScreen.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		4B630B72227D6E3D0069A6CE /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -847,6 +863,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				4B48716B22A0407600702CDD /* SplashScreen.xcodeproj */,
 				4BCFC364229C41DE003C0C85 /* ART.xcodeproj */,
 				4B43BF552291CB9700FCE786 /* RCTPushNotification.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -1159,6 +1176,10 @@
 					ProductGroup = 4B2146FA226F5F0E00D686F9 /* Products */;
 					ProjectRef = E172731319704CE7A8F2146B /* RNVectorIcons.xcodeproj */;
 				},
+				{
+					ProductGroup = 4B48716C22A0407600702CDD /* Products */;
+					ProjectRef = 4B48716B22A0407600702CDD /* SplashScreen.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1451,6 +1472,13 @@
 			remoteRef = 4B43BF5C2291CB9700FCE786 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		4B4871A222A0407600702CDD /* libSplashScreen.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSplashScreen.a;
+			remoteRef = 4B4871A122A0407600702CDD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		4B630B7A227D6E3D0069A6CE /* libRNSVG.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1605,7 +1633,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
