@@ -83,7 +83,7 @@ class MapPlaces extends Component {
                   return (
                     <Marker style={{zIndex: index + 1 }} ref={_marker => { this.marker = _marker }} key={point.id} coordinate={{ latitude: point.lng, longitude: point.lat }} onCalloutPress={() => { this.marker.hideCallout() }}>                      
                       <LinearGradient style={[styles.button]} colors={[category.mainColor.trim(), category.secondaryColor.trim()]} useAngle angle={135}>
-                        <Image style={{height: 18, width: 18}} source={{uri: genImageUri(category.promoIcon)}} resizeMode="contain" />
+                        <Image style={{height: 18, width: 18}} source={{uri: genImageUri(category.promoIcon)}} resizeMode="contain" />                        
                       </LinearGradient>
                       <MapView.Callout tooltip>
                         <View style={{ width: 150, height: 80, backgroundColor: '#fff', borderRadius: 6, padding: 10, borderColor: BG_COLOR, borderWidth: 1 }}>
