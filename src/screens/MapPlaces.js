@@ -77,14 +77,20 @@ class MapPlaces extends Component {
               }}
             > 
               {
-                this.state.points.map((point) => {
+                this.state.points.map((point, index) => {
                   console.log(point) 
                   const [category = {}] = categories.filter((cat) => cat.id === point.cat_id)             
                   return (
-                    <Marker key={point.name} title={`${point.name} \n ${point.address}`} coordinate={{ latitude: point.lng, longitude: point.lat }}>                      
+                    <Marker style={{zIndex: index + 1 }} ref={_marker => { this.marker = _marker }} key={point.id} coordinate={{ latitude: point.lng, longitude: point.lat }} onCalloutPress={() => { this.marker.hideCallout() }}>                      
                       <LinearGradient style={[styles.button]} colors={[category.mainColor.trim(), category.secondaryColor.trim()]} useAngle angle={135}>
                         <Image style={{height: 18, width: 18}} source={{uri: genImageUri(category.promoIcon)}} resizeMode="contain" />
                       </LinearGradient>
+                      <MapView.Callout tooltip>
+                        <View style={{ width: 150, height: 80, backgroundColor: '#fff', borderRadius: 6, padding: 10, borderColor: BG_COLOR, borderWidth: 1 }}>
+                          <Text ellipsizeMode="tail" style={{flex: 1, fontWeight: '500', textAlign: 'center', color: 'black'}}>{point.name}</Text>
+                          <Text ellipsizeMode="tail" style={{flex: 1, fontWeight: '500', textAlign: 'center', color: 'rgba(0,0,0,0.5)'}}>{point.address}</Text>
+                        </View>
+                      </MapView.Callout>
                     </Marker>
                   )
                 })
@@ -109,7 +115,7 @@ class MapPlaces extends Component {
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="home" size={24} /><Text style={{textAlign: 'center'}}>Главная</Text></View>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('MapPlaces')} >
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="room" size={24} style={{ color: '#FF6E36' }} /><Text style={{ color: '#FF6E36', textAlign: 'center' }} >Заведения на карте</Text></View>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="room" size={24} style={{ color: '#FF6E36' }} /><Text style={{ color: '#FF6E36', textAlign: 'center' }} >На карте</Text></View>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('Favorite')} >
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="favorite" size={24} /><Text style={{textAlign: 'center'}}>Избранные</Text></View>

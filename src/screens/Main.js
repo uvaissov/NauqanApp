@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import SplashScreen from 'react-native-splash-screen'
 import AsyncStorage from '@react-native-community/async-storage'
 import { Image, StyleSheet, View, Text, ScrollView, TouchableOpacity, FlatList, ImageBackground } from 'react-native'
 //import LinearGradient from 'react-native-linear-gradient'
@@ -19,7 +20,7 @@ import NotifyService from '../services/NotifyService'
 //const PushNotificationIOS = require('react-native-push-notification')
 //const PushNotification = require('react-native-push-notification')
 
-class Main extends Component {
+class Main extends Component {  
   state = {
     cityId: this.props.cityId
   }
@@ -41,6 +42,7 @@ class Main extends Component {
       firebase.messaging().unsubscribeFromTopic(`cityId_${prevState.cityId}`)
       firebase.messaging().subscribeToTopic(`cityId_${this.props.cityId}`)      
       this._initData()
+      setTimeout(() => SplashScreen.hide(), 1000)      
     }
   }
 
@@ -119,42 +121,23 @@ class Main extends Component {
 
     /**when first loading show this splash screen */
     if (loading) {
-      const size = w * 0.27
+      //const size = w * 0.27
       return (<View style={StyleSheet.absoluteFill}>
-        <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
-        <ImageBackground  
-          style={{width: '100%', flex: 1, transform: [{perspective: 850}], justifyContent: 'center'}}
-          source={require('../../resources/images/background.png')} 
-          resizeMode="cover" 
-          imageStyle={{opacity: 0.2}}      
-        >   
+        <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />           
+        <ImageBackground 
+          style={{ flex: 1, width: '100%', justifyContent: 'center'}}
+          source={require('../../resources/images/launch_screen.png')}
+          resizeMode="cover"
+        >
           {error &&
           <View>
             <Text>{error.message}</Text>
             <Text>{error.stack}</Text>
           </View>
-          }       
-          <Image 
-            style={{ position: 'absolute', height: size, width: size, top: (h / 2) - (size / 2), left: (w / 2) - (size / 2) }} 
-            source={require('../../resources/images/logo.png')}
-            resizeMode="stretch"
-          />
-          <Text style={{ 
-            fontFamily: 'Roboto-Regular',
-            fontStyle: 'normal', 
-            fontSize: 16, 
-            lineHeight: 19,
-            textAlign: 'center', 
-            position: 'absolute', 
-            height: 50, 
-            width: 150, 
-            top: (h / 2) + ((size / 2) + 20), 
-            left: (w / 2) - (75) }} 
-          >
-                Все скидки здесь</Text>
+          }
           {error &&
             <Button title="ПОВТОРИТЬ" onPress={() => this._initData()} />            
-          }
+          } 
         </ImageBackground>
       </View>)
     }
@@ -235,7 +218,7 @@ class Main extends Component {
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="home" size={24} style={{ color: '#FF6E36', textAlign: 'center' }} /><Text style={{ color: '#FF6E36' }} >Главная</Text></View>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('MapPlaces')} >
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="room" size={24} /><Text numberOfLines={1} style={{textAlign: 'center'}}>Заведения на карте</Text></View>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="room" size={24} /><Text numberOfLines={1} style={{textAlign: 'center'}}>На карте</Text></View>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('Favorite')} >
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="favorite" size={24} /><Text style={{textAlign: 'center'}}>Избранные</Text></View>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native'
+import { View, TouchableOpacity, StyleSheet, Text, TextInput } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -15,12 +15,22 @@ const Header = ({
   title,
   sortPress,
   searchPress,
-  visibleSort
+  visibleSort,
+  searchText,
+  showSearch,
+  searchByText
 }) => {
-  const { headerGradView, viewStyle, textStyle, leftButtonStyle, rightButtonStyle } = styles  
-  
+  const { headerGradView, viewStyle, textStyle, leftButtonStyle, rightButtonStyle, inputStyle } = styles  
+  /*
+  searchText={this.state.searchText}
+          showSearch={this.state.showSearch}
+          searchPress={(value) => this.setState({showSearch: value})} 
+  */
   this.show = (value) => {
     sortPress(value)
+  }
+  this.search = (value) => {
+    searchByText(value)  
   }
   return (
     <View style={viewStyle}>
@@ -31,7 +41,13 @@ const Header = ({
             <Ionicons name={leftIcon} style={[leftButtonStyle, { paddingLeft: 15 }]} color={'white'} />
           </TouchableOpacity>
         }
-        <Text numberOfLines={1} ellipsizeMode="tail" style={[textStyle, { paddingLeft: leftIcon ? 35 : 0 }]}>{title}</Text>
+        { showSearch === false &&
+          <Text numberOfLines={1} ellipsizeMode="tail" style={[textStyle, { paddingLeft: leftIcon ? 35 : 0 }]}>{title}</Text>
+        }
+        {
+          showSearch === true &&
+          <TextInput value={searchText} autoFocus style={[inputStyle, { paddingBottom: 0, paddingLeft: leftIcon ? 15 : 0 }]} onChangeText={(value) => this.search(value)} />
+        }
         {
           sortPress &&
           <TouchableOpacity onPress={() => this.show(true)} style={[rightButtonStyle]}>
@@ -40,9 +56,15 @@ const Header = ({
           </TouchableOpacity>
         }        
         {
-          searchPress && 
-          <TouchableOpacity onPress={searchPress}>
+          searchPress && showSearch === false &&
+          <TouchableOpacity onPress={() => searchPress(true)}>
             <Ionicons name={'ios-search'} style={[rightButtonStyle]} color={'white'} />
+          </TouchableOpacity>
+        }     
+        {
+          searchPress && showSearch === true &&
+          <TouchableOpacity onPress={() => searchPress(false)}>
+            <Ionicons name={'ios-close'} style={[rightButtonStyle, {fontSize: 24 }]} color={'white'} />
           </TouchableOpacity>
         }
         
@@ -90,6 +112,12 @@ const styles = StyleSheet.create({
   rightButtonStyle: {
     fontSize: 24,
     marginRight: 15
+  },
+  inputStyle: {
+    fontSize: 20,    
+    fontFamily: 'Roboto-Regular',    
+    flex: 1,
+    color: 'white'
   }
 })
 

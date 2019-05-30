@@ -73,6 +73,11 @@ class CardPlaceDynamic extends Component {
       widthParam *= 0.3
       heightParam *= 0.35
     }
+    let number = 0
+    if (item.prod_count) {
+      number = parseInt(item.prod_count.toString().substr(item.prod_count.toString().length - 1), 10)
+    }
+    const word = number === 1 ? 'е' : number > 1 && number < 5 ? 'я' : 'й'
     return (
       <TouchableHighlight
         style={[view, { width, marginHorizontal: 5, marginBottom: 10 }, style]}
@@ -119,7 +124,7 @@ class CardPlaceDynamic extends Component {
                   fontFamily: 'Roboto-Regular'
                 }}
               >
-                {item.prod_count} предложений
+                {item.prod_count} предложени{word}
               </Text>
             </View>
             {trash && (
