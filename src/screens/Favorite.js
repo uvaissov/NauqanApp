@@ -9,7 +9,11 @@ import CardPlaceDynamic from '../components/uikit/CardPlaceDynamic'
 import CardItem from '../components/uikit/item/CardItem'
 import { selectHorizontalItem } from '../actions/FavoriteActions'
 
-class Favorite extends Component {  
+class Favorite extends Component { 
+  state = {
+    searchText: '',
+    showSearch: false
+  }
   _selectHorizontalItem = (value) => {
     this.props.selectHorizontalItem(value)
   }
@@ -24,11 +28,17 @@ class Favorite extends Component {
   }
   render() {
     const { navigation, places, horizontal } = this.props
+    const { searchText } = this.state
+    let data = places
+    if (searchText) {
+      data = places.filter((row) => row.name.toLowerCase().includes(searchText.toLowerCase()))
+    }
+
     const flatList = horizontal ? (
       <FlatList
         key={`${1}_id`}
         numColumns={1}       
-        data={places}
+        data={data}
         renderItem={this._renderItem}
         keyExtractor={(item) => `${item.id} - ${item.type}`}
       />
@@ -36,7 +46,7 @@ class Favorite extends Component {
       <FlatList 
         key={`${2}_id`}
         columnWrapperStyle={{ justifyContent: 'space-between'}}
-        data={places}
+        data={data}
         numColumns={2} 
         renderItem={this._renderItem}
         keyExtractor={(item) => `${item.id} - ${item.type}`}
@@ -47,14 +57,16 @@ class Favorite extends Component {
         <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
         <Header 
           visibleSort
-          //sortPress={this._showSort} 
-          searchPress={() => navigation.openDrawer()} 
+          searchText={this.state.searchText}
+          showSearch={this.state.showSearch}
+          searchPress={(value) => this.setState({showSearch: value})} 
           navigation={this._navigateToCatalog} 
           leftIcon="md-menu" 
           mainColor="#45A460"
           secondColor="#A9D334" 
           title="Избранное" 
           onPress={() => navigation.openDrawer()} 
+          searchByText={(text) => this.setState({searchText: text})}
         />  
         <View style={{flex: 1, backgroundColor: 'white'}}>
           <View style={{ flexDirection: 'row', alignItems: 'center', padding: 5, marginTop: 5 }}>
@@ -82,7 +94,7 @@ class Favorite extends Component {
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="home" size={24} /><Text style={{textAlign: 'center'}}>Главная</Text></View>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('MapPlaces')} >
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="room" size={24} /><Text style={{textAlign: 'center'}}>Карта заведений</Text></View>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="room" size={24} /><Text style={{textAlign: 'center'}}>На карте</Text></View>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1}} onPress={() => navigation.navigate('Favorite')} >
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><MaterialIcons name="favorite" size={24} style={{ color: '#FF6E36', textAlign: 'center' }} /><Text style={{ color: '#FF6E36' }} >Избранные</Text></View>

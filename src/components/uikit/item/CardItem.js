@@ -99,9 +99,9 @@ class CardItem extends Component {
               </View>
               {
                 item.skidka_price &&
-                <View style={{ flexDirection: 'row'}}>
-                  <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(14), color: '#979797', textDecorationLine: 'line-through' }} >{item.price}</Text>
-                  <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(14), color: '#FF6E36', marginLeft: 5}}>{item.skidka_price} тенге</Text>
+                <View style={{ flexDirection: ((item.price && item.price > 100000) || (item.skidka_price && item.skidka_price > 100000)) ? 'column' : 'row', width: '80%'}}>
+                  <Text ellipsizeMode="tail" style={{fontFamily: 'Roboto-Regular', fontSize: normalize(14), color: '#979797', textDecorationLine: 'line-through', marginRight: 5 }} >{item.price}</Text>
+                  <Text ellipsizeMode="tail" style={{fontFamily: 'Roboto-Regular', fontSize: normalize(14), color: '#FF6E36'}}>{item.skidka_price} тенге</Text>
                 </View>
               }
               {
