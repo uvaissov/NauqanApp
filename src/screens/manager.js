@@ -15,6 +15,7 @@ import Setting from './Setting'
 import Catalog from './inner/Catalog'
 import Item from './inner/Item'
 import Sale from './inner/Sale'
+import MapLocation from './inner/MapLocation'
 import { w } from '../constants/global'
 
 const CustomDrawerComponent = (props) => (
@@ -114,10 +115,9 @@ const MainStack = createStackNavigator(
   {
     Main,
     Catalog,
-    Item: { 
-      screen: Item
-    },
-    Sale
+    Item,
+    Sale,
+    MapLocation
   },
   {
     initialRouteName: 'Main',
