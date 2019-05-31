@@ -10,7 +10,13 @@ import Icon from '../components/svgkit/Icon'
 
 import { w, normalize } from '../constants/global'
 
-class Contact extends Component {  
+class Contact extends Component { 
+  state={
+    fio: '',
+    mail: '',
+    phone: '',
+    message: ''
+  }
   render() {
     const { navigation } = this.props
     return (
@@ -41,10 +47,10 @@ class Contact extends Component {
                 </Text>
               </View>
               <View style={{ padding: 15}}>
-                <View style={styles.containerText}><TextInput style={styles.textStyle} placeholder="ФИО" placeholderTextColor="black" /></View>
-                <View style={styles.containerText}><TextInput style={styles.textStyle} placeholder="E-mail" placeholderTextColor="black" /></View>
-                <View style={styles.containerText}><TextInput style={styles.textStyle} placeholder="Номер телефона" placeholderTextColor="black" /></View>
-                <View style={styles.containerText}><TextInput style={[styles.textStyle, {textAlignVertical: 'top'}]} multiline numberOfLines={10} placeholder="Сообщение" placeholderTextColor="black" /></View>
+                <View style={styles.containerText}><TextInput value={this.state.fio} onChangeText={(text) => this.setState({fio: text})} style={styles.textStyle} placeholder="ФИО" placeholderTextColor="black" /></View>
+                <View style={styles.containerText}><TextInput value={this.state.mail} onChangeText={(text) => this.setState({mail: text})} style={styles.textStyle} placeholder="E-mail" placeholderTextColor="black" /></View>
+                <View style={styles.containerText}><TextInput value={this.state.phone} onChangeText={(text) => this.setState({phone: text})} style={styles.textStyle} placeholder="Номер телефона" placeholderTextColor="black" /></View>
+                <View style={styles.containerText}><TextInput value={this.state.message} onChangeText={(text) => this.setState({message: text})} style={[styles.textStyle, {textAlignVertical: 'top'}]} multiline numberOfLines={10} placeholder="Сообщение" placeholderTextColor="black" /></View>
               </View>
               <View style={{ padding: 15, marginBottom: 30 }}>
                 <Button
@@ -53,7 +59,15 @@ class Contact extends Component {
                     borderRadius: 6,
                     height: 50
                   }}
-                  onPress={() => navigation.navigate('Main')} 
+                  onPress={() => { 
+                    alert('Ваши данные успешно отправлены')
+                    this.setState({
+                      fio: '',
+                      mail: '',
+                      phone: '',
+                      message: ''
+                    })
+                  }}
                   titleStyle={{ fontSize: normalize(14), lineHeight: 16, fontWeight: '500', color: '#fff', fontFamily: 'Roboto-Regular'}} title="ОТПРАВИТЬ"
                 />
               </View>      
@@ -87,7 +101,8 @@ const styles = StyleSheet.create({
     borderColor: '#FFA470',
     borderWidth: 1,
     backgroundColor: '#FFFFFF',
-    marginVertical: 10
+    marginVertical: 10,
+    padding: 0
   }
 })
 

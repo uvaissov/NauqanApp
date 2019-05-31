@@ -11,6 +11,12 @@ import Icon from '../components/svgkit/Icon'
 import { w, normalize } from '../constants/global'
 
 class B2B extends Component {  
+  state={
+    fio: '',
+    mail: '',
+    phone: '',
+    message: ''
+  }
   render() {
     const { navigation } = this.props
     return (
@@ -39,10 +45,10 @@ class B2B extends Component {
                 </Text>
               </View>
               <View style={{ padding: 15}}>
-                <View style={styles.containerText}><TextInput style={styles.textStyle} placeholder="ФИО" placeholderTextColor="black" /></View>
-                <View style={styles.containerText}><TextInput style={styles.textStyle} placeholder="E-mail" placeholderTextColor="black" /></View>
-                <View style={styles.containerText}><TextInput style={styles.textStyle} placeholder="Номер телефона" placeholderTextColor="black" /></View>
-                <View style={styles.containerText}><TextInput style={[styles.textStyle, {textAlignVertical: 'top'}]} multiline numberOfLines={10} placeholder="Сообщение" placeholderTextColor="black" /></View>
+                <View style={styles.containerText}><TextInput value={this.state.fio} onChangeText={(text) => this.setState({fio: text})} style={styles.textStyle} placeholder="ФИО" placeholderTextColor="black" /></View>
+                <View style={styles.containerText}><TextInput value={this.state.mail} onChangeText={(text) => this.setState({mail: text})} style={styles.textStyle} placeholder="E-mail" placeholderTextColor="black" /></View>
+                <View style={styles.containerText}><TextInput value={this.state.phone} onChangeText={(text) => this.setState({phone: text})} style={styles.textStyle} placeholder="Номер телефона" placeholderTextColor="black" /></View>
+                <View style={styles.containerText}><TextInput value={this.state.message} onChangeText={(text) => this.setState({message: text})} style={[styles.textStyle, {textAlignVertical: 'top'}]} multiline numberOfLines={10} placeholder="Сообщение" placeholderTextColor="black" /></View>
               </View>
               <View style={{ padding: 15, marginBottom: 30 }}>
                 <Button
@@ -51,7 +57,16 @@ class B2B extends Component {
                     borderRadius: 6,
                     height: 50
                   }}
-                  onPress={() => navigation.navigate('Main')} 
+                  // eslint-disable-next-line no-alert
+                  onPress={() => { 
+                    alert('Ваши данные успешно отправлены')
+                    this.setState({
+                      fio: '',
+                      mail: '',
+                      phone: '',
+                      message: ''
+                    })
+                  }} 
                   titleStyle={{ fontSize: normalize(14), lineHeight: 16, fontWeight: '500', color: '#fff', fontFamily: 'Roboto-Regular'}} title="ОТПРАВИТЬ"
                 />
               </View>      

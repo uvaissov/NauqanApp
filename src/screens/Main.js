@@ -150,7 +150,7 @@ class Main extends Component {
           
         <ScrollView overScrollMode="never" bounces={false} style={[{ flex: 1}]}>
           <SwiperApp navigation={navigation} data={promo1} />
-          <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 15 }}> 
+          <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 15, paddingTop: 5, paddingBottom: 15 }}> 
             {
               mainCategory.map((itemName) => {
                 const category = categories.filter(cat => cat.id === itemName)[0]                
