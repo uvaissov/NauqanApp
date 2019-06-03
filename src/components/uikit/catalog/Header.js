@@ -3,7 +3,6 @@ import { ScrollView, View, TouchableOpacity, StyleSheet, Text, TextInput } from 
 import LinearGradient from 'react-native-linear-gradient'
 import { ifIphoneX, isIphoneX } from 'react-native-iphone-x-helper'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { NavigationEvents } from 'react-navigation'
 import Icon from '../../svgkit/Icon'
 import { ModalSort } from './ModalSort'
 //import { w } from '../../../constants/global'
@@ -80,7 +79,6 @@ const Header = ({
   }
   return (
     <View style={[viewStyle]}>
-      <NavigationEvents onWillBlur={() => console.log('onWillBlur')} />
       <LinearGradient style={[headerGradView, style]} colors={[mainColor, secondColor]} useAngle angle={135}>
         {leftIcon &&
           <TouchableOpacity onPress={onPress}>

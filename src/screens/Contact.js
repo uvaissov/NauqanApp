@@ -17,6 +17,35 @@ class Contact extends Component {
     phone: '',
     message: ''
   }
+
+  sendMail = () => {
+    const { fio, phone, message, mail } = this.state
+    if (fio.length > 0 && phone.length > 0 && message.length > 0 && mail.length > 0) {
+      const formData = new FormData()
+      formData.append('fio', fio)
+      formData.append('tel', phone)
+      formData.append('sms', message)
+      formData.append('email', mail)
+      formData.append('type', 'contact')
+      fetch(
+        'http://nauqan.ibeacon.kz/send_mail',
+        {
+          method: 'POST',
+          //headers: { 'Content-type': 'multipart/form-data' },
+          body: formData
+        })
+        .then(() => {
+          this.setState({
+            fio: '',
+            mail: '',
+            phone: '',
+            message: ''
+          })
+        })
+    } else {
+      alert('Необходимо заполнить все поля!')
+    }  
+  }
   render() {
     const { navigation } = this.props
     return (
@@ -47,10 +76,10 @@ class Contact extends Component {
                 </Text>
               </View>
               <View style={{ padding: 15}}>
-                <View style={styles.containerText}><TextInput value={this.state.fio} onChangeText={(text) => this.setState({fio: text})} style={styles.textStyle} placeholder="ФИО" placeholderTextColor="black" /></View>
-                <View style={styles.containerText}><TextInput value={this.state.mail} onChangeText={(text) => this.setState({mail: text})} style={styles.textStyle} placeholder="E-mail" placeholderTextColor="black" /></View>
-                <View style={styles.containerText}><TextInput value={this.state.phone} onChangeText={(text) => this.setState({phone: text})} style={styles.textStyle} placeholder="Номер телефона" placeholderTextColor="black" /></View>
-                <View style={styles.containerText}><TextInput value={this.state.message} onChangeText={(text) => this.setState({message: text})} style={[styles.textStyle, {textAlignVertical: 'top'}]} multiline numberOfLines={10} placeholder="Сообщение" placeholderTextColor="black" /></View>
+                <View style={styles.containerText}><TextInput value={this.state.fio} onChangeText={(text) => this.setState({fio: text})} style={styles.textStyle} placeholder="ФИО" placeholderTextColor="rgba(0, 0, 0, 0.54)" /></View>
+                <View style={styles.containerText}><TextInput value={this.state.mail} onChangeText={(text) => this.setState({mail: text})} style={styles.textStyle} placeholder="E-mail" placeholderTextColor="rgba(0, 0, 0, 0.54)" autoCompleteType="email" /></View>
+                <View style={styles.containerText}><TextInput value={this.state.phone} onChangeText={(text) => this.setState({phone: text})} style={styles.textStyle} placeholder="Номер телефона" placeholderTextColor="rgba(0, 0, 0, 0.54)" autoCompleteType="tel" /></View>
+                <View style={styles.containerText}><TextInput value={this.state.message} onChangeText={(text) => this.setState({message: text})} style={[styles.textStyle, {textAlignVertical: 'top'}]} multiline numberOfLines={10} placeholder="Сообщение" placeholderTextColor="rgba(0, 0, 0, 0.54)" /></View>
               </View>
               <View style={{ padding: 15, marginBottom: 30 }}>
                 <Button
@@ -60,13 +89,7 @@ class Contact extends Component {
                     height: 50
                   }}
                   onPress={() => { 
-                    alert('Ваши данные успешно отправлены')
-                    this.setState({
-                      fio: '',
-                      mail: '',
-                      phone: '',
-                      message: ''
-                    })
+                    this.sendMail()
                   }}
                   titleStyle={{ fontSize: normalize(14), lineHeight: 16, fontWeight: '500', color: '#fff', fontFamily: 'Roboto-Regular'}} title="ОТПРАВИТЬ"
                 />

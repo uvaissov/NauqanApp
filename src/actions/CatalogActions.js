@@ -139,7 +139,6 @@ export const getPlacesByCatalog = (id, dir, sub_id, text) => async (dispatch, ge
     return error
   }
   try {
-    //dispatch({ type: SEARCH_TEXT_CHANGE, payload: text }) 
     if (!sub_id) {
       dispatch({ type: SELECT_SUB_CATALOG, payload: undefined }) 
     }
@@ -178,7 +177,6 @@ export const getPlacesTop = () => async (dispatch, getState) => {
   try {
     const cityId = getState().city.selected ? `&city_id=${getState().city.selected}` : ''
     const URL = `${hostName}/zavedeniya?v_tope=1${cityId}`
-    console.log(URL)
     const res = await fetch(URL, {
       method: 'GET'
     })
