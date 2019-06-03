@@ -11,19 +11,7 @@ class NotifyService {
   }
   
     start = async (prevCityId, cityId) => {
-      console.log(`start by ${cityId}`)
       firebase.notifications().android.deleteChannel('test-channel')
-      if (this.notificationListener) {
-        console.log('list', this.notificationListener)
-      }
-      /*
-        if (this.notificationDisplayedListener) {
-            this.notificationDisplayedListener.remove()
-        }
-        if (this.notificationOpenedListener) {
-            this.notificationOpenedListener.remove()
-        }
-      */            
       const notificationOpen = await firebase.notifications().getInitialNotification()
       if (notificationOpen) {
         const action = notificationOpen.action

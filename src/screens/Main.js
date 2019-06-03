@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import SplashScreen from 'react-native-splash-screen'
 import AsyncStorage from '@react-native-community/async-storage'
+import Moment from 'moment'
 import { Image, StyleSheet, View, Text, ScrollView, TouchableOpacity, FlatList, ImageBackground } from 'react-native'
-//import LinearGradient from 'react-native-linear-gradient'
 import { Button } from 'react-native-elements'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
+import { NavigationEvents } from 'react-navigation'
 import CustomStatusBar from '../components/uikit/CustomStatusBar'
 import { getCategories, getSubCategories, getPlacesTop } from '../actions/CatalogActions'
 import { initCity, getCities } from '../actions/CityActions'
@@ -17,12 +18,10 @@ import CardPlaceDynamic from '../components/uikit/CardPlaceDynamic'
 import { w, h, BG_COLOR, TRASPARENT, statusBarHeight } from '../constants/global'
 import NotifyService from '../services/NotifyService'
 
-//const PushNotificationIOS = require('react-native-push-notification')
-//const PushNotification = require('react-native-push-notification')
-
 class Main extends Component {  
   state = {
-    cityId: this.props.cityId
+    cityId: this.props.cityId,
+    promoLoad: new Date()
   }
   async componentDidMount() {
     this.props.initCity()
@@ -33,25 +32,20 @@ class Main extends Component {
     this.notify = new NotifyService(this.onOpen1, this.onOpen2)
     this.notify.start() // Инициализация уведомлении
     firebase.messaging().subscribeToTopic('all')
-    this.refresherContent = setInterval(() => {
-      this._initData() //обновляем информацию на главной странице каждые 3 мин
-    }, 1000 * (3 * 60))
+    setTimeout(() => SplashScreen.hide(), 1000)
   }
   componentDidUpdate(prevState) {
     if (prevState.cityId !== this.props.cityId) {      
       firebase.messaging().unsubscribeFromTopic(`cityId_${prevState.cityId}`)
       firebase.messaging().subscribeToTopic(`cityId_${this.props.cityId}`)      
-      this._initData()
-      setTimeout(() => SplashScreen.hide(), 1000)      
+      this._initData()            
     }
   }
 
   componentWillUnmount() {
-    console.log('componentWillUnmount')
     this.notify.notificationDisplayedListener()
     this.notify.notificationListener()
-    this.notify.notificationOpenedListener()
-    clearInterval(this.refresherContent)
+    this.notify.notificationOpenedListener()    
   }  
 
   onOpen1 = (value) => {
@@ -74,7 +68,6 @@ class Main extends Component {
         await AsyncStorage.setItem('fcmToken', fcmToken)
       }
     }
-    console.log('fcmToken', fcmToken)
   }
 
   async checkPermission() {
@@ -111,13 +104,52 @@ class Main extends Component {
     this.props.getPromoDataSecond()
     this.props.getPlacesTop()
   }
+  //обновления промо когда человек возвращяеться с экрана на экран
+  _refreshAfterTime = () => {
+    if (Moment(this.state.promoLoad).isBefore(Moment().subtract(3, 'minute'))) {      
+      this._initData()
+      this.setState({promoLoad: new Date() })
+    }
+  }
+
+  renderSliderTopPlace = (topPlaces) => {
+    if (!topPlaces || topPlaces.length === 0) {
+      return null
+    }
+    const { navigation } = this.props
+    const [{id}] = topPlaces
+    const itemWidth = 152
+    return (
+      <ScrollView 
+        horizontal
+        //decelerationRate={0}
+        //snapToInterval={(itemWidth/*itemWidth*/ * 2) + 20/*el-Margin*/}
+        overScrollMode="never" 
+        showsVerticalScrollIndicator={false} 
+        showsHorizontalScrollIndicator={false}
+        //pagingEnabled 
+        bounces={false}
+        key={id}
+      > 
+        <FlatList 
+          key={id}
+          alwaysBounceVertical={false}
+          columnWrapperStyle={{ justifyContent: 'flex-start'}}
+          data={topPlaces}
+          numColumns={9} 
+          renderItem={(row) => <CardPlaceDynamic favorite width={itemWidth} navigation={navigation} item={row.item} onPress={() => navigation.push('Item', { id: row.item.id })} />}
+          keyExtractor={(item) => item.id}
+        />
+      </ScrollView>
+    )
+  }
 
   render() {
-    const { navigation, mainCategory, categories, topPlaces, loading, error, cityId, promo1, promo2 } = this.props   
+    const { navigation, mainCategory, categories, topPlaces, loading, error, promo1, promo2 } = this.props   
     
-    if (cityId !== this.state.cityId) {
-      //this.setState({cityId})
-    }
+    const topPlaces1 = topPlaces.slice(0, 9)
+    const topPlaces2 = topPlaces.slice(9, 18)
+    const topPlaces3 = topPlaces.slice(18, 27)
 
     /**when first loading show this splash screen */
     if (loading) {
@@ -143,7 +175,11 @@ class Main extends Component {
     }
 
     return (
-      <View style={styles.container}>        
+      
+      <View style={styles.container}>  
+        <NavigationEvents
+          onDidFocus={() => this._refreshAfterTime()}    
+        />     
         <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
         {/* Start scroll component */}
         <HeaderMain style={{position: 'absolute', width: w, top: (statusBarHeight), zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />                    
@@ -173,25 +209,9 @@ class Main extends Component {
             <View style={{ flex: 1}} />
           </View>
           <View style={{ paddingHorizontal: 15 }}>
-            <ScrollView 
-              horizontal
-              decelerationRate={0}
-              snapToInterval={(152/*itemWidth*/ * 2) + 20/*el-Margin*/}
-              overScrollMode="never" 
-              showsVerticalScrollIndicator={false} 
-              showsHorizontalScrollIndicator={false}
-              pagingEnabled 
-              bounces={false}
-            > 
-              <FlatList 
-                alwaysBounceVertical={false}
-                columnWrapperStyle={{ justifyContent: 'flex-start'}}
-                data={topPlaces}
-                numColumns={9} 
-                renderItem={(row) => <CardPlaceDynamic favorite width={152} navigation={navigation} item={row.item} onPress={() => navigation.push('Item', { id: row.item.id })} />}
-                keyExtractor={(item) => item.id}
-              />
-            </ScrollView>                       
+            {this.renderSliderTopPlace(topPlaces1)}
+            {this.renderSliderTopPlace(topPlaces2)}
+            {this.renderSliderTopPlace(topPlaces3)}
           </View>
           <View style={{ padding: 15 }}>
             <Button

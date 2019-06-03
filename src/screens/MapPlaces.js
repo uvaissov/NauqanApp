@@ -41,17 +41,7 @@ class MapPlaces extends Component {
     })    
   }
 
-  async componentDidUpdate(prevState) {
-    if (prevState.didFinishInitialAnimation === false && this.state.didFinishInitialAnimation === true) {
-      console.log('first fetch')
-      //this.loadPoint()
-    }
-  }
-
   loadPoint = (lat, lng) => {
-    console.log('lat', lat)
-    console.log('lng', lng)
-    
     fetch(`${hostName}/get_zav?lat=${lng}&lng=${lat}&rad=5`)
       .then((res) => res.json())
       .then((data) => {
@@ -78,7 +68,6 @@ class MapPlaces extends Component {
             > 
               {
                 this.state.points.map((point, index) => {
-                  console.log(point) 
                   const [category = {}] = categories.filter((cat) => cat.id === point.cat_id)             
                   return (
                     <Marker style={{zIndex: index + 1 }} ref={_marker => { this.marker = _marker }} key={point.id} coordinate={{ latitude: point.lng, longitude: point.lat }} onCalloutPress={() => { this.marker.hideCallout() }}>                      
@@ -86,7 +75,7 @@ class MapPlaces extends Component {
                         <Image style={{height: 18, width: 18}} source={{uri: genImageUri(category.promoIcon)}} resizeMode="contain" />                        
                       </LinearGradient>
                       <MapView.Callout tooltip>
-                        <View style={{ width: 150, height: 80, backgroundColor: '#fff', borderRadius: 6, padding: 10, borderColor: BG_COLOR, borderWidth: 1 }}>
+                        <View style={{ width: 150, height: 100, backgroundColor: '#fff', borderRadius: 6, padding: 10, borderColor: BG_COLOR, borderWidth: 1 }}>
                           <Text ellipsizeMode="tail" style={{flex: 1, fontWeight: '500', textAlign: 'center', color: 'black'}}>{point.name}</Text>
                           <Text ellipsizeMode="tail" style={{flex: 1, fontWeight: '500', textAlign: 'center', color: 'rgba(0,0,0,0.5)'}}>{point.address}</Text>
                         </View>

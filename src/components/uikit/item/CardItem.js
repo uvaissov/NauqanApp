@@ -18,8 +18,7 @@ class CardItem extends Component {
   componentDidMount() {
     const item = this.props.item
     if (!item.img) {
-      this._fecthData(item)
-      console.log('_fecthData')      
+      this._fecthData(item)      
     }
     Animated.timing(
       // Animate over time
@@ -29,10 +28,6 @@ class CardItem extends Component {
         duration: 300 // Make it take a while
       }
     ).start() // Starts the animation
-  }
-
-  componentDidUpdate() {
-    console.log('update card item')    
   }
 
   _fecthData = (item) => {

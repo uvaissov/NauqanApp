@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, ImageBackground, FlatList, ScrollView, Image, TouchableHighlight, TouchableOpacity } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import FastImage from 'react-native-fast-image'
 //import Spinner from 'react-native-loading-spinner-overlay'
 import { ColorDotsLoader } from 'react-native-indicator'
 import { connect } from 'react-redux'
@@ -22,7 +23,6 @@ class Item extends Component {
 
   // Lifecycle methods
   componentDidMount() {
-    console.log('componentDidMount Item')
     this.props.getZav(this.props.navigation.getParam('id'))
     this.props.getPlacesByZav(this.props.navigation.getParam('id'), this.props.text, this.props.dir)
     // 1: Component is mounted off-screen
@@ -30,10 +30,6 @@ class Item extends Component {
       didFinishInitialAnimation: true
     })
   }
-  componentDidUpdate() {
-    console.log('update')
-  }
-
   onPressCartItem = (id) => {
     this.props.navigation.push('Sale', { id })
   }
@@ -103,12 +99,17 @@ class Item extends Component {
             >
 
               <View style={{ flex: 1 }}>
-
+                { zav.logo && 
                 <View style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 36, backgroundColor: 'white', position: 'absolute', height: 72, width: 72, bottom: -36, left: ((w / 2) - 36) }}>
-                  <View style={{ justifyContent: 'center', alignItems: 'center', height: 62, width: 62, backgroundColor: 'black', borderRadius: 36 }}>
-                    <Text style={{ fontFamily: 'Roboto-Regular', color: 'white', fontSize: 12, lineHeight: 14 }}>VISIT</Text>
+                  <View style={{ height: 62, width: 62, backgroundColor: 'black', borderRadius: 36, overflow: 'hidden' }}>
+                    <FastImage 
+                      style={{flex: 1}} 
+                      source={{uri: genImageUri(zav.logo)}}
+                      resizeMode={FastImage.resizeMode.center}
+                    />
                   </View>
                 </View>
+                }
                 <TouchableOpacity onPress={() => (selected ? this._remFromFav(zav.id) : this._addToFav(zav.id, zav.name))} style={styles.touchZone} >
                   <View style={styles.favoriteView}>
                     <MaterialIcons name={selected === true ? 'favorite' : 'favorite-border'} size={20} style={!selected ? { color: '#170701' } : { color: '#FF6E36' }} />
