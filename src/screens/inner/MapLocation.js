@@ -63,7 +63,7 @@ class MapLocation extends Component {
                         <Image style={{height: 18, width: 18}} source={{uri: genImageUri(category.promoIcon)}} resizeMode="contain" />                        
                       </LinearGradient>
                       <MapView.Callout tooltip>
-                        <View style={{ width: 150, height: 100, backgroundColor: '#fff', borderRadius: 6, padding: 10, borderColor: BG_COLOR, borderWidth: 1 }}>
+                        <View style={{ width: 200, height: 100, backgroundColor: '#fff', borderRadius: 6, padding: 10, borderColor: BG_COLOR, borderWidth: 1 }}>
                           <Text ellipsizeMode="tail" style={{flex: 1, fontWeight: '500', textAlign: 'center', color: 'black'}}>{point.name}</Text>
                           <Text ellipsizeMode="tail" style={{flex: 1, fontWeight: '500', textAlign: 'center', color: 'rgba(0,0,0,0.5)'}}>{point.address}</Text>
                         </View>
@@ -71,13 +71,6 @@ class MapLocation extends Component {
                     </Marker>
                   )
                 })
-              }
-              
-              {
-                !!this.state.latitude && !!this.state.longitude && <MapView.Marker
-                  coordinate={{ latitude: this.state.latitude, longitude: this.state.longitude}}
-                  title={'Your Location'}
-                />
               }
             </MapView>
           }

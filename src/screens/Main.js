@@ -31,13 +31,17 @@ class Main extends Component {
     this.checkPermission()
     this.notify = new NotifyService(this.onOpen1, this.onOpen2)
     this.notify.start() // Инициализация уведомлении
-    firebase.messaging().subscribeToTopic('all')
+    if (this.props.notifyUse === true) {
+      firebase.messaging().subscribeToTopic('all')
+    }
     setTimeout(() => SplashScreen.hide(), 1000)
   }
   componentDidUpdate(prevState) {
-    if (prevState.cityId !== this.props.cityId) {      
+    if (prevState.cityId !== this.props.cityId) {    
       firebase.messaging().unsubscribeFromTopic(`cityId_${prevState.cityId}`)
-      firebase.messaging().subscribeToTopic(`cityId_${this.props.cityId}`)      
+      if (this.props.notifyUse === true) {
+        firebase.messaging().subscribeToTopic(`cityId_${this.props.cityId}`)
+      }
       this._initData()            
     }
   }
@@ -82,7 +86,11 @@ class Main extends Component {
   redirectMessage = (value) => {
     const { id, type } = value
     if (type && id) {
-      this.props.navigation.push('Item', {id: 26})
+      if (type === 'product') {
+        this.props.navigation.push('Sale', {id})
+      } else if (type === 'zavedeniya') {
+        this.props.navigation.push('Item', {id})
+      }
     }
   }
   
@@ -280,7 +288,8 @@ const mapStateToProps = state => {
     error: state.catalog.error,
     cityId: state.city.selected,
     promo1: state.swiper.promo1,
-    promo2: state.swiper.promo2
+    promo2: state.swiper.promo2,
+    notifyUse: state.city.notifyUse
   }
 }
 export default connect(mapStateToProps, 
