@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react'
-import {StyleSheet, View} from 'react-native'
+import {StyleSheet, View, Switch} from 'react-native'
 import CustomStatusBar from '../components/uikit/CustomStatusBar'
 import { Header } from '../components/uikit/favorite/Header'
 //import { w } from '../constants/global'
@@ -19,6 +19,9 @@ class Setting extends Component {
       <View style={styles.container}>
         <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
         <Header mainColor="#8366D8" secondColor="#4786FF" title="Настройка" leftColor="black" leftIcon="md-menu" onPress={() => navigation.openDrawer()} /> 
+        <View>
+          <Switch onValueChange={(value) => console.log(value)} />
+        </View>
       </View>
     )
   }
