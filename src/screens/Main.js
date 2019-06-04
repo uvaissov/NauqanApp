@@ -86,7 +86,11 @@ class Main extends Component {
   redirectMessage = (value) => {
     const { id, type } = value
     if (type && id) {
-      this.props.navigation.push('Item', {id: 26})
+      if (type === 'product') {
+        this.props.navigation.push('Sale', {id})
+      } else if (type === 'zavedeniya') {
+        this.props.navigation.push('Item', {id})
+      }
     }
   }
   
