@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     elevation: 3,
     position: 'relative',
     ...ifIphoneX({
-      height: 90
+      height: 70
     }, {
       height: 70
     }),
