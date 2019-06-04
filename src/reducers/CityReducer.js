@@ -1,11 +1,12 @@
 import {
-  CITY_FETCHED, CITY_FAILED, CITY_SELECT
+  CITY_FETCHED, CITY_FAILED, CITY_SELECT, NOTIFY_SELECT
 } from '../types'
 
 const INITIAL_STATE = {
   items: [],
   selected: null,
-  name: 'Выберите город'
+  name: 'Выберите город',
+  notifyUse: true
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -27,6 +28,12 @@ export default (state = INITIAL_STATE, action) => {
       selected: action.payload
     }
   }
+  case NOTIFY_SELECT: {
+    return {
+      ...state,
+      notifyUse: action.payload
+    }
+  }  
   default: return state
   }
 }

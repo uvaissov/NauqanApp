@@ -4,6 +4,8 @@ import { isIphoneX } from 'react-native-iphone-x-helper'
 export const hostName = 'http://nauqan.ibeacon.kz'
 export const FAVORITE_STORE = '@MyLocalStore:favoriteList'
 export const CITY_STORE = '@MyLocalStore:city'
+export const NOTIFY_USE_STORE = '@MyLocalStore:notifyUse'
+
 export const WHITE = '#fff'
 export const BLACK = '#000'
 

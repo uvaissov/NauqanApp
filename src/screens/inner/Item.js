@@ -101,11 +101,11 @@ class Item extends Component {
               <View style={{ flex: 1 }}>
                 { zav.logo && 
                 <View style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 36, backgroundColor: 'white', position: 'absolute', height: 72, width: 72, bottom: -36, left: ((w / 2) - 36) }}>
-                  <View style={{ height: 62, width: 62, backgroundColor: 'black', borderRadius: 36, overflow: 'hidden' }}>
+                  <View style={{ height: 62, width: 62, borderRadius: 36, overflow: 'hidden' }}>
                     <FastImage 
                       style={{flex: 1}} 
                       source={{uri: genImageUri(zav.logo)}}
-                      resizeMode={FastImage.resizeMode.center}
+                      resizeMode={FastImage.resizeMode.cover}
                     />
                   </View>
                 </View>

@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage'
-import { CITY_FETCHED, CITY_FAILED, CITY_SELECT } from '../types'
+import { CITY_FETCHED, CITY_FAILED, CITY_SELECT, NOTIFY_SELECT } from '../types'
 
-import { hostName, CITY_STORE } from '../constants/global'
+import { hostName, CITY_STORE, NOTIFY_USE_STORE } from '../constants/global'
 
 export const getCities = () => async (dispatch) => {
   function onSuccess(value) {
@@ -37,6 +37,9 @@ export const initCity = () => async (dispatch) => {
   
   try {
     const value = await AsyncStorage.getItem(CITY_STORE) || '2'
+    //notify
+    const notifyUse = await AsyncStorage.getItem(NOTIFY_USE_STORE) || 'true'
+    dispatch({ type: NOTIFY_SELECT, payload: JSON.parse(notifyUse) })
     if (value !== null) {
       return onSuccess(parseInt(value, 10))
     }
@@ -50,6 +53,14 @@ export const selectCity = (value) => {
   AsyncStorage.setItem(CITY_STORE, value.toString())
   return {
     type: CITY_SELECT,
+    payload: value
+  }
+}
+
+export const notifySelect = (value) => {
+  AsyncStorage.setItem(NOTIFY_USE_STORE, value.toString())
+  return {
+    type: NOTIFY_SELECT,
     payload: value
   }
 }
