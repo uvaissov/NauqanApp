@@ -13,7 +13,8 @@ import { getCategories, getSubCategories, getPlacesTop } from '../actions/Catalo
 import { initCity, getCities } from '../actions/CityActions'
 import { initFavorites } from '../actions/FavoriteActions'
 import { getPromoDataFirst, getPromoDataSecond } from '../actions/SwiperActions'
-import { HeaderMain, SwiperApp, ButtonGrad} from '../components/uikit'
+import { SwiperApp, ButtonGrad} from '../components/uikit'
+import HeaderMain from '../components/uikit/main/HeaderMain'
 import CardPlaceDynamic from '../components/uikit/CardPlaceDynamic'
 import { w, h, BG_COLOR, TRASPARENT, statusBarHeight } from '../constants/global'
 import NotifyService from '../services/NotifyService'
@@ -190,7 +191,7 @@ class Main extends Component {
         />     
         <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
         {/* Start scroll component */}
-        <HeaderMain style={{position: 'absolute', width: w, top: (statusBarHeight), zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />                    
+        <HeaderMain navigation={navigation} categories={categories} style={{position: 'absolute', width: w, top: (statusBarHeight), zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />                    
           
         <ScrollView overScrollMode="never" bounces={false} style={[{ flex: 1}]}>
           <SwiperApp navigation={navigation} data={promo1} />
