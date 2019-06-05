@@ -191,7 +191,7 @@ class Main extends Component {
         />     
         <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
         {/* Start scroll component */}
-        <HeaderMain style={{position: 'absolute', width: w, top: (statusBarHeight), zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />                    
+        <HeaderMain navigation={navigation} categories={categories} style={{position: 'absolute', width: w, top: (statusBarHeight), zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />                    
           
         <ScrollView overScrollMode="never" bounces={false} style={[{ flex: 1}]}>
           <SwiperApp navigation={navigation} data={promo1} />
