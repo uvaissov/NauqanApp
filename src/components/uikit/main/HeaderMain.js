@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import LinearGradient from 'react-native-linear-gradient'
 import Icon from '../../svgkit/Icon'
 
-import { w, statusBarHeight, BG_COLOR, hostName, genImageUri, normalize } from '../../../constants/global'
+import { w, BG_COLOR, hostName, genImageUri, normalize } from '../../../constants/global'
 
 class HeaderMain extends Component {
   state = {
@@ -93,23 +93,26 @@ class HeaderMain extends Component {
           </View>
         </LinearGradient>
         { showResults && data.length > 0 &&
-          <TouchableWithoutFeedback
-            onPress={() => { 
-              Keyboard.dismiss() 
-              this.setState({showResults: false})
-            }} style={touchContainer}
-          >
+        <TouchableWithoutFeedback 
+          onPress={() => { 
+            Keyboard.dismiss() 
+            this.setState({showResults: false})
+          }}
+        >
+          <View style={touchContainer} >
             <View style={resultContainer}>
               <ScrollView keyboardShouldPersistTaps={'handled'} >
                 <FlatList
+                  key={data.length}
                   keyboardShouldPersistTaps={'handled'}
                   data={data}
                   renderItem={this.renderItem}
-                  keyExtractor={(item) => item.id}
+                  keyExtractor={(item) => item.id.toString()}
                 />
               </ScrollView>
             </View>
-          </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
         }
         
       </View>
@@ -120,9 +123,10 @@ class HeaderMain extends Component {
 const styles = StyleSheet.create({
   touchContainer: {
     flex: 1,
+    width: w,
     position: 'absolute', 
     zIndex: 5, 
-    top: statusBarHeight + 40
+    top: 60
   },
   resultContainer: {
     marginLeft: 75,
@@ -130,7 +134,9 @@ const styles = StyleSheet.create({
     maxHeight: 220, 
     width: w - 130, 
     backgroundColor: BG_COLOR,
-    padding: 10
+    padding: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(0, 0, 0, 0.1)'
   },
   viewStyle: {
     justifyContent: 'flex-start',    
