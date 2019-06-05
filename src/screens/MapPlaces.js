@@ -88,7 +88,7 @@ class MapPlaces extends Component {
               {
                 !!this.state.latitude && !!this.state.longitude && <MapView.Marker
                   coordinate={{ latitude: this.state.latitude, longitude: this.state.longitude}}
-                  title={'Your Location'}
+                  title={'Я'}
                 />
               }
             </MapView>

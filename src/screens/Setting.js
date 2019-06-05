@@ -32,7 +32,7 @@ class Setting extends Component {
     return (
       <View style={styles.container}>
         <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
-        <Header showSearch={false} mainColor="#8366D8" secondColor="#4786FF" title="Настройка" leftColor="black" leftIcon="md-menu" onPress={() => navigation.openDrawer()} /> 
+        <Header showSearch={false} mainColor="#8366D8" secondColor="#4786FF" title="Настройки" leftColor="black" leftIcon="md-menu" onPress={() => navigation.openDrawer()} /> 
         <View>
           <View style={styles.elementView}>
             <Text style={styles.elementText}>Уведомления</Text>

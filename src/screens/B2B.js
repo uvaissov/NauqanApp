@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import { Text, TextInput, StyleSheet, View, ScrollView, ImageBackground} from 'react-native'
+import { Text, TextInput, StyleSheet, View, ScrollView, ImageBackground, Alert } from 'react-native'
+import { TextInputMask } from 'react-native-masked-text'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
 import { Divider, Button } from 'react-native-elements'
@@ -26,24 +27,11 @@ class B2B extends Component {
       formData.append('sms', message)
       formData.append('email', mail)
       formData.append('type', 'b2b')
-      fetch(
-        'http://nauqan.ibeacon.kz/send_mail',
-        {
-          method: 'POST',
-          //headers: { 'Content-type': 'multipart/form-data' },
-          body: formData
-        })
-        .then(() => {
-          alert('Ваши данные успешно отправлены')
-          this.setState({
-            fio: '',
-            mail: '',
-            phone: '',
-            message: ''
-          })
-        })
+      fetch('http://nauqan.ibeacon.kz/send_mail', { method: 'POST', body: formData })
+      Alert.alert('', 'Ваши данные успешно отправлены', [{text: 'OK', onPress: () => console.log('OK Pressed')}], {cancelable: false})
+      this.setState({fio: '', mail: '', phone: '', message: '' })
     } else {
-      alert('Необходимо заполнить все поля!')
+      Alert.alert('', 'Необходимо заполнить все поля', [{text: 'OK', onPress: () => console.log('OK Pressed')}], {cancelable: false})
     }  
   }
   render() {
@@ -76,7 +64,7 @@ class B2B extends Component {
               <View style={{ padding: 15}}>
                 <View style={styles.containerText}><TextInput value={this.state.fio} onChangeText={(text) => this.setState({fio: text})} style={styles.textStyle} placeholder="ФИО" placeholderTextColor="rgba(0, 0, 0, 0.54)" /></View>
                 <View style={styles.containerText}><TextInput value={this.state.mail} onChangeText={(text) => this.setState({mail: text})} style={styles.textStyle} placeholder="E-mail" placeholderTextColor="rgba(0, 0, 0, 0.54)" autoCompleteType="email" /></View>
-                <View style={styles.containerText}><TextInput value={this.state.phone} onChangeText={(text) => this.setState({phone: text})} style={styles.textStyle} placeholder="Номер телефона" placeholderTextColor="rgba(0, 0, 0, 0.54)" autoCompleteType="tel" /></View>
+                <View style={styles.containerText}><TextInputMask value={this.state.phone} onChangeText={(text) => this.setState({phone: text})} style={styles.textStyle} placeholder="Номер телефона" placeholderTextColor="rgba(0, 0, 0, 0.54)" autoCompleteType="tel" keyboardType={'phone-pad'} type={'custom'} options={{mask: '+9(999)999-99-99'}} /></View>
                 <View style={styles.containerText}><TextInput value={this.state.message} onChangeText={(text) => this.setState({message: text})} style={[styles.textStyle, {textAlignVertical: 'top'}]} multiline numberOfLines={10} placeholder="Сообщение" placeholderTextColor="rgba(0, 0, 0, 0.54)" /></View></View>
               <View style={{ padding: 15, marginBottom: 30 }}>
                 <Button
