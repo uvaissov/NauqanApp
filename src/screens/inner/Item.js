@@ -125,15 +125,13 @@ class Item extends Component {
               <Text style={{ fontFamily: 'Roboto-Regular', color: category.mainColor, fontSize: normalize(12) }}>{category.name}</Text>
             </View>
           </View>
-          <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 15, marginTop: 15, backgroundColor: '#EBF2F5', alignItems: 'center' }}>
-            <MaterialIcons name="room" size={25} style={{ color: 'rgba(0, 0, 0, 0.54)' }} />
-            <Text ellipsizeMode="tail" style={{flex: 1, color: 'rgba(0, 0, 0, 0.87)', fontFamily: 'Roboto-Regular', paddingLeft: 10 }}>{zav.city}, {zav.address}</Text>
-            { zav.lat && zav.lng &&
-            <TouchableOpacity>
-              <MaterialIcons name='directions' size={25} style={{ color: '#FF6E36' }} onPress={() => navigation.navigate('MapLocation', {point: zav })} />
-            </TouchableOpacity>
-            }
-          </View>
+          <TouchableOpacity onPress={() => (zav.lat && zav.lng ? navigation.navigate('MapLocation', {point: zav }) : console.log('zav.lng is null'))}>
+            <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 15, marginTop: 15, backgroundColor: '#EBF2F5', alignItems: 'center' }}>
+              <MaterialIcons name="room" size={25} style={{ color: 'rgba(0, 0, 0, 0.54)' }} />              
+              <Text ellipsizeMode="tail" style={{flex: 1, color: 'rgba(0, 0, 0, 0.87)', fontFamily: 'Roboto-Regular', paddingLeft: 10 }}>{zav.city}, {zav.address}</Text>
+              <MaterialIcons name='directions' size={25} style={{ color: '#FF6E36' }} />              
+            </View>
+          </TouchableOpacity>        
           <View style={{ width: w, overflow: 'hidden', paddingHorizontal: 15, paddingVertical: 20 }}>
             <Text numberOfLines={6} style={{ fontFamily: 'Roboto-Regular', color: 'rgba(0, 0, 0, 0.5)' }}>{zav.description}</Text>
           </View>

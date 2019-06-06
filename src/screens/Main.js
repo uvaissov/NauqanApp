@@ -154,7 +154,7 @@ class Main extends Component {
   }
 
   render() {
-    const { navigation, mainCategory, categories, topPlaces, loading, error, promo1, promo2 } = this.props   
+    const { navigation, mainCategory, categories, topPlaces, loading, error, promo1, promo2, cityId } = this.props   
     
     const topPlaces1 = topPlaces.slice(0, 9)
     const topPlaces2 = topPlaces.slice(9, 18)
@@ -191,7 +191,7 @@ class Main extends Component {
         />     
         <CustomStatusBar backgroundColor="rgba(0, 0, 0, 0.24)" barStyle="default" />
         {/* Start scroll component */}
-        <HeaderMain navigation={navigation} categories={categories} style={{position: 'absolute', width: w, top: (statusBarHeight), zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />                    
+        <HeaderMain cityId={cityId} navigation={navigation} categories={categories} style={{position: 'absolute', width: w, top: (statusBarHeight), zIndex: 1}} leftIcon="ios-menu" title="Главная" onPress={() => navigation.openDrawer()} />                    
           
         <ScrollView overScrollMode="never" bounces={false} style={[{ flex: 1}]}>
           <SwiperApp navigation={navigation} data={promo1} />

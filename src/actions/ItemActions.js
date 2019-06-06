@@ -63,7 +63,6 @@ export const getPlacesByZav = (id, text, dir) => async (dispatch) => {
     const textSearch = !text ? '' : `&text=${text}`
     const dirSearch = !dir ? '' : `&filt_type=price&filt=${dir}`
     const URL = `${hostName}/product?zav_id=${id}${textSearch}${dirSearch}`
-    console.log(textSearch)
     const res = await fetch(URL, {
       method: 'GET'
     })

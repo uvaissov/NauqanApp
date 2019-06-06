@@ -6,11 +6,39 @@ import { Divider } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
 import CustomStatusBar from '../components/uikit/CustomStatusBar'
 import Header from '../components/uikit/item/Header'
-import { w, normalize } from '../constants/global'
+import { w, normalize, hostName } from '../constants/global'
 
 class AboutApp extends Component {  
+  state={
+    content: null
+  }
+  async componentDidMount() {
+    const URL = `${hostName}/desc`
+    console.log(URL) 
+    fetch(URL, {
+      method: 'GET'
+    }).then((res) => res.json())
+      .then((data) => { 
+        if (data && data.length > 0) {
+          this.setState({content: data[0].desc})
+        }
+      } 
+      ).catch(() => {
+        this.setState({content: 'Приложение NAUQAN - это Ваш гид в мире скидок. Это тот самый случай, когда в одном приложении собраны лучшие акционные предложения со всего Казахстана. NAUQAN станет Вашим другом и советчиком в широком спектре товаров и услуг, ведь именно благодаря ему Вы всегда будете в курсе всех скидок и акций, которые проходят в Вашем городе. Мы всегда рады новым предложениям как со стороны пользователей, так и со стороны бизнес-партнеров.'})        
+      })
+  }
+
   render() {
     const { navigation } = this.props
+    const { content } = this.state
+
+    const contentShow = content ? 
+      (<Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(14), fontWeight: '300', lineHeight: 18, paddingHorizontal: 15, marginTop: 5}}>
+        {content.replace(/<\/?[^>]+(>|$)/g, '')}
+      </Text>) : 
+      (
+        <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(14), fontWeight: '300', lineHeight: 18, paddingHorizontal: 15, marginTop: 5}} />)
+  
     return (
       <View style={styles.container}>        
         <ScrollView>
@@ -26,12 +54,10 @@ class AboutApp extends Component {
             </LinearGradient>
                                       
           </View>
-          <View style={{ }}>
+          <View style={{ flex: 1 }}>
             <Text style={{fontFamily: 'Roboto-Regular', fontWeight: 'normal', color: '#170701', paddingHorizontal: 15, fontSize: 24, lineHeight: 28, paddingTop: 25, paddingBottom: 15}}>О приложении</Text>
-            <Divider style={{ backgroundColor: '#E5E5E5', height: 1 }} />
-            <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(14), fontWeight: '300', lineHeight: 18, paddingHorizontal: 15, marginTop: 5}}>
-              Приложение NAUQAN - это Ваш гид в мире скидок. Это тот самый случай, когда в одном приложении собраны лучшие акционные предложения со всего Казахстана. NAUQAN станет Вашим другом и советчиком в широком спектре товаров и услуг, ведь именно благодаря ему Вы всегда будете в курсе всех скидок и акций, которые проходят в Вашем городе. Мы всегда рады новым предложениям как со стороны пользователей, так и со стороны бизнес-партнеров.
-            </Text>
+            <Divider style={{ backgroundColor: '#E5E5E5', height: 1 }} />            
+            {contentShow}
           </View>                          
         </ScrollView>
       </View>

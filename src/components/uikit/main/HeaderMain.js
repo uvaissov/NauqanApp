@@ -27,12 +27,13 @@ class HeaderMain extends Component {
   }
 
   searchByText = async (text) => {
-    this.setState({value: text})
     if (text === '') {
       this.setState({data: []})
       return
     }
-    const URL = `${hostName}/search?text=${text}`    
+    const { cityId } = this.props
+    const URL = `${hostName}/search?text=${text}&city_id=${cityId}`
+    console.log(URL) 
     fetch(URL, {
       method: 'GET'
     }).then((res) => res.json())
@@ -64,7 +65,7 @@ class HeaderMain extends Component {
     const { touchContainer, viewStyle, containerStyle, textStyle, leftButtonStyle, rightButtonStyle, resultContainer } = styles
     const { value, data, showResults } = this.state
     return (
-      <View style={[viewStyle, style, {backgroundColor: headerColor, height: showResults ? 300 : 100 }]}>
+      <View style={[viewStyle, style, {backgroundColor: headerColor, height: showResults && data.length > 0 ? 300 : 100 }]}>
         <LinearGradient
           colors={['rgba(0, 0, 0, 0.9)', 'rgba(0, 0, 0, 0)']}
           start={{ x: 0, y: 1 }}
@@ -107,7 +108,7 @@ class HeaderMain extends Component {
                   keyboardShouldPersistTaps={'handled'}
                   data={data}
                   renderItem={this.renderItem}
-                  keyExtractor={(item) => item.id.toString()}
+                  keyExtractor={(item) => item.id.toString() + item.type}
                 />
               </ScrollView>
             </View>
