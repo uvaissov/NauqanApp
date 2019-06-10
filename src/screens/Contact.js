@@ -4,10 +4,12 @@ import { TextInputMask } from 'react-native-masked-text'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
 import { Divider, Button } from 'react-native-elements'
+import FastImage from 'react-native-fast-image'
 import LinearGradient from 'react-native-linear-gradient'
 import CustomStatusBar from '../components/uikit/CustomStatusBar'
 import Header from '../components/uikit/item/Header'
-import Icon from '../components/svgkit/Icon'
+
+//import Icon from '../components/svgkit/Icon'
 
 import { w, normalize } from '../constants/global'
 
@@ -49,9 +51,14 @@ class Contact extends Component {
               imageStyle={{opacity: 0.2, transform: [{scale: 0.7}]}}
             >
               <Header leftColor="white" style={{position: 'absolute', width: w, top: 0, zIndex: 1}} leftIcon="md-menu" onPress={() => navigation.openDrawer()} />
-              <View style={{ width: w, height: getComponentHeight(w * 0.8) }}>
-                <LinearGradient style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} colors={['#FF662E', '#FFA470']} useAngle angle={146.71}>
-                  <Icon name="contact" height={getComponentHeight(w * 0.7)} width={w * 0.7} />
+              <View style={{ width: w, height: getComponentHeight(w * 0.7) }}>
+                <LinearGradient style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }} colors={['#FF662E', '#FFA470']} useAngle angle={146.71}>
+                  {/*<Icon name="contact" height={getComponentHeight(w * 0.7)} width={w * 0.7} />*/}                 
+                  <FastImage 
+                    style={{height: getComponentHeight(w * 0.6), width: w * 0.8 }} 
+                    source={require('../../resources/images/contact.png')} 
+                    resizeMode={FastImage.resizeMode.contain}
+                  /> 
                 </LinearGradient>
                                       
               </View>
@@ -67,8 +74,8 @@ class Contact extends Component {
               <View style={{ padding: 15}}>
                 <View style={styles.containerText}><TextInput value={this.state.fio} onChangeText={(text) => this.setState({fio: text})} style={styles.textStyle} placeholder="ФИО" placeholderTextColor="rgba(0, 0, 0, 0.54)" /></View>
                 <View style={styles.containerText}><TextInput value={this.state.mail} onChangeText={(text) => this.setState({mail: text})} style={styles.textStyle} placeholder="E-mail" placeholderTextColor="rgba(0, 0, 0, 0.54)" autoCompleteType="email" /></View>
-                <View style={styles.containerText}><TextInputMask value={this.state.phone} onChangeText={(text) => this.setState({phone: text})} style={styles.textStyle} placeholder="Номер телефона" placeholderTextColor="rgba(0, 0, 0, 0.54)" autoCompleteType="tel" keyboardType={'phone-pad'} type={'custom'} options={{mask: '+7(999)999-99-99'}} /></View>
-                <View style={styles.containerText}><TextInput value={this.state.message} onChangeText={(text) => this.setState({message: text})} style={[styles.textStyle, {textAlignVertical: 'top'}]} multiline numberOfLines={10} placeholder="Сообщение" placeholderTextColor="rgba(0, 0, 0, 0.54)" /></View>
+                <View style={styles.containerText}><TextInputMask value={this.state.phone} onChangeText={(text) => this.setState({phone: text})} style={styles.textStyle} placeholder="Номер телефона" placeholderTextColor="rgba(0, 0, 0, 0.54)" autoCompleteType="tel" keyboardType={'phone-pad'} type={'only-numbers'} /></View>
+                <View style={styles.containerText}><TextInput value={this.state.message} onChangeText={(text) => this.setState({message: text})} style={[styles.textStyle, {textAlignVertical: 'top'}]} multiline placeholder="Сообщение" placeholderTextColor="rgba(0, 0, 0, 0.54)" /></View>
               </View>
               <View style={{ padding: 15, marginBottom: 30 }}>
                 <Button

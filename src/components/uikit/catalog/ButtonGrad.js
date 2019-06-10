@@ -30,7 +30,7 @@ const ButtonGrad = ({
           }
         </View>
      
-        <Text style={{ marginTop: 6, width: 100, textAlign: 'center', fontSize: normalize(14), lineHeight: normalize(16), color: `${color}`, opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{text}</Text>
+        <Text style={{ marginTop: 6, width: 100, textAlign: 'center', fontSize: normalize(12), lineHeight: normalize(16), color: `${color}`, opacity: 0.87, fontFamily: 'Roboto-Regular' }}>{text}</Text>
       </TouchableOpacity>
     </View> 
   )

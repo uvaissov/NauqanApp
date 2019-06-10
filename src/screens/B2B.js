@@ -64,8 +64,8 @@ class B2B extends Component {
               <View style={{ padding: 15}}>
                 <View style={styles.containerText}><TextInput value={this.state.fio} onChangeText={(text) => this.setState({fio: text})} style={styles.textStyle} placeholder="ФИО" placeholderTextColor="rgba(0, 0, 0, 0.54)" /></View>
                 <View style={styles.containerText}><TextInput value={this.state.mail} onChangeText={(text) => this.setState({mail: text})} style={styles.textStyle} placeholder="E-mail" placeholderTextColor="rgba(0, 0, 0, 0.54)" autoCompleteType="email" /></View>
-                <View style={styles.containerText}><TextInputMask value={this.state.phone} onChangeText={(text) => this.setState({phone: text})} style={styles.textStyle} placeholder="Номер телефона" placeholderTextColor="rgba(0, 0, 0, 0.54)" autoCompleteType="tel" keyboardType={'phone-pad'} type={'custom'} options={{mask: '+7(999)999-99-99'}} /></View>
-                <View style={styles.containerText}><TextInput value={this.state.message} onChangeText={(text) => this.setState({message: text})} style={[styles.textStyle, {textAlignVertical: 'top'}]} multiline numberOfLines={10} placeholder="Сообщение" placeholderTextColor="rgba(0, 0, 0, 0.54)" /></View></View>
+                <View style={styles.containerText}><TextInputMask value={this.state.phone} onChangeText={(text) => this.setState({phone: text})} style={styles.textStyle} placeholder="Номер телефона" placeholderTextColor="rgba(0, 0, 0, 0.54)" autoCompleteType="tel" keyboardType={'phone-pad'} type={'only-numbers'} /></View>
+                <View style={styles.containerText}><TextInput value={this.state.message} onChangeText={(text) => this.setState({message: text})} style={[styles.textStyle, {textAlignVertical: 'top'}]} multiline placeholder="Сообщение" placeholderTextColor="rgba(0, 0, 0, 0.54)" /></View></View>
               <View style={{ padding: 15, marginBottom: 30 }}>
                 <Button
                   buttonStyle={{ 

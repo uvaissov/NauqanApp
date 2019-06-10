@@ -33,11 +33,11 @@ class AboutApp extends Component {
     const { content } = this.state
 
     const contentShow = content ? 
-      (<Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(14), fontWeight: '300', lineHeight: 18, paddingHorizontal: 15, marginTop: 5}}>
+      (<Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(14), fontWeight: '300', lineHeight: normalize(18), paddingHorizontal: 15, marginTop: 5}}>
         {content.replace(/<\/?[^>]+(>|$)/g, '')}
       </Text>) : 
       (
-        <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(14), fontWeight: '300', lineHeight: 18, paddingHorizontal: 15, marginTop: 5}} />)
+        <Text style={{fontFamily: 'Roboto-Regular', fontSize: normalize(14), fontWeight: '300', lineHeight: normalize(18), paddingHorizontal: 15, marginTop: 5}} />)
   
     return (
       <View style={styles.container}>        
